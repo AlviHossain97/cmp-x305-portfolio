@@ -2022,6 +2022,8 @@
       padding: 12px 60px 12px 16px;
       font-size: 1rem;
       font-family: var(--mono);
+      appearance: none;
+      -webkit-appearance: none;
       color: var(--tx);
       background: linear-gradient(180deg, rgba(15, 20, 32, .98), rgba(20, 25, 38, .98));
       border: 3px solid var(--tx);
@@ -2035,6 +2037,22 @@
 
     .input-container .input::placeholder {
       color: var(--tx3);
+    }
+
+    .input-container .input::-webkit-search-decoration,
+    .input-container .input::-webkit-search-cancel-button,
+    .input-container .input::-webkit-search-results-button,
+    .input-container .input::-webkit-search-results-decoration {
+      -webkit-appearance: none;
+      appearance: none;
+      display: none;
+    }
+
+    .input-container .input::-ms-clear,
+    .input-container .input::-ms-reveal {
+      display: none;
+      width: 0;
+      height: 0;
     }
 
     .input-container .input:hover {
@@ -2763,8 +2781,7 @@
       }
 
       .input-container::after,
-      .input-container .input:not(:placeholder-shown),
-      .input-container .input.is-wobbling {
+      .input-container .input:not(:placeholder-shown) {
         animation: none;
       }
 
@@ -5231,7 +5248,7 @@ var searchSugg=document.getElementById('search-suggestions');
 var searchIdx=[],selIdx=-1;
 
 function triggerSearchWobble(){
-  if(rmq.matches||!searchInput)return;
+  if(!searchInput)return;
   searchInput.classList.remove('is-wobbling');
   void searchInput.offsetWidth;
   searchInput.classList.add('is-wobbling');
