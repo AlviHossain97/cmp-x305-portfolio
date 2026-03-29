@@ -7,7 +7,7 @@
   <title>CMP-X305 Cybersecurity Portfolio | Alvi Hossain</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@700;900&display=swap"
     rel="stylesheet">
   <style>
     /* ===== CSS TOKENS ===== */ /* v2 */
@@ -75,6 +75,7 @@
       --sticky-top: calc(var(--nav-h) + var(--subnav-h) + 8px);
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
+      --display: 'Orbitron', sans-serif;
       --tt-bg: var(--s1);
       --tt-bd: var(--bd);
       --tt-tx: var(--tx2);
@@ -163,15 +164,95 @@
       margin-bottom: 1.75rem;
     }
 
-    .hero h1 {
-      font-size: clamp(2.2rem, 5.5vw, 3.8rem);
-      font-weight: 700;
-      line-height: 1.1;
+    /* From Uiverse.io by LeonKohli */
+    .glitch-container {
+      position: relative;
+      display: inline-block;
       margin-bottom: 1.25rem;
-      background: linear-gradient(135deg, #e0e6f0, #00ff88);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-family: var(--display);
+      font-size: clamp(2.5rem, 6vw, 4.4rem);
+      font-weight: 900;
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #00ffff;
+      text-shadow:
+        0.05em 0 0 #ff00ff,
+        -0.03em -0.04em 0 #ffff00,
+        0.025em 0.04em 0 #00ffff;
+      animation: hero-glitch 725ms infinite;
+    }
+
+    .glitch-container span {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+    }
+
+    .glitch-container span:first-child {
+      animation: hero-glitch 500ms infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
+      transform: translate(-0.04em, -0.03em);
+      opacity: .75;
+    }
+
+    .glitch-container span:last-child {
+      animation: hero-glitch 375ms infinite;
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+      transform: translate(0.04em, 0.03em);
+      opacity: .75;
+    }
+
+    @keyframes hero-glitch {
+      0% {
+        text-shadow:
+          0.05em 0 0 #ff00ff,
+          -0.03em -0.04em 0 #ffff00,
+          0.025em 0.04em 0 #00ffff;
+      }
+
+      15% {
+        text-shadow:
+          0.05em 0 0 #ff00ff,
+          -0.03em -0.04em 0 #ffff00,
+          0.025em 0.04em 0 #00ffff;
+      }
+
+      16% {
+        text-shadow:
+          -0.05em -0.025em 0 #ff00ff,
+          0.025em 0.035em 0 #ffff00,
+          -0.05em -0.05em 0 #00ffff;
+      }
+
+      49% {
+        text-shadow:
+          -0.05em -0.025em 0 #ff00ff,
+          0.025em 0.035em 0 #ffff00,
+          -0.05em -0.05em 0 #00ffff;
+      }
+
+      50% {
+        text-shadow:
+          0.05em 0.035em 0 #ff00ff,
+          0.03em 0 0 #ffff00,
+          0 -0.04em 0 #00ffff;
+      }
+
+      99% {
+        text-shadow:
+          0.05em 0.035em 0 #ff00ff,
+          0.03em 0 0 #ffff00,
+          0 -0.04em 0 #00ffff;
+      }
+
+      100% {
+        text-shadow:
+          -0.05em 0 0 #ff00ff,
+          -0.025em -0.04em 0 #ffff00,
+          -0.04em -0.025em 0 #00ffff;
+      }
     }
 
     .hero-sub {
@@ -1854,6 +1935,11 @@
         animation: none;
       }
 
+      .glitch-container,
+      .glitch-container span {
+        animation: none;
+      }
+
       .ev-card:hover {
         transform: none;
       }
@@ -1948,7 +2034,8 @@
   <section class="hero">
     <div class="hero-inner">
       <div class="badge">CMP-X305 &mdash; Cyber Security &mdash; Coursework Portfolio 1</div>
-      <h1>Cybersecurity Portfolio</h1>
+      <h1 class="glitch-container">CYBERSECURITY PORTFOLIO<span aria-hidden="true">CYBERSECURITY PORTFOLIO</span><span
+          aria-hidden="true">CYBERSECURITY PORTFOLIO</span></h1>
       <p class="hero-sub">Four hands-on security labs covering application reconnaissance, vulnerability exploitation,
         secure administration, and automated risk prioritisation.</p>
       <div class="demo-strip">
