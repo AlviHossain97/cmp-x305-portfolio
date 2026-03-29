@@ -170,6 +170,7 @@
       margin-bottom: 1.25rem;
       background: linear-gradient(135deg, #e0e6f0, #00ff88);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
     }
 
@@ -370,11 +371,12 @@
     .nav-inner {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
       height: var(--nav-h);
+      gap: .5rem;
     }
 
     .nav-logo {
@@ -382,18 +384,169 @@
       font-size: .85rem;
       color: var(--acc);
       font-weight: 600;
+      flex-shrink: 0;
     }
 
     .nav-logo span {
       color: var(--tx3);
     }
 
-    .nav-tabs {
+    /* ── glitch radio nav ── */
+    .nav-glitch-container {
       display: flex;
-      gap: .2rem;
-      flex-wrap: wrap;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
     }
 
+    .radio-wrapper {
+      position: relative;
+      height: 36px;
+      width: 82px;
+      margin: 2px;
+    }
+
+    .radio-wrapper .input {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+    }
+
+    .btn {
+      --primary: #00ff88;
+      --shadow-primary: #00d4ff;
+      --color: #c8d0e0;
+      --font-size: 7.5px;
+      --shadow-secondary: #a78bfa;
+      --clip: polygon(11% 0, 95% 0, 100% 25%, 90% 90%, 95% 90%, 85% 90%, 85% 100%, 7% 100%, 0 80%);
+      --border: 4px;
+      --shimmy-distance: 5;
+      --clip-one: polygon(0 2%, 100% 2%, 100% 95%, 95% 95%, 95% 90%, 85% 90%, 85% 95%, 8% 95%, 0 70%);
+      --clip-two: polygon(0 78%, 100% 78%, 100% 100%, 95% 100%, 95% 90%, 85% 90%, 85% 100%, 8% 100%, 0 78%);
+      --clip-three: polygon(0 44%, 100% 44%, 100% 54%, 95% 54%, 95% 54%, 85% 54%, 85% 54%, 8% 54%, 0 54%);
+      --clip-four: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+      --clip-five: polygon(0 0, 100% 0, 100% 0, 95% 0, 95% 0, 85% 0, 85% 0, 8% 0, 0 0);
+      --clip-six: polygon(0 40%, 100% 40%, 100% 85%, 95% 85%, 95% 85%, 85% 85%, 85% 85%, 8% 85%, 0 70%);
+      --clip-seven: polygon(0 63%, 100% 63%, 100% 80%, 95% 80%, 95% 80%, 85% 80%, 85% 80%, 8% 80%, 0 70%);
+      color: var(--color);
+      text-transform: uppercase;
+      font-family: var(--mono);
+      font-size: var(--font-size);
+      letter-spacing: 2px;
+      position: relative;
+      font-weight: 900;
+      width: 100%;
+      height: 100%;
+      line-height: 36px;
+      text-align: center;
+      transition: background 0.2s;
+      display: block;
+    }
+
+    .input:checked + .btn {
+      --primary: #a78bfa;
+      --shadow-primary: #00ff88;
+      --color: #ffffff;
+    }
+
+    .input:hover + .btn {
+      --primary: #00cc6a;
+      --font-size: 8.5px;
+    }
+
+    .btn:after, .btn:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      clip-path: var(--clip);
+      z-index: -1;
+    }
+
+    .btn:before {
+      background: var(--shadow-primary);
+      transform: translate(var(--border), 0);
+    }
+
+    .btn:after {
+      background: var(--primary);
+    }
+
+    .btn__glitch {
+      position: absolute;
+      top: calc(var(--border) * -1);
+      left: calc(var(--border) * -1);
+      right: calc(var(--border) * -1);
+      bottom: calc(var(--border) * -1);
+      background: var(--shadow-primary);
+      text-shadow: 2px 2px var(--shadow-primary), -2px -2px var(--shadow-secondary);
+      clip-path: var(--clip);
+      animation: glitch 2s infinite;
+      display: none;
+    }
+
+    .input:hover + .btn .btn__glitch {
+      display: block;
+    }
+
+    .input:checked + .btn .btn__glitch {
+      display: block;
+      animation: glitch 5s infinite;
+    }
+
+    .btn__glitch:before {
+      content: '';
+      position: absolute;
+      top: calc(var(--border) * 1);
+      right: calc(var(--border) * 1);
+      bottom: calc(var(--border) * 1);
+      left: calc(var(--border) * 1);
+      clip-path: var(--clip);
+      background: var(--primary);
+      z-index: -1;
+    }
+
+    @keyframes glitch {
+      0% { clip-path: var(--clip-one); }
+      2%, 8% { clip-path: var(--clip-two); transform: translate(calc(var(--shimmy-distance) * -1%), 0); }
+      6% { clip-path: var(--clip-two); transform: translate(calc(var(--shimmy-distance) * 1%), 0); }
+      9% { clip-path: var(--clip-two); transform: translate(0, 0); }
+      10% { clip-path: var(--clip-three); transform: translate(calc(var(--shimmy-distance) * 1%), 0); }
+      13% { clip-path: var(--clip-three); transform: translate(0, 0); }
+      14%, 21% { clip-path: var(--clip-four); transform: translate(calc(var(--shimmy-distance) * 1%), 0); }
+      25% { clip-path: var(--clip-five); transform: translate(calc(var(--shimmy-distance) * 1%), 0); }
+      30% { clip-path: var(--clip-five); transform: translate(calc(var(--shimmy-distance) * -1%), 0); }
+      35%, 45% { clip-path: var(--clip-six); transform: translate(calc(var(--shimmy-distance) * -1%)); }
+      40% { clip-path: var(--clip-six); transform: translate(calc(var(--shimmy-distance) * 1%)); }
+      50% { clip-path: var(--clip-six); transform: translate(0, 0); }
+      55% { clip-path: var(--clip-seven); transform: translate(calc(var(--shimmy-distance) * 1%), 0); }
+      60% { clip-path: var(--clip-seven); transform: translate(0, 0); }
+      31%, 61%, 100% { clip-path: var(--clip-four); }
+    }
+
+    .nav-glitch-number {
+      background: var(--shadow-primary);
+      color: #0a0e17;
+      font-size: 5px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      position: absolute;
+      width: 15px;
+      height: 6px;
+      top: 0;
+      left: 81%;
+      line-height: 6.2px;
+      font-family: var(--mono);
+      text-align: center;
+    }
+
+    /* mobile nav — keep classic style */
     .nav-tab {
       font-family: var(--mono);
       font-size: .7rem;
@@ -408,21 +561,9 @@
       letter-spacing: .05em;
     }
 
-    .nav-tab:hover {
-      color: var(--tx);
-      background: var(--s2);
-    }
-
-    .nav-tab.active {
-      color: var(--acc);
-      background: var(--acc-bg);
-      border-color: var(--acc-bd);
-    }
-
-    .nav-tab:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-    }
+    .nav-tab:hover { color: var(--tx); background: var(--s2); }
+    .nav-tab.active { color: var(--acc); background: var(--acc-bg); border-color: var(--acc-bd); }
+    .nav-tab:focus-visible { outline: none; box-shadow: var(--focus-ring); }
 
     .mob-btn {
       display: none;
@@ -460,8 +601,8 @@
       display: flex;
     }
 
-    @media(max-width:900px) {
-      .nav-tabs {
+    @media(max-width:1000px) {
+      .nav-glitch-container {
         display: none;
       }
 
@@ -1753,16 +1894,45 @@
   <nav class="nav" id="nav" aria-label="Main navigation">
     <div class="nav-inner">
       <div class="nav-logo">alvi<span>@</span>cmp-x305<span>:~$</span></div>
-      <div class="nav-tabs" id="nav-tabs" role="tablist"><button class="nav-tab active" data-s="intro" role="tab"
-          aria-label="Overview section" aria-selected="true">Overview</button><button class="nav-tab" data-s="w5"
-          role="tab" aria-label="WPScan lab section" aria-selected="false">WPScan</button><button class="nav-tab"
-          data-s="w7" role="tab" aria-label="Juice Shop lab section" aria-selected="false">Juice Shop</button><button
-          class="nav-tab" data-s="w8" role="tab" aria-label="Nmap and SSH lab section" aria-selected="false">Nmap &amp;
-          SSH</button><button class="nav-tab" data-s="w9" role="tab" aria-label="Nessus lab section"
-          aria-selected="false">Nessus</button><button class="nav-tab" data-s="overall" role="tab"
-          aria-label="Reflection section" aria-selected="false">Reflection</button><button class="nav-tab" data-s="refs"
-          role="tab" aria-label="References section" aria-selected="false">References</button></div><button
-        class="mob-btn" id="mob-btn" aria-label="Toggle mobile navigation menu" aria-expanded="false">MENU</button>
+      <div class="nav-glitch-container" id="nav-tabs" role="tablist" aria-label="Section navigation">
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-intro" type="radio" data-s="intro" checked aria-label="Overview section">
+          <div class="btn">OVERVIEW<span class="btn__glitch" aria-hidden="">_OVERVIEW</span><span class="nav-glitch-number">00</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-w5" type="radio" data-s="w5" aria-label="WPScan lab section">
+          <div class="btn">WPSCAN<span class="btn__glitch" aria-hidden="">WPSCAN_</span><span class="nav-glitch-number">W5</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-w7" type="radio" data-s="w7" aria-label="Juice Shop lab section">
+          <div class="btn">JUICE<span class="btn__glitch" aria-hidden="">_JUICE_</span><span class="nav-glitch-number">W7</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-w8" type="radio" data-s="w8" aria-label="Nmap and SSH lab section">
+          <div class="btn">NM+SSH<span class="btn__glitch" aria-hidden="">NM+SSH_</span><span class="nav-glitch-number">W8</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-w9" type="radio" data-s="w9" aria-label="Nessus lab section">
+          <div class="btn">NESSUS<span class="btn__glitch" aria-hidden="">NESSUS_</span><span class="nav-glitch-number">W9</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-overall" type="radio" data-s="overall" aria-label="Reflection section">
+          <div class="btn">REFLECT<span class="btn__glitch" aria-hidden="">REFLECT</span><span class="nav-glitch-number">OV</span></div>
+        </div>
+
+        <div class="radio-wrapper">
+          <input class="input" name="nav-glitch" id="ng-refs" type="radio" data-s="refs" aria-label="References section">
+          <div class="btn">REFS<span class="btn__glitch" aria-hidden="">_REFS__</span><span class="nav-glitch-number">RF</span></div>
+        </div>
+
+      </div>
+      <button class="mob-btn" id="mob-btn" aria-label="Toggle mobile navigation menu" aria-expanded="false">MENU</button>
     </div>
   </nav>
   <div class="mob-nav" id="mob-nav" role="navigation" aria-label="Mobile navigation"><button class="nav-tab active"
@@ -3670,8 +3840,12 @@ rmq.addEventListener('change',function(){if(rmq.matches)stopMatrix();else startM
 
 /* ===== TAB NAVIGATION ===== */
 var allTabs=document.querySelectorAll('.nav-tab');
+var allRadios=document.querySelectorAll('.nav-glitch-container .input');
 var allPanels=document.querySelectorAll('.panel');
 function switchTo(s){
+  // sync glitch radio buttons
+  allRadios.forEach(function(r){r.checked=r.dataset.s===s;});
+  // sync mobile nav tabs
   allTabs.forEach(function(t){
     var isActive=t.dataset.s===s;
     t.classList.toggle('active',isActive);
@@ -3685,6 +3859,9 @@ function switchTo(s){
   clearSearchFilter();
   setupActiveSubnav();
 }
+// glitch radio inputs drive navigation
+allRadios.forEach(function(r){r.addEventListener('change',function(){if(r.checked)switchTo(r.dataset.s);});});
+// mobile nav buttons
 allTabs.forEach(function(t){t.addEventListener('click',function(){switchTo(t.dataset.s);});});
 addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>50);});
 
