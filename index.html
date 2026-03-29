@@ -606,6 +606,7 @@
       line-height: 1;
       margin-bottom: .38rem;
       letter-spacing: -.02em;
+      color: var(--stat-accent);
     }
 
     .stat-l {
@@ -616,9 +617,43 @@
       font-weight: 700;
     }
 
+    .stat--w5 {
+      --stat-accent: var(--w5);
+    }
+
+    .stat--w7 {
+      --stat-accent: var(--w7);
+    }
+
+    .stat--w8 {
+      --stat-accent: var(--w8);
+    }
+
+    .stat--w9 {
+      --stat-accent: var(--w9);
+    }
+
+    .stat--acc {
+      --stat-accent: var(--acc);
+    }
+
+    .stat--cyan {
+      --stat-accent: var(--cyan);
+    }
+
+    .stat--amber {
+      --stat-accent: var(--amber);
+    }
+
+    .stat--purple {
+      --stat-accent: var(--purple);
+    }
+
     @media(max-width:680px) {
       .stats {
         grid-template-columns: repeat(2, 1fr);
+        gap: .8rem;
+        margin: 1.65rem 0;
       }
 
       .stat {
@@ -680,10 +715,48 @@
       height: 34px;
       width: 80px;
       margin: 1px;
-      /* per-button week colours — set via inline style:
-         --bc  = fill colour (week accent)
-         --bs  = shadow/offset colour (complementary)
-         --bss = secondary glitch shadow  */
+    }
+
+    .nav-theme-intro {
+      --bc: #00ff88;
+      --bs: #00d4ff;
+      --bss: #a78bfa;
+    }
+
+    .nav-theme-w5 {
+      --bc: #fbbf24;
+      --bs: #fb923c;
+      --bss: #f97316;
+    }
+
+    .nav-theme-w7 {
+      --bc: #34d399;
+      --bs: #00ff88;
+      --bss: #059669;
+    }
+
+    .nav-theme-w8 {
+      --bc: #60a5fa;
+      --bs: #00d4ff;
+      --bss: #3b82f6;
+    }
+
+    .nav-theme-w9 {
+      --bc: #a78bfa;
+      --bs: #e879f9;
+      --bss: #7c3aed;
+    }
+
+    .nav-theme-overall {
+      --bc: #00d4ff;
+      --bs: #00ff88;
+      --bss: #0284c7;
+    }
+
+    .nav-theme-refs {
+      --bc: #94a3b8;
+      --bs: #64748b;
+      --bss: #475569;
     }
 
     .radio-wrapper .input {
@@ -1677,6 +1750,30 @@
       margin-bottom: .6rem;
     }
 
+    .tone-acc {
+      color: var(--acc);
+    }
+
+    .tone-w5 {
+      color: var(--w5);
+    }
+
+    .tone-w7 {
+      color: var(--w7);
+    }
+
+    .tone-w8 {
+      color: var(--w8);
+    }
+
+    .tone-w9 {
+      color: var(--w9);
+    }
+
+    .tone-muted {
+      color: var(--tx3);
+    }
+
     .sec-hdr h2 {
       font-size: clamp(1.88rem, 3vw, 2.05rem);
       font-weight: 700;
@@ -2619,6 +2716,210 @@
       outline: none;
       box-shadow: var(--focus-ring);
     }
+
+    @media(max-width:768px) {
+      .main {
+        padding: 0 1.25rem 4rem;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: 4.75rem 1.25rem 2.75rem;
+      }
+
+      .hero-inner {
+        max-width: 100%;
+      }
+
+      .badge {
+        margin-bottom: 1.35rem;
+        padding: .55rem .95rem .55rem 3.55rem;
+        font-size: .64rem;
+        letter-spacing: .12em;
+        box-shadow: 5px 5px 0 rgba(4, 6, 10, .88);
+      }
+
+      .hero-sub {
+        margin-bottom: 2rem;
+      }
+
+      .demo-strip {
+        gap: .85rem;
+        margin: 1.6rem 0 2rem;
+      }
+
+      .terminal {
+        max-width: 100%;
+        padding: 1.05rem 1.15rem;
+        box-shadow: 8px 8px 0 rgba(4, 6, 10, .88);
+      }
+
+      .sub-nav {
+        padding: .7rem .8rem;
+        margin-bottom: 1.35rem;
+        box-shadow: 6px 6px 0 rgba(4, 6, 10, .84);
+      }
+
+      .sub-nav a {
+        font-size: .66rem;
+        padding: .5rem .7rem;
+      }
+
+      .takeaway {
+        padding: 1.05rem 1.15rem 1.15rem;
+        margin-bottom: 2rem;
+        box-shadow: 8px 8px 0 rgba(4, 6, 10, .88);
+      }
+
+      .analysis-card {
+        margin: 1.35rem 0 1.8rem;
+        box-shadow: 8px 8px 0 rgba(4, 6, 10, .88);
+      }
+
+      .analysis-card .analysis-context,
+      .analysis-card .analysis-takeaway {
+        padding: .85rem 1rem;
+      }
+
+      .sec-hdr {
+        padding: 2.1rem 0 1.6rem;
+        margin-bottom: 2rem;
+      }
+
+      .cb {
+        margin-bottom: 2.2rem;
+      }
+
+      .chart-note {
+        padding-right: 1rem;
+      }
+
+      .ai-box {
+        padding: 1.1rem 1.15rem;
+      }
+
+      .footer {
+        padding: 2rem 1.15rem 2.2rem;
+      }
+    }
+
+    @media(max-width:480px) {
+      .main {
+        padding: 0 1rem 3.2rem;
+      }
+
+      .hero {
+        padding: 4.25rem 1rem 2.2rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        width: min(100%, 26rem);
+        justify-content: flex-start;
+        padding: .6rem .85rem .6rem 3.35rem;
+        font-size: .6rem;
+        line-height: 1.45;
+      }
+
+      .badge::before {
+        left: .72rem;
+      }
+
+      .hero-sub {
+        font-size: .94rem;
+        line-height: 1.68;
+      }
+
+      .demo-strip {
+        grid-template-columns: 1fr;
+        gap: .8rem;
+      }
+
+      .demo-card {
+        translate: -3px -3px;
+        box-shadow: 7px 7px 0 rgba(4, 6, 10, .92);
+      }
+
+      .terminal {
+        padding: .95rem 1rem;
+        font-size: .74rem;
+      }
+
+      .search-module {
+        margin-bottom: 1.9rem;
+      }
+
+      .input-container .input {
+        height: 56px;
+        padding: 11px 56px 11px 14px;
+      }
+
+      .input-container::after {
+        right: 54px;
+      }
+
+      .search-clear {
+        right: 10px;
+      }
+
+      .search-suggestions li {
+        padding: .6rem .85rem;
+      }
+
+      .search-suggestions li .sr-type {
+        min-width: 62px;
+      }
+
+      .sub-nav {
+        padding: .65rem .7rem;
+      }
+
+      .dataset {
+        box-shadow: 7px 7px 0 rgba(4, 6, 10, .88);
+      }
+
+      .ds-card-field {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: .2rem;
+      }
+
+      .ds-card-value {
+        text-align: left;
+      }
+
+      .sec-hdr h2 {
+        font-size: clamp(1.62rem, 8vw, 1.9rem);
+      }
+
+      .cb h3 {
+        line-height: 1.4;
+      }
+
+      .chart-note {
+        padding: .8rem .9rem .8rem 1.9rem;
+      }
+
+      .lbx {
+        padding: 1rem;
+      }
+
+      .lbx-cap {
+        max-width: calc(100% - 1.5rem);
+        bottom: .85rem;
+        padding: .6rem .85rem;
+      }
+
+      .footer {
+        padding: 1.75rem 1rem 2rem;
+      }
+
+      .footer-btn {
+        width: 100%;
+        justify-content: center;
+        padding-inline: 1rem;
+      }
+    }
   </style>
 </head>
 
@@ -2638,43 +2939,43 @@
       <div class="nav-glitch-container" id="nav-tabs" role="tablist" aria-label="Section navigation">
 
         <!-- OVERVIEW — site accent green -->
-        <div class="radio-wrapper" style="--bc:#00ff88;--bs:#00d4ff;--bss:#a78bfa">
+        <div class="radio-wrapper nav-theme-intro">
           <input class="input" name="nav-glitch" id="ng-intro" type="radio" data-s="intro" checked aria-label="Overview section">
           <div class="btn">OVERVIEW<span class="btn__glitch" aria-hidden="">_OVERVIEW</span><span class="nav-glitch-number">00</span></div>
         </div>
 
         <!-- WPSCAN — W5 amber -->
-        <div class="radio-wrapper" style="--bc:#fbbf24;--bs:#fb923c;--bss:#f97316">
+        <div class="radio-wrapper nav-theme-w5">
           <input class="input" name="nav-glitch" id="ng-w5" type="radio" data-s="w5" aria-label="WPScan lab section">
           <div class="btn">WPSCAN<span class="btn__glitch" aria-hidden="">WPSCAN_</span><span class="nav-glitch-number">W5</span></div>
         </div>
 
         <!-- JUICE SHOP — W7 emerald -->
-        <div class="radio-wrapper" style="--bc:#34d399;--bs:#00ff88;--bss:#059669">
+        <div class="radio-wrapper nav-theme-w7">
           <input class="input" name="nav-glitch" id="ng-w7" type="radio" data-s="w7" aria-label="Juice Shop lab section">
           <div class="btn">JUICE<span class="btn__glitch" aria-hidden="">_JUICE_</span><span class="nav-glitch-number">W7</span></div>
         </div>
 
         <!-- NMAP & SSH — W8 blue -->
-        <div class="radio-wrapper" style="--bc:#60a5fa;--bs:#00d4ff;--bss:#3b82f6">
+        <div class="radio-wrapper nav-theme-w8">
           <input class="input" name="nav-glitch" id="ng-w8" type="radio" data-s="w8" aria-label="Nmap and SSH lab section">
           <div class="btn">NM+SSH<span class="btn__glitch" aria-hidden="">NM+SSH_</span><span class="nav-glitch-number">W8</span></div>
         </div>
 
         <!-- NESSUS — W9 purple -->
-        <div class="radio-wrapper" style="--bc:#a78bfa;--bs:#e879f9;--bss:#7c3aed">
+        <div class="radio-wrapper nav-theme-w9">
           <input class="input" name="nav-glitch" id="ng-w9" type="radio" data-s="w9" aria-label="Nessus lab section">
           <div class="btn">NESSUS<span class="btn__glitch" aria-hidden="">NESSUS_</span><span class="nav-glitch-number">W9</span></div>
         </div>
 
         <!-- REFLECTION — cyan -->
-        <div class="radio-wrapper" style="--bc:#00d4ff;--bs:#00ff88;--bss:#0284c7">
+        <div class="radio-wrapper nav-theme-overall">
           <input class="input" name="nav-glitch" id="ng-overall" type="radio" data-s="overall" aria-label="Reflection section">
           <div class="btn">REFLECT<span class="btn__glitch" aria-hidden="">REFLECT</span><span class="nav-glitch-number">OV</span></div>
         </div>
 
         <!-- REFERENCES — slate -->
-        <div class="radio-wrapper" style="--bc:#94a3b8;--bs:#64748b;--bss:#475569">
+        <div class="radio-wrapper nav-theme-refs">
           <input class="input" name="nav-glitch" id="ng-refs" type="radio" data-s="refs" aria-label="References section">
           <div class="btn">REFS<span class="btn__glitch" aria-hidden="">_REFS__</span><span class="nav-glitch-number">RF</span></div>
         </div>
@@ -2772,37 +3073,37 @@
     <!-- ===================== INTRO ===================== -->
     <div class="panel active intro" id="panel-intro">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--acc)">01 / Overview</div>
+        <div class="lbl tone-acc">01 / Overview</div>
         <h2>Introduction</h2>
         <p class="desc">Four practical labs covering discovery, exploitation, secure administration and automated
           assessment &mdash; all within an isolated Kali Linux virtual environment.</p>
       </div>
       <div class="stats">
-        <div class="stat" style="--stat-accent:var(--w5)">
+        <div class="stat stat--w5">
           <div class="stat-head"><span class="stat-window">intro://lab-w5</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--w5)">W5</div>
+            <div class="stat-v">W5</div>
             <div class="stat-l">WPScan</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--w7)">
+        <div class="stat stat--w7">
           <div class="stat-head"><span class="stat-window">intro://lab-w7</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--w7)">W7</div>
+            <div class="stat-v">W7</div>
             <div class="stat-l">Juice Shop</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--w8)">
+        <div class="stat stat--w8">
           <div class="stat-head"><span class="stat-window">intro://lab-w8</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--w8)">W8</div>
+            <div class="stat-v">W8</div>
             <div class="stat-l">Nmap &amp; SSH</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--w9)">
+        <div class="stat stat--w9">
           <div class="stat-head"><span class="stat-window">intro://lab-w9</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--w9)">W9</div>
+            <div class="stat-v">W9</div>
             <div class="stat-l">Nessus</div>
           </div>
         </div>
@@ -2819,31 +3120,31 @@
           itself often just relies on ordinary oversights rather than anything exotic.</p>
       </div>
       <div class="stats">
-        <div class="stat" style="--stat-accent:var(--acc)">
+        <div class="stat stat--acc">
           <div class="stat-head"><span class="stat-window">intro://screens</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--acc)">89</div>
+            <div class="stat-v">89</div>
             <div class="stat-l">Screenshots</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--cyan)">
+        <div class="stat stat--cyan">
           <div class="stat-head"><span class="stat-window">intro://outcomes</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--cyan)">3</div>
+            <div class="stat-v">3</div>
             <div class="stat-l">Learning Outcomes</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--amber)">
+        <div class="stat stat--amber">
           <div class="stat-head"><span class="stat-window">intro://toolchain</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--amber)">4</div>
+            <div class="stat-v">4</div>
             <div class="stat-l">Security Tools</div>
           </div>
         </div>
-        <div class="stat" style="--stat-accent:var(--purple)">
+        <div class="stat stat--purple">
           <div class="stat-head"><span class="stat-window">intro://sources</span></div>
           <div class="stat-body">
-            <div class="stat-v" style="color:var(--purple)">11</div>
+            <div class="stat-v">11</div>
             <div class="stat-l">References</div>
           </div>
         </div>
@@ -2853,7 +3154,7 @@
     <!-- ===================== W5 WPSCAN ===================== -->
     <div class="panel w5" id="panel-w5">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--w5)">02 / Week 5</div>
+        <div class="lbl tone-w5">02 / Week 5</div>
         <h2>Web Application Security Lab (WPScan)</h2>
         <p class="desc">Application-layer reconnaissance against a WordPress instance to map the full attack surface:
           themes, plugins, resources, and credential exposure.</p>
@@ -3143,7 +3444,7 @@
     <!-- ===================== W7 JUICE SHOP ===================== -->
     <div class="panel w7" id="panel-w7">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--w7)">03 / Week 7</div>
+        <div class="lbl tone-w7">03 / Week 7</div>
         <h2>Juice Shop Lab</h2>
         <p class="desc">Hands-on exploitation of intentionally vulnerable web application behaviour across ten
           challenges, with per-challenge broken-control analysis.</p>
@@ -3553,7 +3854,7 @@
     <!-- ===================== W8 NMAP & SSH ===================== -->
     <div class="panel w8" id="panel-w8">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--w8)">04 / Week 8</div>
+        <div class="lbl tone-w8">04 / Week 8</div>
         <h2>Vulnerability Assessment Lab (Nmap and SSH)</h2>
         <p class="desc">Network-level host and service discovery with Nmap, followed by secure administration using SSH
           key-based authentication, tunnelling, and multiplexing.</p>
@@ -4329,7 +4630,7 @@
     <!-- ===================== W9 NESSUS ===================== -->
     <div class="panel w9" id="panel-w9">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--w9)">05 / Week 9</div>
+        <div class="lbl tone-w9">05 / Week 9</div>
         <h2>Vulnerability Scanning and Mitigation Lab (Nessus)</h2>
         <p class="desc">Automated vulnerability scanning of two hosts with structured severity output, host-to-host
           comparison, and context-dependent prioritisation.</p>
@@ -4548,7 +4849,7 @@
     <!-- ===================== OVERALL REFLECTION ===================== -->
     <div class="panel overall" id="panel-overall">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--acc)">06 / Overall</div>
+        <div class="lbl tone-acc">06 / Overall</div>
         <h2>Overall Reflection</h2>
         <p class="desc">Cross-lab learning, tool effectiveness, and what I would do differently next time.</p>
       </div>
@@ -4572,7 +4873,7 @@
     <!-- ===================== REFERENCES ===================== -->
     <div class="panel" id="panel-refs">
       <div class="sec-hdr">
-        <div class="lbl" style="color:var(--tx3)">07 / References</div>
+        <div class="lbl tone-muted">07 / References</div>
         <h2>References</h2>
         <p class="desc">IEEE-style references for all sources cited across the four lab sections.</p>
       </div>
