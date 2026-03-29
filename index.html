@@ -1481,10 +1481,33 @@
       box-shadow:
         10px 10px 0 rgba(0, 0, 0, .7),
         10px 10px 0 1px rgba(0, 255, 136, .14);
+      animation: search-wobble .5s ease-in-out;
     }
 
     .input-container .input:focus::placeholder {
       color: var(--tx2);
+    }
+
+    @keyframes search-wobble {
+      0% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+
+      25% {
+        transform: translate(-4px, 0) rotate(-1.5deg);
+      }
+
+      50% {
+        transform: translate(4px, 0) rotate(1.5deg);
+      }
+
+      75% {
+        transform: translate(-3px, 0) rotate(-1deg);
+      }
+
+      100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
     }
 
     @keyframes search-glitch {
@@ -1543,6 +1566,10 @@
       font-weight: 700;
       letter-spacing: .04em;
       animation: search-glitch 1.1s linear infinite;
+    }
+
+    .input-container .input:focus:not(:placeholder-shown) {
+      animation: search-wobble .5s ease-in-out, search-glitch 1.1s linear .5s infinite;
     }
 
     .search-clear {
@@ -2039,10 +2066,6 @@
         scroll-behavior: auto;
       }
 
-      #mc {
-        display: none;
-      }
-
       .t-cur {
         animation: none;
         opacity: .7;
@@ -2066,7 +2089,8 @@
       }
 
       .input-container::after,
-      .input-container .input:not(:placeholder-shown) {
+      .input-container .input:not(:placeholder-shown),
+      .input-container .input:focus {
         animation: none;
       }
 
@@ -4049,10 +4073,10 @@ function drawM(){
     if(mdrops[i]*mfs>cv.height&&Math.random()>.975)mdrops[i]=0;mdrops[i]++;
   }
 }
-function startMatrix(){if(!rmq.matches){mTimer=setInterval(drawM,50);}}
-function stopMatrix(){clearInterval(mTimer);}
-startMatrix();
-rmq.addEventListener('change',function(){if(rmq.matches)stopMatrix();else startMatrix();});
+    function startMatrix(){stopMatrix();mTimer=setInterval(drawM,50);}
+    function stopMatrix(){clearInterval(mTimer);}
+    startMatrix();
+    rmq.addEventListener('change',function(){startMatrix();});
 
 /* ===== TAB NAVIGATION ===== */
 var allTabs=document.querySelectorAll('.nav-tab');
