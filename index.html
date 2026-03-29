@@ -431,15 +431,16 @@
     }
 
     .terminal {
-      background: var(--s2);
-      border: 1px solid var(--bd);
-      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
       padding: 1.25rem 1.75rem;
       text-align: left;
       font-family: var(--mono);
       font-size: .78rem;
       max-width: 500px;
       margin: 0 auto;
+      box-shadow: 10px 10px 0 rgba(4, 6, 10, .88);
     }
 
     .t-bar {
@@ -1126,20 +1127,19 @@
     /* ===== ANALYSIS CARDS ===== */
     .analysis-card {
       margin: 1.5rem 0 2rem;
-      background: var(--s2);
-      border: 1px solid var(--bd);
-      border-top: 3px solid var(--acc);
-      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
       overflow: hidden;
-      box-shadow: var(--sh-sm);
+      box-shadow: 10px 10px 0 rgba(4, 6, 10, .88);
     }
 
     .analysis-card .analysis-context {
-      padding: 1rem 1.25rem .7rem;
+      padding: .95rem 1.25rem .85rem;
       font-size: .85rem;
       color: var(--tx2);
-      border-bottom: 1px solid var(--bd);
-      background: rgba(0, 255, 136, .015);
+      border-bottom: 3px solid rgba(4, 6, 10, .96);
+      background: linear-gradient(180deg, rgba(15, 20, 32, .98), rgba(11, 15, 24, .96));
     }
 
     .analysis-card .analysis-context strong {
@@ -1165,11 +1165,11 @@
     }
 
     .analysis-card .analysis-takeaway {
-      padding: .85rem 1.25rem;
+      padding: .95rem 1.25rem;
       font-size: .82rem;
       color: var(--tx2);
-      border-top: 1px solid var(--bd);
-      background: rgba(0, 255, 136, .03);
+      border-top: 3px solid rgba(4, 6, 10, .96);
+      background: linear-gradient(180deg, rgba(0, 255, 136, .05), rgba(0, 255, 136, .015));
     }
 
     .analysis-card .analysis-takeaway strong {
@@ -1531,24 +1531,24 @@
 
     /* ===== KEY TAKEAWAY ===== */
     .takeaway {
-      background: linear-gradient(135deg, rgba(0, 255, 136, .02), transparent);
-      border: 1px solid rgba(0, 255, 136, .08);
-      border-left: 3px solid var(--acc);
-      border-radius: 0 var(--r-lg) var(--r-lg) 0;
-      padding: 1.35rem 1.5rem 1.35rem 1.5rem;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
+      padding: 1.25rem 1.45rem 1.35rem;
       margin: 0 0 2.5rem;
       display: block;
       position: relative;
+      box-shadow: 10px 10px 0 rgba(4, 6, 10, .88);
     }
 
     .takeaway::after {
       content: '';
       position: absolute;
       top: 0;
+      left: 0;
       right: 0;
-      width: 120px;
-      height: 100%;
-      background: linear-gradient(270deg, rgba(0, 255, 136, .015), transparent);
+      height: 3px;
+      background: linear-gradient(90deg, var(--acc), var(--cyan), transparent 80%);
       pointer-events: none;
     }
 
@@ -1662,7 +1662,9 @@
       text-transform: uppercase;
       letter-spacing: .1em;
       padding: .25rem .7rem;
-      border-radius: var(--r-sm);
+      border-radius: 0;
+      border: 2px solid rgba(4, 6, 10, .96);
+      box-shadow: 2px 2px 0 rgba(4, 6, 10, .9);
       font-weight: 500;
       position: relative;
     }
@@ -1731,20 +1733,21 @@
     }
 
     .chart-note {
-      background: var(--s2);
-      border-left: 3px solid var(--acc);
-      border-radius: 0 var(--r-md) var(--r-md) 0;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
       padding: .85rem 1.2rem;
       margin-bottom: 1rem;
       font-size: .85rem;
       color: var(--tx2);
       position: relative;
+      box-shadow: 7px 7px 0 rgba(4, 6, 10, .84);
     }
 
     .chart-note::before {
       content: '▸';
       position: absolute;
-      left: -3px;
+      left: .8rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--acc);
@@ -1754,6 +1757,10 @@
 
     .chart-note strong {
       color: var(--tx);
+    }
+
+    .chart-note {
+      padding-left: 2.1rem;
     }
 
     /* ===== SEARCH MODULE ===== */
@@ -2283,28 +2290,31 @@
 
     .mit-list li {
       position: relative;
-      padding: .75rem 0 .75rem 2.2rem;
-      border-left: 2px solid var(--bd);
-      margin-left: .5rem;
+      padding: .9rem 1rem .9rem 2.6rem;
+      border: 2px solid rgba(4, 6, 10, .96);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .96), rgba(10, 14, 23, .96));
+      box-shadow: 5px 5px 0 rgba(4, 6, 10, .84);
+      margin: 0 0 .8rem;
       font-size: .9rem;
       color: var(--tx2);
-      transition: border-color .2s, color .2s;
+      transition: translate .2s ease, box-shadow .2s ease, color .2s;
     }
 
     .mit-list li:hover {
-      border-color: var(--acc);
+      translate: 2px 2px;
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .84);
       color: var(--tx);
     }
 
     .mit-list li::before {
       content: '▸';
       position: absolute;
-      left: -.55rem;
+      left: .8rem;
+      top: 50%;
+      transform: translateY(-50%);
       font-family: var(--mono);
       color: var(--acc);
       font-weight: 700;
-      background: var(--s0);
-      padding: 0 .15rem;
       font-size: .85rem;
     }
 
@@ -2351,20 +2361,22 @@
       align-items: center;
       gap: .6rem;
       margin-top: 1.5rem;
-      background: var(--acc-bg);
-      border: 1px solid var(--acc-bd);
-      color: var(--acc);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      color: var(--tx);
       font-family: var(--mono);
       font-size: .78rem;
       padding: .65rem 1.4rem;
-      border-radius: var(--r-md);
+      border-radius: 0;
+      box-shadow: 6px 6px 0 rgba(4, 6, 10, .88);
       text-decoration: none;
-      transition: all .25s;
+      transition: translate .2s ease, box-shadow .2s ease, background .2s ease;
     }
 
     .dl-btn:hover {
-      background: rgba(0, 255, 136, .15);
-      box-shadow: 0 4px 20px rgba(0, 255, 136, .1);
+      translate: 2px 2px;
+      box-shadow: 4px 4px 0 rgba(4, 6, 10, .88);
+      background: linear-gradient(180deg, rgba(0, 255, 136, .11), rgba(8, 12, 20, .98));
       text-decoration: none;
     }
 
@@ -2374,11 +2386,12 @@
     }
 
     .ai-box {
-      background: var(--s2);
-      border: 1px solid var(--bd);
-      border-radius: var(--r-lg);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
       padding: 1.25rem 1.5rem;
       margin-top: 2rem;
+      box-shadow: 9px 9px 0 rgba(4, 6, 10, .88);
     }
 
     .ai-box .ai-label {
@@ -2386,7 +2399,7 @@
       font-size: .68rem;
       text-transform: uppercase;
       letter-spacing: .1em;
-      color: var(--tx3);
+      color: var(--tx);
       margin-bottom: .6rem;
     }
 
