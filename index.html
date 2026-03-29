@@ -73,6 +73,12 @@
       --nav-h: 60px;
       --subnav-h: 44px;
       --sticky-top: calc(var(--nav-h) + var(--subnav-h) + 8px);
+      --meta-fs: .68rem;
+      --meta-track: .12em;
+      --body-fs: .95rem;
+      --body-lh: 1.72;
+      --support-fs: .78rem;
+      --support-lh: 1.62;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
       --display: 'Orbitron', sans-serif;
@@ -279,8 +285,10 @@
     }
 
     .hero-sub {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
       color: var(--tx2);
+      line-height: 1.75;
+      text-wrap: balance;
       max-width: 620px;
       margin: 0 auto 2.5rem;
     }
@@ -394,12 +402,13 @@
       font-weight: 800;
       color: var(--tx);
       line-height: 1.35;
+      letter-spacing: .01em;
     }
 
     .demo-card .demo-desc {
-      font-size: .74rem;
+      font-size: var(--support-fs);
       color: rgba(224, 230, 240, .8);
-      line-height: 1.55;
+      line-height: var(--support-lh);
       flex: 1;
     }
 
@@ -596,13 +605,15 @@
       font-weight: 700;
       line-height: 1;
       margin-bottom: .38rem;
+      letter-spacing: -.02em;
     }
 
     .stat-l {
-      font-size: .7rem;
+      font-size: .67rem;
       color: rgba(224, 230, 240, .82);
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .1em;
+      font-weight: 700;
     }
 
     @media(max-width:680px) {
@@ -1121,17 +1132,17 @@
     }
 
     .ev-card .ev-claim {
-      font-size: .82rem;
-      font-weight: 600;
+      font-size: .84rem;
+      font-weight: 700;
       color: var(--tx);
-      line-height: 1.4;
+      line-height: 1.45;
+      letter-spacing: .01em;
     }
 
     .ev-card .ev-support {
-      font-size: .74rem;
+      font-size: var(--support-fs);
       color: var(--tx2);
-      line-height: 1.55;
-      font-style: italic;
+      line-height: var(--support-lh);
       margin-top: auto;
     }
 
@@ -1170,8 +1181,9 @@
 
     .analysis-card .analysis-context {
       padding: .95rem 1.25rem .85rem;
-      font-size: .85rem;
+      font-size: .86rem;
       color: var(--tx2);
+      line-height: 1.68;
       border-bottom: 3px solid rgba(4, 6, 10, .96);
       background: linear-gradient(180deg, rgba(15, 20, 32, .98), rgba(11, 15, 24, .96));
     }
@@ -1200,8 +1212,9 @@
 
     .analysis-card .analysis-takeaway {
       padding: .95rem 1.25rem;
-      font-size: .82rem;
+      font-size: .84rem;
       color: var(--tx2);
+      line-height: 1.68;
       border-top: 3px solid rgba(4, 6, 10, .96);
       background: linear-gradient(180deg, rgba(0, 255, 136, .05), rgba(0, 255, 136, .015));
     }
@@ -1591,29 +1604,29 @@
     }
 
     .takeaway .tk-title {
-      font-size: .75rem;
+      font-size: .72rem;
       font-family: var(--mono);
       text-transform: uppercase;
-      letter-spacing: .12em;
+      letter-spacing: var(--meta-track);
       color: var(--acc);
       margin-bottom: .15rem;
       font-weight: 700;
     }
 
     .takeaway .tk-sub {
-      font-size: .63rem;
+      font-size: .62rem;
       font-family: var(--mono);
       text-transform: uppercase;
-      letter-spacing: .08em;
+      letter-spacing: .11em;
       color: var(--tx3);
       margin-bottom: .5rem;
       display: block;
     }
 
     .takeaway .tk-text {
-      font-size: .93rem;
+      font-size: var(--body-fs);
       color: var(--tx);
-      line-height: 1.7;
+      line-height: var(--body-lh);
       font-weight: 500;
     }
 
@@ -1665,14 +1678,16 @@
     }
 
     .sec-hdr h2 {
-      font-size: 1.9rem;
+      font-size: clamp(1.88rem, 3vw, 2.05rem);
       font-weight: 700;
       margin-bottom: .4rem;
+      letter-spacing: -.02em;
     }
 
     .sec-hdr .desc {
       color: var(--tx2);
-      font-size: .93rem;
+      font-size: var(--body-fs);
+      line-height: var(--body-lh);
       max-width: 720px;
     }
 
@@ -1718,7 +1733,8 @@
     .cb li {
       color: var(--tx2);
       margin-bottom: .7rem;
-      font-size: .93rem;
+      font-size: var(--body-fs);
+      line-height: var(--body-lh);
     }
 
     .cb ol,
@@ -1772,8 +1788,9 @@
       border-radius: var(--r-md);
       padding: .85rem 1.2rem;
       margin-bottom: 1rem;
-      font-size: .85rem;
+      font-size: .86rem;
       color: var(--tx2);
+      line-height: 1.66;
       position: relative;
       box-shadow: 7px 7px 0 rgba(4, 6, 10, .84);
     }
@@ -2242,14 +2259,15 @@
       left: 50%;
       transform: translateX(-50%);
       font-family: var(--mono);
-      font-size: .76rem;
+      font-size: .82rem;
       color: var(--tx2);
       background: var(--s2);
-      padding: .5rem 1.25rem;
+      padding: .65rem 1.25rem;
       border-radius: var(--r-md);
       max-width: 80%;
       text-align: center;
       border: 1px solid var(--bd);
+      line-height: 1.6;
     }
 
     .lbx-close {
@@ -2362,8 +2380,9 @@
       counter-increment: ref;
       padding: .55rem 0 .55rem 2.75rem;
       position: relative;
-      font-size: .84rem;
-      color: var(--tx3);
+      font-size: .88rem;
+      line-height: 1.68;
+      color: var(--tx2);
       border-bottom: 1px solid rgba(30, 42, 58, .5);
     }
 
@@ -2430,21 +2449,73 @@
 
     .ai-box .ai-label {
       font-family: var(--mono);
-      font-size: .68rem;
+      font-size: var(--meta-fs);
       text-transform: uppercase;
-      letter-spacing: .1em;
+      letter-spacing: var(--meta-track);
       color: var(--tx);
       margin-bottom: .6rem;
+    }
+
+    .ai-box p {
+      font-size: var(--body-fs);
+      line-height: var(--body-lh);
+      color: var(--tx2);
     }
 
     .footer {
       position: relative;
       z-index: 1;
       border-top: 1px solid var(--bd);
-      padding: 2rem;
+      padding: 2.4rem 1.5rem 2.6rem;
       text-align: center;
-      font-size: .78rem;
-      color: var(--tx3);
+      font-size: .84rem;
+      color: var(--tx2);
+    }
+
+    .footer-line {
+      line-height: 1.65;
+    }
+
+    .footer-line + .footer-line {
+      margin-top: .35rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: .9rem;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+
+    .footer-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .6rem;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      color: var(--tx);
+      font-family: var(--mono);
+      font-size: .74rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .6rem 1.2rem;
+      border-radius: 0;
+      box-shadow: 5px 5px 0 rgba(4, 6, 10, .88);
+      text-decoration: none;
+      transition: translate .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .footer-btn:hover {
+      translate: 2px 2px;
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .88);
+      background: linear-gradient(180deg, rgba(0, 212, 255, .1), rgba(8, 12, 20, .98));
+      text-decoration: none;
+    }
+
+    .footer-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
     }
 
     .visually-hidden {
@@ -2500,7 +2571,8 @@
       .nav-tab:hover,
       .sub-nav a:hover,
       .mit-list li:hover,
-      .dl-btn:hover {
+      .dl-btn:hover,
+      .footer-btn:hover {
         translate: none;
       }
 
@@ -4508,8 +4580,12 @@
 
   </div><!-- /main -->
   <footer class="footer">
-    <p>Alvi Hossain &mdash; HOS22555470 &mdash; BSc Computer Science and Software Engineering</p>
-    <p style="margin-top:.4rem;">CMP-X305 Cyber Security &bull; University of Roehampton &bull; 2026</p>
+    <p class="footer-line">Alvi Hossain &mdash; HOS22555470 &mdash; BSc Computer Science and Software Engineering</p>
+    <p class="footer-line">CMP-X305 Cyber Security &bull; University of Roehampton &bull; 2026</p>
+    <div class="footer-links">
+      <a class="footer-btn" href="https://github.com/AlviHossain97" target="_blank" rel="noopener noreferrer"
+        aria-label="Open Alvi Hossain GitHub profile">GitHub Profile</a>
+    </div>
   </footer>
   <script>
 (function(){
