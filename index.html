@@ -84,73 +84,90 @@ a:hover{text-decoration:underline;}
 .sub-nav a:focus-visible{outline:none;box-shadow:var(--focus-ring);}
 
 /* ===== EVIDENCE CARDS ===== */
-.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem;margin:1.25rem 0 1rem;}
-.ev-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;transition:all .28s;cursor:pointer;display:flex;flex-direction:column;}
-.ev-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);box-shadow:var(--sh-glow-h);}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.25rem;margin:1.5rem 0 1.25rem;}
+.ev-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;transition:all .28s;cursor:pointer;display:flex;flex-direction:column;position:relative;}
+.ev-card:hover{border-color:var(--bd-hover);transform:translateY(-3px);box-shadow:var(--sh-glow-h),0 12px 28px rgba(0,0,0,.25);}
 .ev-card:focus-visible{outline:none;box-shadow:var(--focus-ring);border-color:var(--acc);}
-.ev-card .ev-label{font-family:var(--mono);font-size:.7rem;color:var(--acc2);font-weight:600;padding:.55rem 1rem .35rem;letter-spacing:.04em;}
-.ev-card .ev-label::before{content:'◈ ';}
-.ev-card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;filter:brightness(.88);transition:filter .25s;}
-.ev-card:hover img{filter:brightness(1.02);}
-.ev-card .ev-body{padding:.65rem 1rem .75rem;border-top:1px solid var(--bd);}
-.ev-card .ev-claim{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.3rem;line-height:1.4;}
-.ev-card .ev-support{font-size:.73rem;color:var(--tx3);line-height:1.5;font-style:italic;}
+.ev-card .ev-label{font-family:var(--mono);font-size:.68rem;color:var(--acc2);font-weight:600;padding:.6rem 1rem .35rem;letter-spacing:.06em;display:flex;align-items:center;gap:.5rem;}
+.ev-card .ev-label::before{content:'◈';font-size:.8rem;}
+.ev-card[data-annotations] .ev-label::after{content:'⊕ annotated';font-size:.55rem;margin-left:auto;color:var(--tx3);background:rgba(0,255,136,.08);padding:.1rem .45rem;border-radius:var(--r-sm);letter-spacing:.03em;text-transform:uppercase;}
+.ev-card .ev-img-wrap{position:relative;overflow:hidden;}
+.ev-card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;filter:brightness(.88) saturate(.95);transition:filter .3s,transform .3s;}
+.ev-card:hover img{filter:brightness(1.02) saturate(1.05);transform:scale(1.02);}
+.ev-card .ev-body{padding:.7rem 1rem .85rem;border-top:1px solid var(--bd);background:linear-gradient(180deg,rgba(20,25,38,.5),transparent);flex:1;display:flex;flex-direction:column;gap:.25rem;}
+.ev-card .ev-claim{font-size:.82rem;font-weight:600;color:var(--tx);line-height:1.4;}
+.ev-card .ev-support{font-size:.74rem;color:var(--tx2);line-height:1.55;font-style:italic;margin-top:auto;}
+.ev-card .ev-support::before{content:'↳ ';color:var(--tx3);}
 @media(max-width:480px){.ev-grid{grid-template-columns:1fr;}}
 
 /* ===== ANALYSIS CARDS ===== */
-.analysis-card{margin:1.5rem 0 2rem;background:var(--s2);border:2px solid var(--bd);border-top:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;}
-.analysis-card .analysis-context{padding:1rem 1.25rem .6rem;font-size:.85rem;color:var(--tx2);border-bottom:1px solid var(--bd);}
+.analysis-card{margin:1.5rem 0 2rem;background:var(--s2);border:1px solid var(--bd);border-top:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--sh-sm);}
+.analysis-card .analysis-context{padding:1rem 1.25rem .7rem;font-size:.85rem;color:var(--tx2);border-bottom:1px solid var(--bd);background:rgba(0,255,136,.015);}
 .analysis-card .analysis-context strong{color:var(--tx);}
+.analysis-card .analysis-context::before{content:'▸ ';color:var(--acc);font-weight:700;}
 .analysis-card .ev-card{border:none;border-radius:0;margin:0;border-left:none;}
 .analysis-card .ev-card:hover{transform:none;box-shadow:none;}
-.analysis-card .analysis-takeaway{padding:.75rem 1.25rem;font-size:.82rem;color:var(--tx2);border-top:1px solid var(--bd);background:rgba(0,255,136,.02);}
-.analysis-card .analysis-takeaway strong{color:var(--tx);}
+.analysis-card .analysis-takeaway{padding:.85rem 1.25rem;font-size:.82rem;color:var(--tx2);border-top:1px solid var(--bd);background:rgba(0,255,136,.03);}
+.analysis-card .analysis-takeaway strong{color:var(--acc);}
+.analysis-card .analysis-takeaway::before{content:'◎ ';color:var(--acc);}
 
 /* ===== DATA MODULES ===== */
-.dataset{margin:1.25rem 0 2rem;}
-.tbl-wrap{width:100%;overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--bd);-webkit-overflow-scrolling:touch;}
+.dataset{margin:1.5rem 0 2.25rem;position:relative;}
+.dataset::before{content:'';position:absolute;left:0;top:0;width:3px;height:100%;background:linear-gradient(180deg,var(--acc),transparent);border-radius:2px;opacity:.4;}
+.ds-header{display:flex;align-items:center;gap:.6rem;padding:0 0 .6rem .75rem;}
+.ds-header .ds-icon{font-size:1rem;filter:grayscale(.3);}
+.ds-header .ds-title{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);}
+.ds-header .ds-count{font-family:var(--mono);font-size:.6rem;color:var(--acc2);background:var(--acc-bg);padding:.1rem .45rem;border-radius:var(--r-sm);margin-left:auto;}
+.tbl-wrap{width:100%;overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--bd);-webkit-overflow-scrolling:touch;background:var(--s1);box-shadow:inset 0 1px 0 rgba(255,255,255,.02);}
 table.ft{width:100%;border-collapse:collapse;font-size:.82rem;min-width:580px;table-layout:auto;}
 table.ft thead{position:sticky;top:0;z-index:2;}
-table.ft th{background:var(--s0);font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;}
-table.ft td{padding:.65rem 1rem;border-bottom:1px solid rgba(30,42,58,.7);color:var(--tx2);vertical-align:top;line-height:1.5;}
+table.ft th{background:linear-gradient(180deg,var(--s0),rgba(10,14,23,.95));font-family:var(--mono);font-size:.64rem;text-transform:uppercase;letter-spacing:.1em;color:var(--acc2);padding:.8rem 1rem;text-align:left;border-bottom:2px solid var(--bd);white-space:nowrap;position:relative;}
+table.ft th::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(90deg,var(--acc),transparent);opacity:.15;}
+table.ft td{padding:.75rem 1rem;border-bottom:1px solid rgba(30,42,58,.5);color:var(--tx2);vertical-align:top;line-height:1.55;transition:background .15s,color .15s;}
+table.ft tbody tr:nth-child(even) td{background:rgba(0,0,0,.12);}
 table.ft tr:last-child td{border-bottom:none;}
-table.ft tr:hover td{background:rgba(0,255,136,.02);}
-table.ft td code{font-size:.78em;}
+table.ft tr:hover td{background:rgba(0,255,136,.04);color:var(--tx);}
+table.ft td:first-child{color:var(--tx);font-weight:500;}
+table.ft td code{font-size:.78em;background:rgba(0,212,255,.08);color:var(--cyan);padding:.15rem .4rem;border-radius:var(--r-sm);}
+.ds-footer{padding:.5rem .75rem 0;font-family:var(--mono);font-size:.6rem;color:var(--tx3);letter-spacing:.04em;text-align:right;opacity:.6;}
 
-.sb{display:inline-block;font-family:var(--mono);font-size:.67rem;padding:.15rem .55rem;border-radius:var(--r-pill);font-weight:600;text-transform:uppercase;white-space:nowrap;}
-.sh{background:var(--ch-high-bg);color:var(--ch-high);}
-.sm{background:var(--ch-med-bg);color:var(--ch-med);}
-.sl{background:var(--ch-low-bg);color:var(--ch-low);}
-.si{background:var(--ch-info-bg);color:var(--ch-info);}
-.s1{background:var(--ch-s1-bg);color:var(--ch-s1);}
-.s2{background:var(--ch-s2-bg);color:var(--ch-s2);}
+.sb{display:inline-block;font-family:var(--mono);font-size:.65rem;padding:.2rem .6rem;border-radius:var(--r-pill);font-weight:600;text-transform:uppercase;white-space:nowrap;letter-spacing:.04em;}
+.sh{background:var(--ch-high-bg);color:var(--ch-high);border:1px solid rgba(248,113,113,.2);}
+.sm{background:var(--ch-med-bg);color:var(--ch-med);border:1px solid rgba(251,191,36,.2);}
+.sl{background:var(--ch-low-bg);color:var(--ch-low);border:1px solid rgba(96,165,250,.2);}
+.si{background:var(--ch-info-bg);color:var(--ch-info);border:1px solid rgba(90,100,120,.2);}
+.s1{background:var(--ch-s1-bg);color:var(--ch-s1);border:1px solid rgba(52,211,153,.2);}
+.s2{background:var(--ch-s2-bg);color:var(--ch-s2);border:1px solid rgba(251,191,36,.2);}
 
 .dataset-cards{display:none;}
-@media(max-width:768px){.dataset .tbl-wrap{display:none;}.dataset-cards{display:flex;flex-direction:column;gap:var(--sp3);}.ds-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;font-size:.82rem;}.ds-card-primary{padding:.65rem 1rem;font-weight:600;color:var(--tx);border-bottom:1px solid var(--bd);font-size:.85rem;}.ds-card-field{display:flex;justify-content:space-between;gap:var(--sp3);padding:.45rem 1rem;border-bottom:1px solid rgba(30,42,58,.4);}.ds-card-field:last-child{border-bottom:none;}.ds-card-label{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);flex-shrink:0;padding-top:.1rem;}.ds-card-value{color:var(--tx2);text-align:right;line-height:1.5;}}
+@media(max-width:768px){.dataset .tbl-wrap{display:none;}.dataset-cards{display:flex;flex-direction:column;gap:var(--sp3);}.ds-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;font-size:.82rem;transition:border-color .2s,box-shadow .2s;}.ds-card:hover{border-color:var(--bd-hover);box-shadow:var(--sh-glow);}.ds-card-primary{padding:.75rem 1rem;font-weight:600;color:var(--tx);border-bottom:1px solid var(--bd);font-size:.85rem;background:linear-gradient(180deg,rgba(0,255,136,.02),transparent);}.ds-card-field{display:flex;justify-content:space-between;gap:var(--sp3);padding:.5rem 1rem;border-bottom:1px solid rgba(30,42,58,.3);}.ds-card-field:last-child{border-bottom:none;}.ds-card-label{font-family:var(--mono);font-size:.63rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);flex-shrink:0;padding-top:.1rem;min-width:80px;}.ds-card-value{color:var(--tx2);text-align:right;line-height:1.5;}}
 
 /* ===== KEY TAKEAWAY ===== */
-.takeaway{background:transparent;border:none;border-left:3px solid var(--acc);border-radius:0;padding:1.25rem 0 1.25rem 1.5rem;margin:0 0 2.5rem;display:block;}
+.takeaway{background:linear-gradient(135deg,rgba(0,255,136,.02),transparent);border:1px solid rgba(0,255,136,.08);border-left:3px solid var(--acc);border-radius:0 var(--r-lg) var(--r-lg) 0;padding:1.35rem 1.5rem 1.35rem 1.5rem;margin:0 0 2.5rem;display:block;position:relative;}
+.takeaway::after{content:'';position:absolute;top:0;right:0;width:120px;height:100%;background:linear-gradient(270deg,rgba(0,255,136,.015),transparent);pointer-events:none;}
 .takeaway .tk-icon{display:none;}
-.takeaway .tk-title{font-size:.75rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:.15rem;font-weight:700;}
-.takeaway .tk-sub{font-size:.65rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.45rem;display:block;}
+.takeaway .tk-title{font-size:.75rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.12em;color:var(--acc);margin-bottom:.15rem;font-weight:700;}
+.takeaway .tk-sub{font-size:.63rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.5rem;display:block;}
 .takeaway .tk-text{font-size:.93rem;color:var(--tx);line-height:1.7;font-weight:500;}
 
 /* ===== SECTIONS ===== */
 .panel{display:none;animation:fadeIn .35s ease;}
 .panel.active{display:block;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
-.sec-hdr{padding:2.75rem 0 2rem;border-bottom:1px solid var(--bd);margin-bottom:2.5rem;}
+.sec-hdr{padding:2.75rem 0 2rem;border-bottom:1px solid var(--bd);margin-bottom:2.5rem;position:relative;}
+.sec-hdr::after{content:'';position:absolute;bottom:-1px;left:0;width:80px;height:2px;background:linear-gradient(90deg,var(--acc),transparent);}
 .sec-hdr .lbl{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.6rem;}
 .sec-hdr h2{font-size:1.9rem;font-weight:700;margin-bottom:.4rem;}
 .sec-hdr .desc{color:var(--tx2);font-size:.93rem;max-width:720px;}
 
 .cb{margin-bottom:2.75rem;scroll-margin-top:120px;}
 .cb h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
-.cb h3 .sec-tag{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:var(--r-sm);font-weight:500;}
+.cb h3 .sec-tag{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.25rem .7rem;border-radius:var(--r-sm);font-weight:500;position:relative;}
+.cb h3 .sec-tag::after{content:'';position:absolute;bottom:0;left:.7rem;right:.7rem;height:1px;background:currentColor;opacity:.2;}
 .cb p,.cb li{color:var(--tx2);margin-bottom:.7rem;font-size:.93rem;}
 .cb ol,.cb ul{padding-left:1.5rem;}
 .cb strong{color:var(--tx);}
-.cb code{font-family:var(--mono);font-size:.83em;background:var(--s2);padding:.15rem .4rem;border-radius:var(--r-sm);color:var(--cyan);}
+.cb code{font-family:var(--mono);font-size:.83em;background:rgba(0,212,255,.06);padding:.15rem .4rem;border-radius:var(--r-sm);color:var(--cyan);border:1px solid rgba(0,212,255,.08);}
 
 .w5 .sec-tag{background:rgba(251,191,36,.12);color:var(--w5);}
 .w7 .sec-tag{background:rgba(52,211,153,.12);color:var(--w7);}
@@ -158,7 +175,8 @@ table.ft td code{font-size:.78em;}
 .w9 .sec-tag{background:rgba(167,139,250,.12);color:var(--w9);}
 .intro .sec-tag,.overall .sec-tag{background:rgba(0,255,136,.1);color:var(--acc);}
 
-.chart-note{background:var(--s2);border-left:3px solid var(--acc);border-radius:0 var(--r-md) var(--r-md) 0;padding:.75rem 1.1rem;margin-bottom:1rem;font-size:.85rem;color:var(--tx2);}
+.chart-note{background:var(--s2);border-left:3px solid var(--acc);border-radius:0 var(--r-md) var(--r-md) 0;padding:.85rem 1.2rem;margin-bottom:1rem;font-size:.85rem;color:var(--tx2);position:relative;}
+.chart-note::before{content:'▸';position:absolute;left:-3px;top:50%;transform:translateY(-50%);color:var(--acc);font-size:.7rem;opacity:.5;}
 .chart-note strong{color:var(--tx);}
 
 /* ===== SEARCH MODULE ===== */
@@ -216,8 +234,9 @@ table.ft td code{font-size:.78em;}
 
 /* ===== UTILITIES ===== */
 .mit-list{list-style:none;padding:0;}
-.mit-list li{position:relative;padding:.65rem 0 .65rem 2rem;border-left:2px solid var(--bd);margin-left:.5rem;font-size:.9rem;color:var(--tx2);}
-.mit-list li::before{content:'>';position:absolute;left:-.55rem;font-family:var(--mono);color:var(--acc);font-weight:700;background:var(--s0);padding:0 .1rem;}
+.mit-list li{position:relative;padding:.75rem 0 .75rem 2.2rem;border-left:2px solid var(--bd);margin-left:.5rem;font-size:.9rem;color:var(--tx2);transition:border-color .2s,color .2s;}
+.mit-list li:hover{border-color:var(--acc);color:var(--tx);}
+.mit-list li::before{content:'▸';position:absolute;left:-.55rem;font-family:var(--mono);color:var(--acc);font-weight:700;background:var(--s0);padding:0 .15rem;font-size:.85rem;}
 
 .ref-list{list-style:none;padding:0;counter-reset:ref;}
 .ref-list li{counter-increment:ref;padding:.55rem 0 .55rem 2.75rem;position:relative;font-size:.84rem;color:var(--tx3);border-bottom:1px solid rgba(30,42,58,.5);}
@@ -335,6 +354,7 @@ table.ft td code{font-size:.78em;}
     <h3><span class="sec-tag">Findings and Analysis</span></h3>
     <p>For me the most useful result was not one single finding but the way WPScan assembled the application's attack surface. Figure W5-3 identified the active theme and its version, and then Figure W5-7 revealed <code>robots.txt</code>, XML-RPC, the readme and discoverable uploads. Together these gave me a checklist of entry points to document and address.</p>
     <div class="dataset" data-ds="w5-findings">
+      <div class="ds-header"><span class="ds-icon">🛡️</span><span class="ds-title">Security Findings Matrix</span><span class="ds-count">4 findings</span></div>
       <div class="tbl-wrap"><table class="ft">
         <thead><tr><th>Finding</th><th>Evidence</th><th>Security Impact</th><th><span class="tt" tabindex="0">CIA<span class="tt-text" role="tooltip">Confidentiality, Integrity, Availability — the three pillars of information security</span></span> Impact</th><th>Priority</th><th>Recommended Action</th></tr></thead>
         <tbody>
@@ -400,6 +420,7 @@ table.ft td code{font-size:.78em;}
     <h3><span class="sec-tag">Challenge Coverage</span></h3>
     <p>The score board showed eleven solved challenges overall. I selected ten representative challenges for detailed write-up because the brief asks for quality of analysis rather than volume.</p>
     <div class="dataset" data-ds="w7-coverage">
+      <div class="ds-header"><span class="ds-icon">🎯</span><span class="ds-title">Challenge Coverage Analysis</span><span class="ds-count">10 challenges</span></div>
       <div class="tbl-wrap"><table class="ft">
         <thead><tr><th>Challenge</th><th>Difficulty</th><th>What Was Exploited</th><th>Broken Control</th><th>CIA / Privacy Impact</th><th>Mitigation Focus</th><th>Evidence</th></tr></thead>
         <tbody>
@@ -500,7 +521,7 @@ table.ft td code{font-size:.78em;}
     </div>
   </div>
   <div class="cb" id="w8-nmap-find"><h3><span class="sec-tag">Nmap Findings and Analysis</span></h3>
-    <div class="dataset" data-ds="w8-services"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Protocol / Port</th><th>Service</th><th>Why It Matters</th><th>Defensive Question</th><th>Evidence</th></tr></thead><tbody>
+    <div class="dataset" data-ds="w8-services"><div class="ds-header"><span class="ds-icon">📶</span><span class="ds-title">Discovered Hosts &amp; Services</span><span class="ds-count">7 entries</span></div><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Protocol / Port</th><th>Service</th><th>Why It Matters</th><th>Defensive Question</th><th>Evidence</th></tr></thead><tbody>
       <tr><td><code>192.168.123.1</code></td><td>22/tcp</td><td>SSH</td><td>Direct administrative path to the gateway</td><td>Restrict to trusted admin hosts and key-based auth only</td><td>W8-2</td></tr>
       <tr><td><code>192.168.123.1</code></td><td>5666/tcp</td><td>NRPE</td><td>Monitoring service visible from the scanning segment</td><td>Does this port need to be reachable from this network at all?</td><td>W8-2</td></tr>
       <tr><td><code>192.168.123.1</code></td><td>53, 68, 123, 161 / udp</td><td>DNS, DHCP, NTP, SNMP</td><td>Multiple UDP services expand the gateway footprint</td><td>Review firewall policy and interface exposure per service</td><td>W8-3</td></tr>
@@ -509,7 +530,7 @@ table.ft td code{font-size:.78em;}
       <tr><td><code>192.168.123.30</code></td><td>3306/tcp</td><td>MySQL</td><td>Database exposure increases lateral attack options</td><td>Restrict MySQL to only the required hosts</td><td>W8-2, W8-4</td></tr>
       <tr><td><code>fe80::...aa02</code></td><td>22/tcp, 80/tcp</td><td>SSH + HTTP over IPv6</td><td>Same host reachable on a second protocol stack</td><td>Apply the same hardening policy to IPv6 as IPv4</td><td>W8-9</td></tr>
     </tbody></table></div></div>
-    <div class="dataset" data-ds="w8-techniques"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Technique</th><th>Purpose</th><th>Result</th><th>Confidence Note</th></tr></thead><tbody>
+    <div class="dataset" data-ds="w8-techniques"><div class="ds-header"><span class="ds-icon">🔬</span><span class="ds-title">Scan Techniques &amp; Confidence</span><span class="ds-count">8 techniques</span></div><div class="tbl-wrap"><table class="ft"><thead><tr><th>Technique</th><th>Purpose</th><th>Result</th><th>Confidence Note</th></tr></thead><tbody>
       <tr><td>Host discovery (<code>-sn</code>)</td><td>Identify live hosts</td><td>Three live systems found</td><td>High-confidence first pass on the lab subnet</td></tr>
       <tr><td>Focused TCP scan</td><td>Map exposed TCP services</td><td>Gateway and WordPress host profiled</td><td>Strong evidence of attack surface; not evidence of compromise</td></tr>
       <tr><td>UDP scan</td><td>Check for services beyond TCP</td><td>Several gateway services returned open|filtered</td><td>UDP results are less reliable; treat as leads for follow-up</td></tr>
@@ -537,7 +558,7 @@ table.ft td code{font-size:.78em;}
     </div>
   </div>
   <div class="cb" id="w8-ssh-find"><h3><span class="sec-tag">SSH Findings and Analysis</span></h3>
-    <div class="dataset" data-ds="w8-ssh"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Security Property</th><th>What SSH Provided in This Lab</th><th>Residual Risk if Mishandled</th></tr></thead><tbody>
+    <div class="dataset" data-ds="w8-ssh"><div class="ds-header"><span class="ds-icon">🔐</span><span class="ds-title">SSH Security Properties</span><span class="ds-count">3 properties</span></div><div class="tbl-wrap"><table class="ft"><thead><tr><th>Security Property</th><th>What SSH Provided in This Lab</th><th>Residual Risk if Mishandled</th></tr></thead><tbody>
       <tr><td>Confidentiality</td><td>Encrypted administration sessions, SCP transfers, and forwarded traffic</td><td>Weakens quickly if keys are stolen or tunnels are exposed carelessly</td></tr>
       <tr><td>Integrity</td><td>Host verification and authenticated sessions reduce risk of tampering in transit</td><td>Trust depends on key protection and correct host validation</td></tr>
       <tr><td>Availability</td><td>Secure remote administration without exposing every internal service directly</td><td>Overuse of tunnelling or broken key management can create operational fragility</td></tr>
@@ -576,7 +597,7 @@ table.ft td code{font-size:.78em;}
     </div>
   </div>
   <div class="cb" id="w9-comparison"><h3><span class="sec-tag">Severity Comparison</span></h3>
-    <div class="dataset" data-ds="w9-severity"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Informational</th><th>Most Notable Finding</th></tr></thead><tbody>
+    <div class="dataset" data-ds="w9-severity"><div class="ds-header"><span class="ds-icon">📊</span><span class="ds-title">Severity Comparison by Host</span><span class="ds-count">2 hosts</span></div><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Informational</th><th>Most Notable Finding</th></tr></thead><tbody>
       <tr><td>Master Gateway (<code>192.168.123.1</code>)</td><td>0</td><td>0</td><td><span class="sb sm">1</span></td><td><span class="sb sl">1</span></td><td><span class="sb si">24</span></td><td>50686 &mdash; IP Forwarding Enabled</td></tr>
       <tr><td>Ubuntu WordPress (<code>192.168.123.30</code>)</td><td>0</td><td>0</td><td><span class="sb sm">1</span></td><td><span class="sb sl">1</span></td><td><span class="sb si">35</span></td><td>187315 &mdash; SSH Terrapin Prefix Truncation (CVE-2023-48795)</td></tr>
     </tbody></table></div></div>
@@ -588,7 +609,7 @@ table.ft td code{font-size:.78em;}
     <p>The comparison chart and table make one additional point clear: raw counts are not enough. The WordPress host had more informational findings but the Gateway's IP Forwarding finding had more potential operational impact in a different environment. Severity ratings must be read alongside the role and exposure of the host.</p>
   </div>
   <div class="cb" id="w9-mit"><h3><span class="sec-tag">Mitigation Actions and Recommendations</span></h3>
-    <div class="dataset" data-ds="w9-mitigations"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Finding</th><th>Severity</th><th>Why It Matters in Context</th><th>Immediate Action</th><th>Validation</th></tr></thead><tbody>
+    <div class="dataset" data-ds="w9-mitigations"><div class="ds-header"><span class="ds-icon">⚙️</span><span class="ds-title">Mitigation Actions &amp; Validation</span><span class="ds-count">4 actions</span></div><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Finding</th><th>Severity</th><th>Why It Matters in Context</th><th>Immediate Action</th><th>Validation</th></tr></thead><tbody>
       <tr><td>Ubuntu WordPress</td><td>SSH Terrapin (CVE-2023-48795)</td><td><span class="sb sm">Medium</span></td><td>Weakness in the management channel &mdash; unconditional patch target regardless of host role</td><td>Patch OpenSSH; review recommended algorithm hardening</td><td>Rescan after patching to confirm the finding no longer appears</td></tr>
       <tr><td>Ubuntu WordPress</td><td>Broad service exposure (SSH + MySQL)</td><td><span class="sb sl">Low&ndash;Info</span></td><td>Exposure multiplies attack paths even when individual items are not critical</td><td>Restrict SSH and MySQL to the smallest required scope</td><td>Re-run scan after firewall changes and compare exposure</td></tr>
       <tr><td>Master Gateway</td><td>IP Forwarding Enabled</td><td><span class="sb sm">Medium</span></td><td>Expected on a routing host; risk level depends on whether this role is intended and documented</td><td>Confirm intended role; enforce strict inter-interface firewall policy</td><td>Rescan after configuration review; confirm only intended routing behaviour remains</td></tr>
