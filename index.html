@@ -82,6 +82,11 @@
       --ann-bg: var(--s2);
       --ann-line: var(--acc);
       --ann-pin: var(--acc);
+      --hero-title: var(--tx);
+      --hero-glitch-a: var(--acc);
+      --hero-glitch-b: var(--cyan);
+      --hero-glitch-c: var(--purple);
+      --hero-title-glow: rgba(0, 255, 136, .1);
     }
 
     /* ===== BASE / RESET ===== */
@@ -174,12 +179,13 @@
       font-weight: 900;
       line-height: 1;
       text-transform: uppercase;
-      letter-spacing: .06em;
-      color: #00ffff;
+      letter-spacing: .05em;
+      color: var(--hero-title);
       text-shadow:
-        0.05em 0 0 #ff00ff,
-        -0.03em -0.04em 0 #ffff00,
-        0.025em 0.04em 0 #00ffff;
+        0.045em 0 0 var(--hero-glitch-a),
+        -0.03em -0.035em 0 var(--hero-glitch-b),
+        0.025em 0.04em 0 var(--hero-glitch-c);
+      filter: drop-shadow(0 10px 26px var(--hero-title-glow));
       animation: hero-glitch 725ms infinite;
     }
 
@@ -194,64 +200,64 @@
       animation: hero-glitch 500ms infinite;
       clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
       transform: translate(-0.04em, -0.03em);
-      opacity: .75;
+      opacity: .6;
     }
 
     .glitch-container span:last-child {
       animation: hero-glitch 375ms infinite;
       clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
       transform: translate(0.04em, 0.03em);
-      opacity: .75;
+      opacity: .6;
     }
 
     @keyframes hero-glitch {
       0% {
         text-shadow:
-          0.05em 0 0 #ff00ff,
-          -0.03em -0.04em 0 #ffff00,
-          0.025em 0.04em 0 #00ffff;
+          0.045em 0 0 var(--hero-glitch-a),
+          -0.03em -0.035em 0 var(--hero-glitch-b),
+          0.025em 0.04em 0 var(--hero-glitch-c);
       }
 
       15% {
         text-shadow:
-          0.05em 0 0 #ff00ff,
-          -0.03em -0.04em 0 #ffff00,
-          0.025em 0.04em 0 #00ffff;
+          0.045em 0 0 var(--hero-glitch-a),
+          -0.03em -0.035em 0 var(--hero-glitch-b),
+          0.025em 0.04em 0 var(--hero-glitch-c);
       }
 
       16% {
         text-shadow:
-          -0.05em -0.025em 0 #ff00ff,
-          0.025em 0.035em 0 #ffff00,
-          -0.05em -0.05em 0 #00ffff;
+          -0.045em -0.025em 0 var(--hero-glitch-a),
+          0.025em 0.035em 0 var(--hero-glitch-b),
+          -0.045em -0.045em 0 var(--hero-glitch-c);
       }
 
       49% {
         text-shadow:
-          -0.05em -0.025em 0 #ff00ff,
-          0.025em 0.035em 0 #ffff00,
-          -0.05em -0.05em 0 #00ffff;
+          -0.045em -0.025em 0 var(--hero-glitch-a),
+          0.025em 0.035em 0 var(--hero-glitch-b),
+          -0.045em -0.045em 0 var(--hero-glitch-c);
       }
 
       50% {
         text-shadow:
-          0.05em 0.035em 0 #ff00ff,
-          0.03em 0 0 #ffff00,
-          0 -0.04em 0 #00ffff;
+          0.045em 0.03em 0 var(--hero-glitch-a),
+          0.03em 0 0 var(--hero-glitch-b),
+          0 -0.04em 0 var(--hero-glitch-c);
       }
 
       99% {
         text-shadow:
-          0.05em 0.035em 0 #ff00ff,
-          0.03em 0 0 #ffff00,
-          0 -0.04em 0 #00ffff;
+          0.045em 0.03em 0 var(--hero-glitch-a),
+          0.03em 0 0 var(--hero-glitch-b),
+          0 -0.04em 0 var(--hero-glitch-c);
       }
 
       100% {
         text-shadow:
-          -0.05em 0 0 #ff00ff,
-          -0.025em -0.04em 0 #ffff00,
-          -0.04em -0.025em 0 #00ffff;
+          -0.045em 0 0 var(--hero-glitch-a),
+          -0.025em -0.04em 0 var(--hero-glitch-b),
+          -0.04em -0.025em 0 var(--hero-glitch-c);
       }
     }
 
