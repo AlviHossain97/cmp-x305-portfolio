@@ -506,19 +506,70 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin: 2rem 0;
+      align-items: stretch;
     }
 
     .stat {
-      background: var(--s2);
-      border: 1px solid var(--bd);
-      border-radius: var(--r-lg);
-      padding: 1.1rem;
-      text-align: center;
-      transition: border-color .25s;
+      --stat-accent: var(--acc);
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      translate: -4px -4px;
+      background: linear-gradient(180deg, rgba(14, 19, 30, .98), rgba(9, 13, 22, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
+      box-shadow: 8px 8px 0 rgba(4, 6, 10, .92);
+      overflow: hidden;
+      transition: translate .25s ease, box-shadow .25s ease;
     }
 
     .stat:hover {
-      border-color: var(--bd-hover);
+      translate: -2px -2px;
+      box-shadow: 6px 6px 0 rgba(4, 6, 10, .92);
+    }
+
+    .stat-head {
+      display: flex;
+      align-items: center;
+      min-height: 32px;
+      gap: .55rem;
+      padding: .45rem .7rem .42rem 3.7rem;
+      background: linear-gradient(180deg, rgba(231, 236, 244, .96), rgba(209, 218, 230, .9));
+      border-bottom: 3px solid rgba(4, 6, 10, .96);
+      color: #05070d;
+      font-family: var(--mono);
+      font-size: .6rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      position: relative;
+    }
+
+    .stat-head::before {
+      content: '';
+      position: absolute;
+      left: .7rem;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--stat-accent);
+      box-shadow: 14px 0 0 rgba(5, 7, 13, .2), 28px 0 0 rgba(5, 7, 13, .14);
+    }
+
+    .stat-window {
+      white-space: nowrap;
+      color: rgba(5, 7, 13, .76);
+    }
+
+    .stat-body {
+      padding: .95rem .85rem .9rem;
+      text-align: center;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .stat-v {
@@ -526,19 +577,24 @@
       font-size: 1.8rem;
       font-weight: 700;
       line-height: 1;
-      margin-bottom: .3rem;
+      margin-bottom: .38rem;
     }
 
     .stat-l {
       font-size: .7rem;
-      color: var(--tx3);
+      color: rgba(224, 230, 240, .82);
       text-transform: uppercase;
-      letter-spacing: .05em;
+      letter-spacing: .08em;
     }
 
     @media(max-width:680px) {
       .stats {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stat {
+        translate: -3px -3px;
+        box-shadow: 6px 6px 0 rgba(4, 6, 10, .92);
       }
     }
 
@@ -2389,6 +2445,11 @@
         box-shadow: 12px 12px 0 rgba(4, 6, 10, .92);
       }
 
+      .stat:hover {
+        translate: -4px -4px;
+        box-shadow: 8px 8px 0 rgba(4, 6, 10, .92);
+      }
+
       .input-container::after,
       .input-container .input:not(:placeholder-shown),
       .input-container .input.is-wobbling {
@@ -2570,21 +2631,33 @@
           assessment &mdash; all within an isolated Kali Linux virtual environment.</p>
       </div>
       <div class="stats">
-        <div class="stat">
-          <div class="stat-v" style="color:var(--w5)">W5</div>
-          <div class="stat-l">WPScan</div>
+        <div class="stat" style="--stat-accent:var(--w5)">
+          <div class="stat-head"><span class="stat-window">intro://lab-w5</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--w5)">W5</div>
+            <div class="stat-l">WPScan</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--w7)">W7</div>
-          <div class="stat-l">Juice Shop</div>
+        <div class="stat" style="--stat-accent:var(--w7)">
+          <div class="stat-head"><span class="stat-window">intro://lab-w7</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--w7)">W7</div>
+            <div class="stat-l">Juice Shop</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--w8)">W8</div>
-          <div class="stat-l">Nmap &amp; SSH</div>
+        <div class="stat" style="--stat-accent:var(--w8)">
+          <div class="stat-head"><span class="stat-window">intro://lab-w8</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--w8)">W8</div>
+            <div class="stat-l">Nmap &amp; SSH</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--w9)">W9</div>
-          <div class="stat-l">Nessus</div>
+        <div class="stat" style="--stat-accent:var(--w9)">
+          <div class="stat-head"><span class="stat-window">intro://lab-w9</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--w9)">W9</div>
+            <div class="stat-l">Nessus</div>
+          </div>
         </div>
       </div>
       <div class="cb">
@@ -2599,21 +2672,33 @@
           itself often just relies on ordinary oversights rather than anything exotic.</p>
       </div>
       <div class="stats">
-        <div class="stat">
-          <div class="stat-v" style="color:var(--acc)">89</div>
-          <div class="stat-l">Screenshots</div>
+        <div class="stat" style="--stat-accent:var(--acc)">
+          <div class="stat-head"><span class="stat-window">intro://screens</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--acc)">89</div>
+            <div class="stat-l">Screenshots</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--cyan)">3</div>
-          <div class="stat-l">Learning Outcomes</div>
+        <div class="stat" style="--stat-accent:var(--cyan)">
+          <div class="stat-head"><span class="stat-window">intro://outcomes</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--cyan)">3</div>
+            <div class="stat-l">Learning Outcomes</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--amber)">4</div>
-          <div class="stat-l">Security Tools</div>
+        <div class="stat" style="--stat-accent:var(--amber)">
+          <div class="stat-head"><span class="stat-window">intro://toolchain</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--amber)">4</div>
+            <div class="stat-l">Security Tools</div>
+          </div>
         </div>
-        <div class="stat">
-          <div class="stat-v" style="color:var(--purple)">11</div>
-          <div class="stat-l">References</div>
+        <div class="stat" style="--stat-accent:var(--purple)">
+          <div class="stat-head"><span class="stat-window">intro://sources</span></div>
+          <div class="stat-body">
+            <div class="stat-v" style="color:var(--purple)">11</div>
+            <div class="stat-l">References</div>
+          </div>
         </div>
       </div>
     </div>
