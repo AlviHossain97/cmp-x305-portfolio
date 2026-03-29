@@ -273,57 +273,160 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin: 2rem 0 2.5rem;
+      align-items: stretch;
     }
 
     .demo-card {
-      background: var(--s2);
-      border: 1px solid var(--bd);
-      border-left: 4px solid var(--w5);
-      border-radius: var(--r-lg);
-      padding: 1.25rem 1rem;
-      text-align: center;
-      transition: border-color .25s, transform .25s, box-shadow .25s;
+      --demo-accent: var(--w5);
+      position: relative;
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      translate: -6px -6px;
+      background: linear-gradient(180deg, rgba(38, 29, 10, .96), rgba(24, 18, 8, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-md);
+      box-shadow: 12px 12px 0 rgba(4, 6, 10, .92);
+      overflow: hidden;
+      transition: translate .28s ease, box-shadow .28s ease, background .28s ease;
     }
 
     .demo-card:nth-child(2) {
-      border-left-color: var(--w7);
+      --demo-accent: var(--w7);
+      background: linear-gradient(180deg, rgba(10, 34, 25, .96), rgba(8, 22, 18, .98));
     }
 
     .demo-card:nth-child(3) {
-      border-left-color: var(--w8);
+      --demo-accent: var(--w8);
+      background: linear-gradient(180deg, rgba(10, 24, 38, .96), rgba(8, 18, 28, .98));
     }
 
     .demo-card:nth-child(4) {
-      border-left-color: var(--w9);
+      --demo-accent: var(--w9);
+      background: linear-gradient(180deg, rgba(24, 16, 38, .96), rgba(16, 10, 28, .98));
     }
 
     .demo-card:hover {
-      border-color: var(--bd-hover);
-      transform: translateY(-3px);
-      box-shadow: var(--sh-glow);
+      translate: -4px -4px;
+      box-shadow: 10px 10px 0 rgba(4, 6, 10, .92);
+    }
+
+    .demo-card .demo-head {
+      display: flex;
+      align-items: center;
+      gap: .65rem;
+      min-height: 38px;
+      padding: .5rem .8rem;
+      background: linear-gradient(180deg, rgba(231, 236, 244, .96), rgba(209, 218, 230, .9));
+      color: #05070d;
+      border-bottom: 3px solid rgba(4, 6, 10, .96);
+      font-family: var(--mono);
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .demo-card .demo-head::before {
+      content: '';
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--demo-accent);
+      box-shadow: 16px 0 0 rgba(5, 7, 13, .2), 32px 0 0 rgba(5, 7, 13, .14);
+      flex-shrink: 0;
+      margin-right: 2rem;
+    }
+
+    .demo-card .demo-window {
+      color: rgba(5, 7, 13, .74);
+      white-space: nowrap;
+    }
+
+    .demo-card .demo-week {
+      margin-left: auto;
+      padding: .15rem .45rem;
+      border: 2px solid rgba(4, 6, 10, .92);
+      background: rgba(255, 255, 255, .74);
+      box-shadow: 2px 2px 0 rgba(4, 6, 10, .92);
+    }
+
+    .demo-card .demo-content {
+      padding: .95rem .95rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: .55rem;
+      flex: 1;
+      text-align: left;
     }
 
     .demo-card .icon {
-      font-size: 1.5rem;
-      margin-bottom: .6rem;
+      width: 2.2rem;
+      height: 2.2rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border: 3px solid rgba(4, 6, 10, .96);
+      background: rgba(255, 255, 255, .08);
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .92);
     }
 
     .demo-card .demo-title {
-      font-size: .8rem;
-      font-weight: 600;
+      font-size: .88rem;
+      font-weight: 800;
       color: var(--tx);
-      margin-bottom: .35rem;
+      line-height: 1.35;
     }
 
     .demo-card .demo-desc {
-      font-size: .72rem;
-      color: var(--tx3);
-      line-height: 1.5;
+      font-size: .74rem;
+      color: rgba(224, 230, 240, .8);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .demo-card .demo-tag {
+      display: inline-flex;
+      align-items: center;
+      align-self: flex-start;
+      margin-top: .1rem;
+      padding: .36rem .7rem;
+      border: 3px solid rgba(4, 6, 10, .96);
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .92);
+      background: #f7d778;
+      color: #05070d;
+      font-family: var(--mono);
+      font-size: .65rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+
+    .demo-card:nth-child(1) .demo-tag {
+      background: #f7d778;
+    }
+
+    .demo-card:nth-child(2) .demo-tag {
+      background: #72e7b0;
+    }
+
+    .demo-card:nth-child(3) .demo-tag {
+      background: #8cceff;
+    }
+
+    .demo-card:nth-child(4) .demo-tag {
+      background: #ceb9ff;
     }
 
     @media(max-width:680px) {
       .demo-strip {
         grid-template-columns: repeat(2, 1fr);
+      }
+
+      .demo-card {
+        translate: -4px -4px;
+        box-shadow: 8px 8px 0 rgba(4, 6, 10, .92);
       }
     }
 
@@ -1026,66 +1129,148 @@
     .dataset {
       margin: 1.5rem 0 2.25rem;
       position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: var(--r-lg);
+      box-shadow: 12px 12px 0 rgba(4, 6, 10, .88);
     }
 
     .dataset::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      width: 3px;
-      height: 100%;
-      background: linear-gradient(180deg, var(--acc), transparent);
-      border-radius: 2px;
-      opacity: .4;
+      inset: 42px 0 0;
+      background:
+        repeating-linear-gradient(to right, rgba(90, 100, 120, .12) 0 1px, transparent 1px 76px),
+        repeating-linear-gradient(to bottom, rgba(90, 100, 120, .12) 0 1px, transparent 1px 58px);
+      opacity: .26;
+      pointer-events: none;
+    }
+
+    .dataset::after {
+      content: '';
+      position: absolute;
+      inset: 58px 0 0;
+      background:
+        linear-gradient(115deg, transparent 0 19%, rgba(0, 212, 255, .16) 19.2% 19.55%, transparent 19.75% 100%),
+        linear-gradient(244deg, transparent 0 61%, rgba(0, 255, 136, .13) 61.15% 61.55%, transparent 61.75% 100%),
+        linear-gradient(180deg, transparent 0 75%, rgba(167, 139, 250, .1) 75.2% 75.55%, transparent 75.75% 100%);
+      opacity: .78;
+      animation: dataset-flow 8s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes dataset-flow {
+      from {
+        background-position: 0 0, 0 0, 0 0;
+      }
+
+      to {
+        background-position: 42px 0, -28px 0, 0 24px;
+      }
     }
 
     .ds-header {
+      position: relative;
+      z-index: 2;
       display: flex;
       align-items: center;
       gap: .6rem;
-      padding: 0 0 .6rem .75rem;
+      min-height: 42px;
+      padding: .55rem .9rem .55rem 4.15rem;
+      background: linear-gradient(180deg, rgba(17, 21, 30, .98), rgba(11, 15, 24, .96));
+      border-bottom: 3px solid rgba(4, 6, 10, .96);
+    }
+
+    .ds-header::before {
+      content: '';
+      position: absolute;
+      left: .9rem;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--acc);
+      box-shadow: 16px 0 0 var(--amber), 32px 0 0 var(--purple);
+      opacity: .95;
     }
 
     .ds-header .ds-icon {
-      font-size: 1rem;
-      filter: grayscale(.3);
+      font-size: .9rem;
+      filter: grayscale(.1);
+      opacity: .85;
     }
 
     .ds-header .ds-title {
       font-family: var(--mono);
-      font-size: .7rem;
+      font-size: .68rem;
       text-transform: uppercase;
       letter-spacing: .1em;
-      color: var(--tx3);
+      color: var(--tx);
     }
 
     .ds-header .ds-count {
       font-family: var(--mono);
       font-size: .6rem;
-      color: var(--acc2);
-      background: var(--acc-bg);
-      padding: .1rem .45rem;
-      border-radius: var(--r-sm);
+      color: #05070d;
+      background: linear-gradient(180deg, rgba(224, 230, 240, .95), rgba(209, 218, 230, .9));
+      padding: .18rem .5rem;
+      border: 2px solid rgba(4, 6, 10, .96);
+      border-radius: 0;
+      box-shadow: 2px 2px 0 rgba(4, 6, 10, .92);
       margin-left: auto;
     }
 
     .tbl-wrap {
+      position: relative;
+      z-index: 1;
       width: 100%;
       overflow-x: auto;
-      border-radius: var(--r-lg);
-      border: 1px solid var(--bd);
+      margin: .85rem;
+      border-radius: calc(var(--r-lg) - 4px);
+      border: 1px solid rgba(108, 122, 145, .26);
       -webkit-overflow-scrolling: touch;
-      background: var(--s1);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, .02);
+      background: linear-gradient(180deg, rgba(11, 15, 24, .96), rgba(14, 19, 30, .96));
+      box-shadow:
+        0 20px 32px rgba(0, 0, 0, .26),
+        inset 0 1px 0 rgba(255, 255, 255, .03),
+        inset 0 0 0 1px rgba(255, 255, 255, .02);
+    }
+
+    .tbl-wrap::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(to right, rgba(90, 100, 120, .12) 0 1px, transparent 1px 74px),
+        repeating-linear-gradient(to bottom, rgba(90, 100, 120, .12) 0 1px, transparent 1px 54px);
+      opacity: .16;
+      pointer-events: none;
+    }
+
+    .tbl-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(105deg, transparent 0 21%, rgba(0, 212, 255, .12) 21.2% 21.5%, transparent 21.7% 100%),
+        linear-gradient(210deg, transparent 0 67%, rgba(0, 255, 136, .1) 67.1% 67.45%, transparent 67.65% 100%);
+      opacity: .82;
+      pointer-events: none;
+      animation: dataset-flow 6s linear infinite reverse;
     }
 
     table.ft {
+      position: relative;
+      z-index: 1;
       width: 100%;
       border-collapse: collapse;
       font-size: .82rem;
       min-width: 580px;
       table-layout: auto;
+      background: transparent;
     }
 
     table.ft thead {
@@ -1095,15 +1280,15 @@
     }
 
     table.ft th {
-      background: linear-gradient(180deg, var(--s0), rgba(10, 14, 23, .95));
+      background: linear-gradient(180deg, rgba(14, 18, 28, .98), rgba(8, 12, 20, .96));
       font-family: var(--mono);
       font-size: .64rem;
       text-transform: uppercase;
       letter-spacing: .1em;
-      color: var(--acc2);
+      color: var(--tx);
       padding: .8rem 1rem;
       text-align: left;
-      border-bottom: 2px solid var(--bd);
+      border-bottom: 2px solid rgba(108, 122, 145, .24);
       white-space: nowrap;
       position: relative;
     }
@@ -1121,7 +1306,7 @@
 
     table.ft td {
       padding: .75rem 1rem;
-      border-bottom: 1px solid rgba(30, 42, 58, .5);
+      border-bottom: 1px solid rgba(72, 82, 104, .24);
       color: var(--tx2);
       vertical-align: top;
       line-height: 1.55;
@@ -1129,7 +1314,7 @@
     }
 
     table.ft tbody tr:nth-child(even) td {
-      background: rgba(0, 0, 0, .12);
+      background: rgba(255, 255, 255, .018);
     }
 
     table.ft tr:last-child td {
@@ -1137,7 +1322,7 @@
     }
 
     table.ft tr:hover td {
-      background: rgba(0, 255, 136, .04);
+      background: rgba(0, 255, 136, .05);
       color: var(--tx);
     }
 
@@ -1214,9 +1399,16 @@
 
     .dataset-cards {
       display: none;
+      position: relative;
+      z-index: 1;
+      padding: .85rem;
     }
 
     @media(max-width:768px) {
+      .dataset {
+        box-shadow: 9px 9px 0 rgba(4, 6, 10, .88);
+      }
+
       .dataset .tbl-wrap {
         display: none;
       }
@@ -2183,12 +2375,18 @@
         animation: none;
       }
 
+      .dataset::after,
+      .tbl-wrap::after {
+        animation: none;
+      }
+
       .ev-card:hover {
         transform: none;
       }
 
       .demo-card:hover {
-        transform: none;
+        translate: -6px -6px;
+        box-shadow: 12px 12px 0 rgba(4, 6, 10, .92);
       }
 
       .input-container::after,
@@ -2294,27 +2492,48 @@
         secure administration, and automated risk prioritisation.</p>
       <div class="demo-strip">
         <div class="demo-card">
-          <div class="icon">&#x1F50D;</div>
-          <div class="demo-title">Application Recon</div>
-          <div class="demo-desc">WPScan exposes attack surface at the plugin and resource level, not just open ports.
+          <div class="demo-head"><span class="demo-window">overview://recon</span><span class="demo-week">W5</span>
+          </div>
+          <div class="demo-content">
+            <div class="icon">&#x1F50D;</div>
+            <div class="demo-title">Application Recon</div>
+            <div class="demo-desc">WPScan exposes attack surface at the plugin and resource level, not just open ports.
+            </div>
+            <div class="demo-tag">WPScan</div>
           </div>
         </div>
         <div class="demo-card">
-          <div class="icon">&#x26A1;</div>
-          <div class="demo-title">Exploit Analysis</div>
-          <div class="demo-desc">Juice Shop demonstrates how broken controls chain together into serious risk.</div>
-        </div>
-        <div class="demo-card">
-          <div class="icon">&#x1F510;</div>
-          <div class="demo-title">Secure Administration</div>
-          <div class="demo-desc">Nmap discovery paired with SSH hardening links what is exposed to how to lock it down.
+          <div class="demo-head"><span class="demo-window">overview://exploit</span><span class="demo-week">W7</span>
+          </div>
+          <div class="demo-content">
+            <div class="icon">&#x26A1;</div>
+            <div class="demo-title">Exploit Analysis</div>
+            <div class="demo-desc">Juice Shop demonstrates how broken controls chain together into serious risk.</div>
+            <div class="demo-tag">Juice Shop</div>
           </div>
         </div>
         <div class="demo-card">
-          <div class="icon">&#x1F4CA;</div>
-          <div class="demo-title">Risk Prioritisation</div>
-          <div class="demo-desc">Nessus turns raw findings into severity-based output that requires context to interpret
-            correctly.</div>
+          <div class="demo-head"><span class="demo-window">overview://secure-admin</span><span class="demo-week">W8</span>
+          </div>
+          <div class="demo-content">
+            <div class="icon">&#x1F510;</div>
+            <div class="demo-title">Secure Administration</div>
+            <div class="demo-desc">Nmap discovery paired with SSH hardening links what is exposed to how to lock it
+              down.
+            </div>
+            <div class="demo-tag">Nmap + SSH</div>
+          </div>
+        </div>
+        <div class="demo-card">
+          <div class="demo-head"><span class="demo-window">overview://risk-priority</span><span class="demo-week">W9</span>
+          </div>
+          <div class="demo-content">
+            <div class="icon">&#x1F4CA;</div>
+            <div class="demo-title">Risk Prioritisation</div>
+            <div class="demo-desc">Nessus turns raw findings into severity-based output that requires context to
+              interpret correctly.</div>
+            <div class="demo-tag">Nessus</div>
+          </div>
         </div>
       </div>
       <div class="terminal">
