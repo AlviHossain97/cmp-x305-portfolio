@@ -690,15 +690,59 @@
     }
 
     .nav-logo {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      min-height: 34px;
+      padding: .42rem .8rem .42rem 3.25rem;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      border-radius: 0;
+      box-shadow: 4px 4px 0 rgba(4, 6, 10, .88);
       font-family: var(--mono);
-      font-size: .85rem;
+      font-size: .74rem;
       color: var(--acc);
-      font-weight: 600;
+      font-weight: 700;
+      letter-spacing: .05em;
       flex-shrink: 0;
+      white-space: nowrap;
+    }
+
+    .nav-logo::before {
+      content: '';
+      position: absolute;
+      left: .7rem;
+      top: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--acc);
+      box-shadow: 13px 0 0 var(--cyan), 26px 0 0 var(--purple);
+    }
+
+    .nav-logo::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(0, 255, 136, .75), rgba(0, 212, 255, .5), transparent 78%);
+      opacity: .72;
+      pointer-events: none;
     }
 
     .nav-logo span {
-      color: var(--tx3);
+      color: var(--tx2);
+    }
+
+    .nav-logo span:first-of-type {
+      color: var(--cyan);
+    }
+
+    .nav-logo span:last-of-type {
+      color: var(--purple);
     }
 
     /* ── glitch radio nav ── */
@@ -963,6 +1007,30 @@
 
       .mob-btn {
         display: block;
+      }
+
+      .nav-logo {
+        font-size: .7rem;
+        padding-left: 3.05rem;
+      }
+    }
+
+    @media(max-width:680px) {
+      .nav-inner {
+        padding: 0 1rem;
+      }
+
+      .nav-logo {
+        font-size: .66rem;
+        padding: .38rem .7rem .38rem 2.95rem;
+        box-shadow: 3px 3px 0 rgba(4, 6, 10, .88);
+      }
+
+      .nav-logo::before {
+        width: 7px;
+        height: 7px;
+        left: .62rem;
+        box-shadow: 11px 0 0 var(--cyan), 22px 0 0 var(--purple);
       }
     }
 
