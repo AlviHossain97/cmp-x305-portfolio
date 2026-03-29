@@ -7,25 +7,253 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
+
+/* ===== CSS TOKENS ===== */
+:root{--s0:#0a0e17;--s1:#0f1420;--s2:#141926;--s3:#1a2030;--bd:#1e2a3a;--bd-hover:rgba(0,255,136,.3);--bd-active:rgba(0,255,136,.5);--tx:#e0e6f0;--tx2:#8892a4;--tx3:#5a6478;--acc:#00ff88;--acc2:#00cc6a;--acc-bg:rgba(0,255,136,.06);--acc-bd:rgba(0,255,136,.13);--cyan:#00d4ff;--purple:#a78bfa;--amber:#fbbf24;--red:#f87171;--teal:#2dd4bf;--w5:#fbbf24;--w7:#34d399;--w8:#60a5fa;--w9:#a78bfa;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:999px;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:32px;--sp8:40px;--sp9:48px;--sp10:64px;--sh-sm:0 2px 8px rgba(0,0,0,.2);--sh-md:0 4px 16px rgba(0,0,0,.3);--sh-lg:0 8px 32px rgba(0,0,0,.4);--sh-glow:0 4px 30px rgba(0,255,136,.06);--sh-glow-h:0 8px 28px rgba(0,255,136,.08);--ch-high-bg:rgba(248,113,113,.15);--ch-high:#f87171;--ch-med-bg:rgba(251,191,36,.15);--ch-med:#fbbf24;--ch-low-bg:rgba(96,165,250,.15);--ch-low:#00d4ff;--ch-info-bg:rgba(90,100,120,.15);--ch-info:#5a6478;--ch-s1-bg:rgba(52,211,153,.1);--ch-s1:#34d399;--ch-s2-bg:rgba(251,191,36,.1);--ch-s2:#fbbf24;--focus-ring:0 0 0 2px var(--acc);--focus-offset:0 0 0 4px var(--s0);--hl-bg:rgba(0,255,136,.12);--nav-h:60px;--subnav-h:44px;--sticky-top:calc(var(--nav-h) + var(--subnav-h) + 8px);--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;--tt-bg:var(--s1);--tt-bd:var(--bd);--tt-tx:var(--tx2);--ann-bg:var(--s2);--ann-line:var(--acc);--ann-pin:var(--acc);}
+
+/* ===== BASE / RESET ===== */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-:root{--s0:#0a0e17;--s1:#0f1420;--s2:#141926;--s3:#1a2030;--bd:#1e2a3a;--bd-hover:rgba(0,255,136,.3);--bd-active:rgba(0,255,136,.5);--tx:#e0e6f0;--tx2:#8892a4;--tx3:#5a6478;--acc:#00ff88;--acc2:#00cc6a;--acc-bg:rgba(0,255,136,.06);--acc-bd:rgba(0,255,136,.13);--cyan:#00d4ff;--purple:#a78bfa;--amber:#fbbf24;--red:#f87171;--teal:#2dd4bf;--w5:#fbbf24;--w7:#34d399;--w8:#60a5fa;--w9:#a78bfa;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:999px;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:32px;--sp8:40px;--sp9:48px;--sp10:64px;--sh-sm:0 2px 8px rgba(0,0,0,.2);--sh-md:0 4px 16px rgba(0,0,0,.3);--sh-lg:0 8px 32px rgba(0,0,0,.4);--sh-glow:0 4px 30px rgba(0,255,136,.06);--sh-glow-h:0 8px 28px rgba(0,255,136,.08);--ch-high-bg:rgba(248,113,113,.15);--ch-high:#f87171;--ch-med-bg:rgba(251,191,36,.15);--ch-med:#fbbf24;--ch-low-bg:rgba(96,165,250,.15);--ch-low:#00d4ff;--ch-info-bg:rgba(90,100,120,.15);--ch-info:#5a6478;--ch-s1-bg:rgba(52,211,153,.1);--ch-s1:#34d399;--ch-s2-bg:rgba(251,191,36,.1);--ch-s2:#fbbf24;--focus-ring:0 0 0 2px var(--acc);--focus-offset:0 0 0 4px var(--s0);--hl-bg:rgba(0,255,136,.12);--nav-h:60px;--subnav-h:44px;--sticky-top:calc(var(--nav-h) + var(--subnav-h) + 8px);--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;}
-html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);color:var(--tx);line-height:1.7;overflow-x:hidden;}a{color:var(--cyan);text-decoration:none;}a:hover{text-decoration:underline;}
-.main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 2rem 5rem;}#mc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.06;pointer-events:none;}
-.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);}.nav.scrolled{box-shadow:var(--sh-glow);}.nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);}.nav-logo{font-family:var(--mono);font-size:.85rem;color:var(--acc);font-weight:600;}.nav-logo span{color:var(--tx3);}.nav-tabs{display:flex;gap:.2rem;flex-wrap:wrap;}.nav-tab{font-family:var(--mono);font-size:.7rem;padding:.45rem .9rem;border:1px solid transparent;border-radius:var(--r-md);background:transparent;color:var(--tx2);cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;}.nav-tab:hover{color:var(--tx);background:var(--s2);}.nav-tab.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}.nav-tab:focus-visible{outline:none;box-shadow:var(--focus-ring);}.mob-btn{display:none;background:none;border:1px solid var(--bd);color:var(--acc);padding:.4rem .8rem;border-radius:var(--r-md);font-family:var(--mono);font-size:.72rem;cursor:pointer;}.mob-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}.mob-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(10,14,23,.97);backdrop-filter:blur(20px);z-index:99;padding:1rem;border-bottom:1px solid var(--bd);flex-direction:column;gap:.25rem;}.mob-nav.open{display:flex;}@media(max-width:900px){.nav-tabs{display:none;}.mob-btn{display:block;}}
-.sub-nav{position:sticky;top:var(--nav-h);z-index:50;display:flex;gap:var(--sp2);flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:var(--sp3) var(--sp4);background:rgba(10,14,23,.92);backdrop-filter:blur(16px);border:1px solid var(--bd);border-radius:var(--r-md);margin:0 0 var(--sp6);scrollbar-width:none;}.sub-nav::-webkit-scrollbar{display:none;}.sub-nav a{font-family:var(--mono);font-size:.7rem;color:var(--tx3);text-decoration:none;padding:var(--sp2) var(--sp3);border-radius:var(--r-pill);white-space:nowrap;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;border:1px solid transparent;}.sub-nav a:hover{color:var(--acc);background:var(--acc-bg);}.sub-nav a.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}.sub-nav a:focus-visible{outline:none;box-shadow:var(--focus-ring);}
-.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 3rem;}.hero-inner{max-width:860px;text-align:center;}.badge{display:inline-block;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-bd);padding:.4rem 1.2rem;border-radius:var(--r-pill);margin-bottom:1.75rem;}.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:700;line-height:1.1;margin-bottom:1.25rem;background:linear-gradient(135deg,#e0e6f0,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.hero-sub{font-size:1.05rem;color:var(--tx2);max-width:620px;margin:0 auto 2.5rem;}.demo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0 2.5rem;}.demo-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1rem;text-align:center;transition:border-color .25s,transform .25s;}.demo-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);}.demo-card .icon{font-size:1.5rem;margin-bottom:.6rem;}.demo-card .demo-title{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.35rem;}.demo-card .demo-desc{font-size:.72rem;color:var(--tx3);line-height:1.5;}@media(max-width:680px){.demo-strip{grid-template-columns:repeat(2,1fr);}}.terminal{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.75rem;text-align:left;font-family:var(--mono);font-size:.78rem;max-width:500px;margin:0 auto;}.t-bar{display:flex;gap:6px;margin-bottom:.9rem;}.t-dot{width:10px;height:10px;border-radius:50%;}.t-dot:nth-child(1){background:#f87171;}.t-dot:nth-child(2){background:#fbbf24;}.t-dot:nth-child(3){background:#34d399;}.t-p{color:var(--acc);}.t-c{color:var(--tx);}.t-o{color:var(--tx3);}.t-cur{display:inline-block;width:8px;height:15px;background:var(--acc);animation:blink 1s infinite;vertical-align:text-bottom;margin-left:2px;}@keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0;}.stat{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.1rem;text-align:center;transition:border-color .25s;}.stat:hover{border-color:var(--bd-hover);}.stat-v{font-family:var(--mono);font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:.3rem;}.stat-l{font-size:.7rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;}@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr);}}
-.panel{display:none;animation:fadeIn .35s ease;}.panel.active{display:block;}@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}.sec-hdr{padding:2.75rem 0 2rem;border-bottom:1px solid var(--bd);margin-bottom:2.5rem;}.sec-hdr .lbl{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.6rem;}.sec-hdr h2{font-size:1.9rem;font-weight:700;margin-bottom:.4rem;}.sec-hdr .desc{color:var(--tx2);font-size:.93rem;max-width:720px;}.takeaway{background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,212,255,.04));border:1px solid rgba(0,255,136,.2);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin:0 0 2.5rem;display:flex;gap:1rem;align-items:flex-start;}.takeaway .tk-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem;}.takeaway .tk-title{font-size:.75rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:.15rem;}.takeaway .tk-sub{font-size:.65rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.45rem;}.takeaway .tk-text{font-size:.88rem;color:var(--tx2);line-height:1.65;}.cb{margin-bottom:2.75rem;scroll-margin-top:120px;}.cb h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}.cb h3 .sec-tag{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:var(--r-sm);font-weight:500;}.cb p,.cb li{color:var(--tx2);margin-bottom:.7rem;font-size:.93rem;}.cb ol,.cb ul{padding-left:1.5rem;}.cb strong{color:var(--tx);}.cb code{font-family:var(--mono);font-size:.83em;background:var(--s2);padding:.15rem .4rem;border-radius:var(--r-sm);color:var(--cyan);}.w5 .sec-tag{background:rgba(251,191,36,.12);color:var(--w5);}.w7 .sec-tag{background:rgba(52,211,153,.12);color:var(--w7);}.w8 .sec-tag{background:rgba(96,165,250,.12);color:var(--w8);}.w9 .sec-tag{background:rgba(167,139,250,.12);color:var(--w9);}.intro .sec-tag,.overall .sec-tag{background:rgba(0,255,136,.1);color:var(--acc);}
-.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem;margin:1.25rem 0 1rem;}.ev-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;transition:all .28s;cursor:pointer;display:flex;flex-direction:column;}.ev-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);box-shadow:var(--sh-glow-h);}.ev-card:focus-visible{outline:none;box-shadow:var(--focus-ring);border-color:var(--acc);}.ev-card .ev-label{font-family:var(--mono);font-size:.68rem;color:var(--acc2);font-weight:600;padding:.55rem 1rem .35rem;letter-spacing:.04em;}.ev-card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;filter:brightness(.88);transition:filter .25s;}.ev-card:hover img{filter:brightness(1.02);}.ev-card .ev-body{padding:.65rem 1rem .75rem;border-top:1px solid var(--bd);}.ev-card .ev-claim{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.3rem;line-height:1.4;}.ev-card .ev-support{font-size:.73rem;color:var(--tx3);line-height:1.5;font-style:italic;}.analysis-card{margin:1.5rem 0 2rem;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;}.analysis-card .analysis-context{padding:1rem 1.25rem .6rem;font-size:.85rem;color:var(--tx2);border-bottom:1px solid var(--bd);}.analysis-card .analysis-context strong{color:var(--tx);}.analysis-card .ev-card{border:none;border-radius:0;margin:0;}.analysis-card .ev-card:hover{transform:none;box-shadow:none;}.analysis-card .analysis-takeaway{padding:.75rem 1.25rem;font-size:.82rem;color:var(--tx2);border-top:1px solid var(--bd);background:rgba(0,255,136,.02);}.analysis-card .analysis-takeaway strong{color:var(--tx);}.chart-note{background:var(--s2);border-left:3px solid var(--acc);border-radius:0 var(--r-md) var(--r-md) 0;padding:.75rem 1.1rem;margin-bottom:1rem;font-size:.85rem;color:var(--tx2);}.chart-note strong{color:var(--tx);}
-.dataset{margin:1.25rem 0 2rem;}.tbl-wrap{width:100%;overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--bd);-webkit-overflow-scrolling:touch;}table.ft{width:100%;border-collapse:collapse;font-size:.82rem;min-width:580px;table-layout:auto;}table.ft thead{position:sticky;top:0;z-index:2;}table.ft th{background:var(--s1);font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;}table.ft td{padding:.65rem 1rem;border-bottom:1px solid rgba(30,42,58,.7);color:var(--tx2);vertical-align:top;line-height:1.5;}table.ft tr:last-child td{border-bottom:none;}table.ft tr:hover td{background:rgba(0,255,136,.02);}table.ft td code{font-size:.78em;}.sb{display:inline-block;font-family:var(--mono);font-size:.67rem;padding:.15rem .55rem;border-radius:var(--r-pill);font-weight:600;text-transform:uppercase;white-space:nowrap;}.sh{background:var(--ch-high-bg);color:var(--ch-high);}.sm{background:var(--ch-med-bg);color:var(--ch-med);}.sl{background:var(--ch-low-bg);color:var(--ch-low);}.si{background:var(--ch-info-bg);color:var(--ch-info);}.s1{background:var(--ch-s1-bg);color:var(--ch-s1);}.s2{background:var(--ch-s2-bg);color:var(--ch-s2);}.dataset-cards{display:none;}@media(max-width:768px){.dataset .tbl-wrap{display:none;}.dataset-cards{display:flex;flex-direction:column;gap:var(--sp3);}.ds-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;font-size:.82rem;}.ds-card-primary{padding:.65rem 1rem;font-weight:600;color:var(--tx);border-bottom:1px solid var(--bd);font-size:.85rem;}.ds-card-field{display:flex;justify-content:space-between;gap:var(--sp3);padding:.45rem 1rem;border-bottom:1px solid rgba(30,42,58,.4);}.ds-card-field:last-child{border-bottom:none;}.ds-card-label{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);flex-shrink:0;padding-top:.1rem;}.ds-card-value{color:var(--tx2);text-align:right;line-height:1.5;}}.mit-list{list-style:none;padding:0;}.mit-list li{position:relative;padding:.65rem 0 .65rem 2rem;border-left:2px solid var(--bd);margin-left:.5rem;font-size:.9rem;color:var(--tx2);}.mit-list li::before{content:'>';position:absolute;left:-.55rem;font-family:var(--mono);color:var(--acc);font-weight:700;background:var(--s0);padding:0 .1rem;}
-.search-module{position:relative;max-width:560px;margin:0 auto 2.5rem;z-index:60;}.search-box{position:relative;display:flex;align-items:center;}.search-box svg{position:absolute;left:14px;width:16px;height:16px;color:var(--tx3);pointer-events:none;}.search-box input{width:100%;font-family:var(--mono);font-size:.82rem;padding:.7rem 2.5rem .7rem 40px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);color:var(--tx);outline:none;transition:border-color .2s;}.search-box input::placeholder{color:var(--tx3);}.search-box input:focus{border-color:var(--acc-bd);box-shadow:var(--sh-glow);}.search-clear{position:absolute;right:10px;background:none;border:none;color:var(--tx3);font-size:1.1rem;cursor:pointer;padding:4px 8px;border-radius:var(--r-sm);line-height:1;}.search-clear:hover{color:var(--tx);}.search-clear:focus-visible{outline:none;box-shadow:var(--focus-ring);}.search-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-md);max-height:320px;overflow-y:auto;list-style:none;padding:var(--sp2) 0;box-shadow:var(--sh-lg);}.search-suggestions[hidden]{display:none;}.search-suggestions li{padding:.5rem 1rem;font-size:.8rem;color:var(--tx2);cursor:pointer;display:flex;align-items:center;gap:.6rem;transition:background .15s;}.search-suggestions li:hover,.search-suggestions li[aria-selected="true"]{background:var(--acc-bg);color:var(--tx);}.search-suggestions li .sr-type{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);flex-shrink:0;min-width:70px;}.search-suggestions li .sr-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.search-suggestions li mark{background:var(--hl-bg);color:var(--acc);border-radius:2px;padding:0 1px;}.search-filter-active .ev-card.search-hidden{display:none;}.search-filter-active .dataset tbody tr.search-hidden{display:none;}.search-filter-active .ds-card.search-hidden{display:none;}.search-filter-bar{display:none;align-items:center;justify-content:space-between;padding:.5rem 1rem;background:var(--acc-bg);border:1px solid var(--acc-bd);border-radius:var(--r-md);margin-bottom:var(--sp4);font-family:var(--mono);font-size:.72rem;color:var(--acc);}.search-filter-active .search-filter-bar{display:flex;}.search-filter-bar button{background:none;border:none;color:var(--tx3);font-family:var(--mono);font-size:.72rem;cursor:pointer;padding:2px 6px;}.search-filter-bar button:hover{color:var(--tx);}.search-hl{animation:hlPulse 2s ease-out;}@keyframes hlPulse{0%,20%{outline:2px solid var(--acc);outline-offset:4px;background:var(--hl-bg);}100%{outline-color:transparent;background:transparent;}}
-.lbx{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);backdrop-filter:blur(10px);cursor:zoom-out;align-items:center;justify-content:center;padding:2rem;}.lbx.open{display:flex;}.lbx img{max-width:96%;max-height:88vh;border-radius:var(--r-md);box-shadow:0 0 60px rgba(0,255,136,.1);cursor:default;}.lbx-cap{position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.76rem;color:var(--tx2);background:var(--s2);padding:.5rem 1.25rem;border-radius:var(--r-md);max-width:80%;text-align:center;border:1px solid var(--bd);}.lbx-close{position:absolute;top:1rem;right:1.5rem;background:var(--s2);border:1px solid var(--bd);color:var(--tx2);font-size:1.5rem;width:40px;height:40px;border-radius:var(--r-md);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:201;}.lbx-close:hover{color:var(--tx);border-color:var(--bd-hover);}.lbx-close:focus-visible{outline:none;box-shadow:var(--focus-ring);}
-.ref-list{list-style:none;padding:0;counter-reset:ref;}.ref-list li{counter-increment:ref;padding:.55rem 0 .55rem 2.75rem;position:relative;font-size:.84rem;color:var(--tx3);border-bottom:1px solid rgba(30,42,58,.5);}.ref-list li:last-child{border-bottom:none;}.ref-list li::before{content:'[' counter(ref) ']';position:absolute;left:0;font-family:var(--mono);color:var(--acc2);font-size:.76rem;width:2.5rem;}.ref-list a{color:var(--cyan);text-decoration:none;}.ref-list a:hover{text-decoration:underline;}.dl-btn{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;background:var(--acc-bg);border:1px solid var(--acc-bd);color:var(--acc);font-family:var(--mono);font-size:.78rem;padding:.65rem 1.4rem;border-radius:var(--r-md);text-decoration:none;transition:all .25s;}.dl-btn:hover{background:rgba(0,255,136,.15);box-shadow:0 4px 20px rgba(0,255,136,.1);text-decoration:none;}.dl-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}.ai-box{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-top:2rem;}.ai-box .ai-label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:.6rem;}.footer{position:relative;z-index:1;border-top:1px solid var(--bd);padding:2rem;text-align:center;font-size:.78rem;color:var(--tx3);}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}#mc{display:none;}.t-cur{animation:none;opacity:.7;}.panel{animation:none;}.ev-card:hover{transform:none;}.demo-card:hover{transform:none;}.search-hl{animation:none;outline:2px solid var(--acc);outline-offset:4px;}}:focus-visible{outline:none;box-shadow:var(--focus-ring);}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--s0);color:var(--tx);line-height:1.7;overflow-x:hidden;}
+a{color:var(--cyan);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* ===== LAYOUT ===== */
+.main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 2rem 5rem;}
+#mc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.06;pointer-events:none;}
+
+/* ===== TOP DASHBOARD ===== */
+.hero{position:relative;z-index:1;min-height:90vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 3rem;}
+.hero-inner{max-width:860px;text-align:center;}
+.badge{display:inline-block;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-bd);padding:.4rem 1.2rem;border-radius:var(--r-pill);margin-bottom:1.75rem;}
+.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:700;line-height:1.1;margin-bottom:1.25rem;background:linear-gradient(135deg,#e0e6f0,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-sub{font-size:1.05rem;color:var(--tx2);max-width:620px;margin:0 auto 2.5rem;}
+
+.demo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0 2.5rem;}
+.demo-card{background:var(--s2);border:1px solid var(--bd);border-left:4px solid var(--w5);border-radius:var(--r-lg);padding:1.25rem 1rem;text-align:center;transition:border-color .25s,transform .25s,box-shadow .25s;}
+.demo-card:nth-child(2){border-left-color:var(--w7);}
+.demo-card:nth-child(3){border-left-color:var(--w8);}
+.demo-card:nth-child(4){border-left-color:var(--w9);}
+.demo-card:hover{border-color:var(--bd-hover);transform:translateY(-3px);box-shadow:var(--sh-glow);}
+.demo-card .icon{font-size:1.5rem;margin-bottom:.6rem;}
+.demo-card .demo-title{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.35rem;}
+.demo-card .demo-desc{font-size:.72rem;color:var(--tx3);line-height:1.5;}
+@media(max-width:680px){.demo-strip{grid-template-columns:repeat(2,1fr);}}
+
+.terminal{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.75rem;text-align:left;font-family:var(--mono);font-size:.78rem;max-width:500px;margin:0 auto;}
+.t-bar{display:flex;gap:6px;margin-bottom:.9rem;}
+.t-dot{width:10px;height:10px;border-radius:50%;}
+.t-dot:nth-child(1){background:#f87171;}
+.t-dot:nth-child(2){background:#fbbf24;}
+.t-dot:nth-child(3){background:#34d399;}
+.t-p{color:var(--acc);}
+.t-c{color:var(--tx);}
+.t-o{color:var(--tx3);}
+.t-cur{display:inline-block;width:8px;height:15px;background:var(--acc);animation:blink 1s infinite;vertical-align:text-bottom;margin-left:2px;}
+@keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0;}
+.stat{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.1rem;text-align:center;transition:border-color .25s;}
+.stat:hover{border-color:var(--bd-hover);}
+.stat-v{font-family:var(--mono);font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:.3rem;}
+.stat-l{font-size:.7rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;}
+@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr);}}
+
+/* ===== NAVIGATION ===== */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);}
+.nav.scrolled{box-shadow:var(--sh-glow);}
+.nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);}
+.nav-logo{font-family:var(--mono);font-size:.85rem;color:var(--acc);font-weight:600;}
+.nav-logo span{color:var(--tx3);}
+.nav-tabs{display:flex;gap:.2rem;flex-wrap:wrap;}
+.nav-tab{font-family:var(--mono);font-size:.7rem;padding:.45rem .9rem;border:1px solid transparent;border-radius:var(--r-md);background:transparent;color:var(--tx2);cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;}
+.nav-tab:hover{color:var(--tx);background:var(--s2);}
+.nav-tab.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}
+.nav-tab:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+.mob-btn{display:none;background:none;border:1px solid var(--bd);color:var(--acc);padding:.4rem .8rem;border-radius:var(--r-md);font-family:var(--mono);font-size:.72rem;cursor:pointer;}
+.mob-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+.mob-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(10,14,23,.97);backdrop-filter:blur(20px);z-index:99;padding:1rem;border-bottom:1px solid var(--bd);flex-direction:column;gap:.25rem;}
+.mob-nav.open{display:flex;}
+@media(max-width:900px){.nav-tabs{display:none;}.mob-btn{display:block;}}
+
+.sub-nav{position:sticky;top:var(--nav-h);z-index:50;display:flex;gap:var(--sp2);flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:var(--sp3) var(--sp4);background:rgba(10,14,23,.92);backdrop-filter:blur(16px);border:1px solid var(--bd);border-radius:var(--r-md);margin:0 0 var(--sp6);scrollbar-width:none;scroll-snap-type:x mandatory;}
+.sub-nav::-webkit-scrollbar{display:none;}
+.sub-nav a{font-family:var(--mono);font-size:.7rem;color:var(--tx3);text-decoration:none;padding:var(--sp2) var(--sp3);border-radius:var(--r-pill);white-space:nowrap;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;border:1px solid transparent;}
+.sub-nav a:hover{color:var(--acc);background:var(--acc-bg);}
+.sub-nav a.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}
+.sub-nav a:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+
+/* ===== EVIDENCE CARDS ===== */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem;margin:1.25rem 0 1rem;}
+.ev-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;transition:all .28s;cursor:pointer;display:flex;flex-direction:column;}
+.ev-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);box-shadow:var(--sh-glow-h);}
+.ev-card:focus-visible{outline:none;box-shadow:var(--focus-ring);border-color:var(--acc);}
+.ev-card .ev-label{font-family:var(--mono);font-size:.7rem;color:var(--acc2);font-weight:600;padding:.55rem 1rem .35rem;letter-spacing:.04em;}
+.ev-card .ev-label::before{content:'◈ ';}
+.ev-card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;filter:brightness(.88);transition:filter .25s;}
+.ev-card:hover img{filter:brightness(1.02);}
+.ev-card .ev-body{padding:.65rem 1rem .75rem;border-top:1px solid var(--bd);}
+.ev-card .ev-claim{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.3rem;line-height:1.4;}
+.ev-card .ev-support{font-size:.73rem;color:var(--tx3);line-height:1.5;font-style:italic;}
+@media(max-width:480px){.ev-grid{grid-template-columns:1fr;}}
+
+/* ===== ANALYSIS CARDS ===== */
+.analysis-card{margin:1.5rem 0 2rem;background:var(--s2);border:2px solid var(--bd);border-top:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;}
+.analysis-card .analysis-context{padding:1rem 1.25rem .6rem;font-size:.85rem;color:var(--tx2);border-bottom:1px solid var(--bd);}
+.analysis-card .analysis-context strong{color:var(--tx);}
+.analysis-card .ev-card{border:none;border-radius:0;margin:0;border-left:none;}
+.analysis-card .ev-card:hover{transform:none;box-shadow:none;}
+.analysis-card .analysis-takeaway{padding:.75rem 1.25rem;font-size:.82rem;color:var(--tx2);border-top:1px solid var(--bd);background:rgba(0,255,136,.02);}
+.analysis-card .analysis-takeaway strong{color:var(--tx);}
+
+/* ===== DATA MODULES ===== */
+.dataset{margin:1.25rem 0 2rem;}
+.tbl-wrap{width:100%;overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--bd);-webkit-overflow-scrolling:touch;}
+table.ft{width:100%;border-collapse:collapse;font-size:.82rem;min-width:580px;table-layout:auto;}
+table.ft thead{position:sticky;top:0;z-index:2;}
+table.ft th{background:var(--s0);font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;}
+table.ft td{padding:.65rem 1rem;border-bottom:1px solid rgba(30,42,58,.7);color:var(--tx2);vertical-align:top;line-height:1.5;}
+table.ft tr:last-child td{border-bottom:none;}
+table.ft tr:hover td{background:rgba(0,255,136,.02);}
+table.ft td code{font-size:.78em;}
+
+.sb{display:inline-block;font-family:var(--mono);font-size:.67rem;padding:.15rem .55rem;border-radius:var(--r-pill);font-weight:600;text-transform:uppercase;white-space:nowrap;}
+.sh{background:var(--ch-high-bg);color:var(--ch-high);}
+.sm{background:var(--ch-med-bg);color:var(--ch-med);}
+.sl{background:var(--ch-low-bg);color:var(--ch-low);}
+.si{background:var(--ch-info-bg);color:var(--ch-info);}
+.s1{background:var(--ch-s1-bg);color:var(--ch-s1);}
+.s2{background:var(--ch-s2-bg);color:var(--ch-s2);}
+
+.dataset-cards{display:none;}
+@media(max-width:768px){.dataset .tbl-wrap{display:none;}.dataset-cards{display:flex;flex-direction:column;gap:var(--sp3);}.ds-card{background:var(--s2);border:1px solid var(--bd);border-left:3px solid var(--acc);border-radius:var(--r-lg);overflow:hidden;font-size:.82rem;}.ds-card-primary{padding:.65rem 1rem;font-weight:600;color:var(--tx);border-bottom:1px solid var(--bd);font-size:.85rem;}.ds-card-field{display:flex;justify-content:space-between;gap:var(--sp3);padding:.45rem 1rem;border-bottom:1px solid rgba(30,42,58,.4);}.ds-card-field:last-child{border-bottom:none;}.ds-card-label{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);flex-shrink:0;padding-top:.1rem;}.ds-card-value{color:var(--tx2);text-align:right;line-height:1.5;}}
+
+/* ===== KEY TAKEAWAY ===== */
+.takeaway{background:transparent;border:none;border-left:3px solid var(--acc);border-radius:0;padding:1.25rem 0 1.25rem 1.5rem;margin:0 0 2.5rem;display:block;}
+.takeaway .tk-icon{display:none;}
+.takeaway .tk-title{font-size:.75rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:.15rem;font-weight:700;}
+.takeaway .tk-sub{font-size:.65rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.45rem;display:block;}
+.takeaway .tk-text{font-size:.93rem;color:var(--tx);line-height:1.7;font-weight:500;}
+
+/* ===== SECTIONS ===== */
+.panel{display:none;animation:fadeIn .35s ease;}
+.panel.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.sec-hdr{padding:2.75rem 0 2rem;border-bottom:1px solid var(--bd);margin-bottom:2.5rem;}
+.sec-hdr .lbl{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.6rem;}
+.sec-hdr h2{font-size:1.9rem;font-weight:700;margin-bottom:.4rem;}
+.sec-hdr .desc{color:var(--tx2);font-size:.93rem;max-width:720px;}
+
+.cb{margin-bottom:2.75rem;scroll-margin-top:120px;}
+.cb h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}
+.cb h3 .sec-tag{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:var(--r-sm);font-weight:500;}
+.cb p,.cb li{color:var(--tx2);margin-bottom:.7rem;font-size:.93rem;}
+.cb ol,.cb ul{padding-left:1.5rem;}
+.cb strong{color:var(--tx);}
+.cb code{font-family:var(--mono);font-size:.83em;background:var(--s2);padding:.15rem .4rem;border-radius:var(--r-sm);color:var(--cyan);}
+
+.w5 .sec-tag{background:rgba(251,191,36,.12);color:var(--w5);}
+.w7 .sec-tag{background:rgba(52,211,153,.12);color:var(--w7);}
+.w8 .sec-tag{background:rgba(96,165,250,.12);color:var(--w8);}
+.w9 .sec-tag{background:rgba(167,139,250,.12);color:var(--w9);}
+.intro .sec-tag,.overall .sec-tag{background:rgba(0,255,136,.1);color:var(--acc);}
+
+.chart-note{background:var(--s2);border-left:3px solid var(--acc);border-radius:0 var(--r-md) var(--r-md) 0;padding:.75rem 1.1rem;margin-bottom:1rem;font-size:.85rem;color:var(--tx2);}
+.chart-note strong{color:var(--tx);}
+
+/* ===== SEARCH MODULE ===== */
+.search-module{position:relative;max-width:560px;margin:0 auto 2.5rem;z-index:60;}
+.search-box{position:relative;display:flex;align-items:center;}
+.search-box svg{position:absolute;left:14px;width:16px;height:16px;color:var(--tx3);pointer-events:none;}
+.search-box input{width:100%;font-family:var(--mono);font-size:.82rem;padding:.7rem 2.5rem .7rem 40px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);color:var(--tx);outline:none;transition:border-color .2s;}
+.search-box input::placeholder{color:var(--tx3);}
+.search-box input:focus{border-color:var(--acc-bd);box-shadow:var(--sh-glow);}
+.search-clear{position:absolute;right:10px;background:none;border:none;color:var(--tx3);font-size:1.1rem;cursor:pointer;padding:4px 8px;border-radius:var(--r-sm);line-height:1;}
+.search-clear:hover{color:var(--tx);}
+.search-clear:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+
+.search-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-md);max-height:320px;overflow-y:auto;list-style:none;padding:var(--sp2) 0;box-shadow:var(--sh-lg);}
+.search-suggestions[hidden]{display:none;}
+.search-suggestions li{padding:.5rem 1rem;font-size:.8rem;color:var(--tx2);cursor:pointer;display:flex;align-items:center;gap:.6rem;transition:background .15s;}
+.search-suggestions li:hover,.search-suggestions li[aria-selected="true"]{background:var(--acc-bg);color:var(--tx);}
+.search-suggestions li .sr-type{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);flex-shrink:0;min-width:70px;background:var(--s1);padding:.2rem .4rem;border-radius:2px;}
+.search-suggestions li .sr-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.search-suggestions li mark{background:var(--hl-bg);color:var(--acc);border-radius:2px;padding:0 1px;}
+
+.search-filter-active .ev-card.search-hidden{display:none;}
+.search-filter-active .dataset tbody tr.search-hidden{display:none;}
+.search-filter-active .ds-card.search-hidden{display:none;}
+.search-filter-bar{display:none;align-items:center;justify-content:space-between;padding:.5rem 1rem;background:var(--acc-bg);border:1px solid var(--acc-bd);border-radius:var(--r-md);margin-bottom:var(--sp4);font-family:var(--mono);font-size:.72rem;color:var(--acc);}
+.search-filter-active .search-filter-bar{display:flex;}
+.search-filter-bar button{background:none;border:none;color:var(--tx3);font-family:var(--mono);font-size:.72rem;cursor:pointer;padding:2px 6px;}
+.search-filter-bar button:hover{color:var(--tx);}
+
+.search-hl{animation:hlPulse 2s ease-out;}
+@keyframes hlPulse{0%,20%{outline:2px solid var(--acc);outline-offset:4px;background:var(--hl-bg);}100%{outline-color:transparent;background:transparent;}}
+
+/* ===== LIGHTBOX & ANNOTATIONS ===== */
+.lbx{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);backdrop-filter:blur(10px);cursor:zoom-out;align-items:center;justify-content:center;padding:2rem;}
+.lbx.open{display:flex;}
+.lbx img{max-width:96%;max-height:88vh;border-radius:var(--r-md);box-shadow:0 0 60px rgba(0,255,136,.1);cursor:default;position:relative;}
+
+.lbx-annotations{position:absolute;inset:0;pointer-events:none;}
+.ann-pin{position:absolute;width:24px;height:24px;border-radius:50%;background:var(--ann-pin);color:var(--s0);font-size:.7rem;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid var(--s0);box-shadow:var(--sh-sm);pointer-events:auto;cursor:default;}
+.ann-line{position:absolute;border-left:2px dashed var(--ann-line);pointer-events:none;}
+.ann-legend{position:absolute;bottom:60px;left:50%;transform:translateX(-50%);display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;max-width:90%;}
+.ann-item{background:var(--ann-bg);border:1px solid var(--bd);border-radius:var(--r-md);padding:.4rem .8rem;font-size:.72rem;color:var(--tx2);display:flex;align-items:center;gap:.4rem;pointer-events:auto;}
+.ann-item .ann-num{width:18px;height:18px;border-radius:50%;background:var(--ann-pin);color:var(--s0);font-size:.6rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+@media(max-width:768px){.ann-legend{position:static;bottom:auto;left:auto;transform:none;margin-top:1rem;}}
+
+.lbx-cap{position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.76rem;color:var(--tx2);background:var(--s2);padding:.5rem 1.25rem;border-radius:var(--r-md);max-width:80%;text-align:center;border:1px solid var(--bd);}
+.lbx-close{position:absolute;top:1rem;right:1.5rem;background:var(--s2);border:1px solid var(--bd);color:var(--tx2);font-size:1.5rem;width:40px;height:40px;border-radius:var(--r-md);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:201;}
+.lbx-close:hover{color:var(--tx);border-color:var(--bd-hover);}
+.lbx-close:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+
+/* ===== TOOLTIPS ===== */
+.tt{position:relative;border-bottom:1px dotted var(--acc);cursor:help;}
+.tt .tt-text{visibility:hidden;opacity:0;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--tt-bg);border:1px solid var(--tt-bd);border-radius:var(--r-md);padding:.5rem .75rem;font-size:.75rem;color:var(--tt-tx);white-space:nowrap;max-width:280px;white-space:normal;z-index:80;box-shadow:var(--sh-md);transition:opacity .2s,visibility .2s;pointer-events:none;}
+.tt:hover .tt-text,.tt:focus .tt-text{visibility:visible;opacity:1;}
+
+/* ===== UTILITIES ===== */
+.mit-list{list-style:none;padding:0;}
+.mit-list li{position:relative;padding:.65rem 0 .65rem 2rem;border-left:2px solid var(--bd);margin-left:.5rem;font-size:.9rem;color:var(--tx2);}
+.mit-list li::before{content:'>';position:absolute;left:-.55rem;font-family:var(--mono);color:var(--acc);font-weight:700;background:var(--s0);padding:0 .1rem;}
+
+.ref-list{list-style:none;padding:0;counter-reset:ref;}
+.ref-list li{counter-increment:ref;padding:.55rem 0 .55rem 2.75rem;position:relative;font-size:.84rem;color:var(--tx3);border-bottom:1px solid rgba(30,42,58,.5);}
+.ref-list li:last-child{border-bottom:none;}
+.ref-list li::before{content:'[' counter(ref) ']';position:absolute;left:0;font-family:var(--mono);color:var(--acc2);font-size:.76rem;width:2.5rem;}
+.ref-list a{color:var(--cyan);text-decoration:none;}
+.ref-list a:hover{text-decoration:underline;}
+
+.dl-btn{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;background:var(--acc-bg);border:1px solid var(--acc-bd);color:var(--acc);font-family:var(--mono);font-size:.78rem;padding:.65rem 1.4rem;border-radius:var(--r-md);text-decoration:none;transition:all .25s;}
+.dl-btn:hover{background:rgba(0,255,136,.15);box-shadow:0 4px 20px rgba(0,255,136,.1);text-decoration:none;}
+.dl-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+
+.ai-box{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-top:2rem;}
+.ai-box .ai-label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:.6rem;}
+
+.footer{position:relative;z-index:1;border-top:1px solid var(--bd);padding:2rem;text-align:center;font-size:.78rem;color:var(--tx3);}
+
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+
+/* ===== RESPONSIVE ===== */
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}#mc{display:none;}.t-cur{animation:none;opacity:.7;}.panel{animation:none;}.ev-card:hover{transform:none;}.demo-card:hover{transform:none;}.search-hl{animation:none;outline:2px solid var(--acc);outline-offset:4px;}}
+
+:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+
 </style>
 </head>
 <body>
 <canvas id="mc"></canvas>
-<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Image viewer"><button class="lbx-close" id="lbx-close" aria-label="Close image viewer">&times;</button><img id="lbx-img" src="" alt=""><div class="lbx-cap" id="lbx-cap"></div></div>
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Image viewer">
+  <button class="lbx-close" id="lbx-close" aria-label="Close image viewer">&times;</button>
+  <div class="lbx-content" id="lbx-content">
+    <img id="lbx-img" src="" alt="">
+    <div class="lbx-annotations" id="lbx-annotations"></div>
+  </div>
+  <div class="lbx-cap" id="lbx-cap"></div>
+</div>
 <nav class="nav" id="nav" aria-label="Main navigation"><div class="nav-inner"><div class="nav-logo">alvi<span>@</span>cmp-x305<span>:~$</span></div><div class="nav-tabs" id="nav-tabs" role="tablist"><button class="nav-tab active" data-s="intro" role="tab" aria-label="Overview section" aria-selected="true">Overview</button><button class="nav-tab" data-s="w5" role="tab" aria-label="WPScan lab section" aria-selected="false">WPScan</button><button class="nav-tab" data-s="w7" role="tab" aria-label="Juice Shop lab section" aria-selected="false">Juice Shop</button><button class="nav-tab" data-s="w8" role="tab" aria-label="Nmap and SSH lab section" aria-selected="false">Nmap &amp; SSH</button><button class="nav-tab" data-s="w9" role="tab" aria-label="Nessus lab section" aria-selected="false">Nessus</button><button class="nav-tab" data-s="overall" role="tab" aria-label="Reflection section" aria-selected="false">Reflection</button><button class="nav-tab" data-s="refs" role="tab" aria-label="References section" aria-selected="false">References</button></div><button class="mob-btn" id="mob-btn" aria-label="Toggle mobile navigation menu" aria-expanded="false">MENU</button></div></nav>
 <div class="mob-nav" id="mob-nav" role="navigation" aria-label="Mobile navigation"><button class="nav-tab active" data-s="intro" aria-label="Overview section">Overview</button><button class="nav-tab" data-s="w5" aria-label="WPScan lab section">WPScan</button><button class="nav-tab" data-s="w7" aria-label="Juice Shop lab section">Juice Shop</button><button class="nav-tab" data-s="w8" aria-label="Nmap and SSH lab section">Nmap &amp; SSH</button><button class="nav-tab" data-s="w9" aria-label="Nessus lab section">Nessus</button><button class="nav-tab" data-s="overall" aria-label="Reflection section">Reflection</button><button class="nav-tab" data-s="refs" aria-label="References section">References</button></div>
 <section class="hero"><div class="hero-inner"><div class="badge">CMP-X305 &mdash; Cyber Security &mdash; Coursework Portfolio 1</div><h1>Cybersecurity Portfolio</h1><p class="hero-sub">Four hands-on security labs covering application reconnaissance, vulnerability exploitation, secure administration, and automated risk prioritisation.</p><div class="demo-strip"><div class="demo-card"><div class="icon">&#x1F50D;</div><div class="demo-title">Application Recon</div><div class="demo-desc">WPScan exposes attack surface at the plugin and resource level, not just open ports.</div></div><div class="demo-card"><div class="icon">&#x26A1;</div><div class="demo-title">Exploit Analysis</div><div class="demo-desc">Juice Shop demonstrates how broken controls chain together into serious risk.</div></div><div class="demo-card"><div class="icon">&#x1F510;</div><div class="demo-title">Secure Administration</div><div class="demo-desc">Nmap discovery paired with SSH hardening links what is exposed to how to lock it down.</div></div><div class="demo-card"><div class="icon">&#x1F4CA;</div><div class="demo-title">Risk Prioritisation</div><div class="demo-desc">Nessus turns raw findings into severity-based output that requires context to interpret correctly.</div></div></div><div class="terminal"><div class="t-bar"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div><div><span class="t-p">$</span> <span class="t-c">whoami</span></div><div><span class="t-o">Alvi Hossain &mdash; HOS22555470 &mdash; BSc CS &amp; SE</span></div><div><span class="t-p">$</span> <span class="t-c">ls labs/</span></div><div><span class="t-o">WPScan/&nbsp;&nbsp;JuiceShop/&nbsp;&nbsp;Nmap-SSH/&nbsp;&nbsp;Nessus/</span></div><div><span class="t-p">$</span> <span class="t-cur"></span></div></div></div></section>
@@ -69,7 +297,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
     <div class="tk-body">
       <div class="tk-title">Key Takeaway</div>
       <div class="tk-sub">Main analytical point</div>
-      <div class="tk-text">WPScan works at the application layer, not just the network layer. It flagged the active theme version, an Akismet advisory requiring version validation, exposed resources including robots.txt and XML-RPC, and demonstrated how quickly reconnaissance can progress to a brute-force login attempt. Each finding needed manual version confirmation before being treated as a confirmed vulnerability &mdash; that distinction between flagged and confirmed is the core analytical lesson of this lab.</div>
+      <div class="tk-text">WPScan works at the application layer, not just the network layer. It flagged the active theme version, an Akismet advisory requiring version validation, exposed resources including robots.txt and <span class="tt" tabindex="0">XML-RPC<span class="tt-text" role="tooltip">XML Remote Procedure Call — a WordPress API endpoint that can be abused for brute-force and DDoS attacks</span></span>, and demonstrated how quickly reconnaissance can progress to a brute-force login attempt. Each finding needed manual version confirmation before being treated as a confirmed vulnerability &mdash; that distinction between flagged and confirmed is the core analytical lesson of this lab.</div>
     </div>
   </div>
   <div class="sub-nav" id="sub-nav-w5" role="navigation" aria-label="WPScan subsections">
@@ -77,7 +305,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
   </div>
   <div class="cb" id="w5-aim">
     <h3><span class="sec-tag">Aim</span></h3>
-    <p>The aim of this lab was to use WPScan from Kali Linux in order to assess a WordPress instance at <code>http://192.168.123.30</code> and identify any exposed themes, plugins and resources, then interpret the security risks from the results [2], [3]. This lab addressed <strong>LO1</strong> because I was able to translate the scan output into concrete hardening actions, and <strong>LO3</strong> because it showed how publicly exposed WordPress components can reduce user privacy.</p>
+    <p>The aim of this lab was to use WPScan from Kali Linux in order to assess a WordPress instance at <code>http://192.168.123.30</code> and identify any exposed themes, plugins and resources, then interpret the security risks from the results [2], [3]. This lab addressed <strong><span class="tt" tabindex="0">LO1<span class="tt-text" role="tooltip">Learning Outcome 1 — Identify vulnerabilities and recommend hardening actions</span></span></strong> because I was able to translate the scan output into concrete hardening actions, and <strong><span class="tt" tabindex="0">LO3<span class="tt-text" role="tooltip">Learning Outcome 3 — Assess privacy and data-protection implications</span></span></strong> because it showed how publicly exposed WordPress components can reduce user privacy.</p>
   </div>
   <div class="cb" id="w5-method">
     <h3><span class="sec-tag">Methodology</span></h3>
@@ -100,7 +328,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-4" onclick="openLbx('images/image4.png','Figure W5-4 &mdash; Brute-force password exercise launched against the login endpoint')"><div class="ev-label">Figure W5-4</div><img src="images/image4.png" alt="Brute-force exercise launched" loading="lazy"><div class="ev-body"><div class="ev-claim">Brute-force exercise launched</div><div class="ev-support">Demonstrates how a site with no lockout policy gives automated password guessing unlimited attempts.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-5" onclick="openLbx('images/image5.png','Figure W5-5 &mdash; WPScan confirmed successful use of the API during scanning')"><div class="ev-label">Figure W5-5</div><img src="images/image5.png" alt="API-backed enrichment confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">API-backed enrichment confirmed</div><div class="ev-support">Confirms WPVulnDB was actively queried. Advisory matches are version-dependent and still require manual validation.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-6" onclick="openLbx('images/image6.png','Figure W5-6 &mdash; Akismet stored XSS advisory flagged via API enrichment')"><div class="ev-label">Figure W5-6</div><img src="images/image6.png" alt="Akismet XSS advisory flagged" loading="lazy"><div class="ev-body"><div class="ev-claim">Akismet XSS advisory flagged</div><div class="ev-support">Advisory indicates a potential unauthenticated stored XSS &mdash; the installed version must be confirmed against the affected range before treating this as a confirmed finding.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-7" onclick="openLbx('images/image7.png','Figure W5-7 &mdash; robots.txt, XML-RPC, readme.html, uploads, and WP-Cron all exposed')"><div class="ev-label">Figure W5-7</div><img src="images/image7.png" alt="Exposed resources: robots.txt, XML-RPC, readme, uploads" loading="lazy"><div class="ev-body"><div class="ev-claim">Exposed resources: robots.txt, XML-RPC, readme, uploads</div><div class="ev-support">The strongest single recon screenshot &mdash; five separate exposure types that together reduce the effort needed for every subsequent attack stage.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":15,"y":30,"label":"robots.txt","detail":"Exposes admin paths that help attackers map the application structure."},{"id":2,"x":15,"y":50,"label":"XML-RPC enabled","detail":"Allows automated brute-force and DDoS amplification via the xmlrpc.php endpoint."},{"id":3,"x":15,"y":70,"label":"readme.html public","detail":"Discloses the exact WordPress version, narrowing the attacker's research scope."}]' tabindex="0" role="button" aria-label="View Figure W5-7" onclick="openLbx('images/image7.png','Figure W5-7 &mdash; robots.txt, XML-RPC, readme.html, uploads, and WP-Cron all exposed')"><div class="ev-label">Figure W5-7</div><img src="images/image7.png" alt="Exposed resources: robots.txt, XML-RPC, readme, uploads" loading="lazy"><div class="ev-body"><div class="ev-claim">Exposed resources: robots.txt, XML-RPC, readme, uploads</div><div class="ev-support">The strongest single recon screenshot &mdash; five separate exposure types that together reduce the effort needed for every subsequent attack stage.</div></div></div>
     </div>
   </div>
   <div class="cb" id="w5-findings">
@@ -108,12 +336,12 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
     <p>For me the most useful result was not one single finding but the way WPScan assembled the application's attack surface. Figure W5-3 identified the active theme and its version, and then Figure W5-7 revealed <code>robots.txt</code>, XML-RPC, the readme and discoverable uploads. Together these gave me a checklist of entry points to document and address.</p>
     <div class="dataset" data-ds="w5-findings">
       <div class="tbl-wrap"><table class="ft">
-        <thead><tr><th>Finding</th><th>Evidence</th><th>Security Impact</th><th>CIA Impact</th><th>Priority</th><th>Recommended Action</th></tr></thead>
+        <thead><tr><th>Finding</th><th>Evidence</th><th>Security Impact</th><th><span class="tt" tabindex="0">CIA<span class="tt-text" role="tooltip">Confidentiality, Integrity, Availability — the three pillars of information security</span></span> Impact</th><th>Priority</th><th>Recommended Action</th></tr></thead>
         <tbody>
           <tr><td>Active theme disclosure &mdash; travel-booking 1.4.0</td><td>W5-3</td><td>Reduces uncertainty about the stack; supports targeted research</td><td>Confidentiality</td><td><span class="sb sm">Medium</span></td><td>Patch, remove unused themes, suppress version disclosure</td></tr>
           <tr><td>Plugin advisory (Akismet stored XSS &mdash; flagged, version validation required)</td><td>W5-5, W5-6</td><td>Indicates a potentially vulnerable component &mdash; not confirmed until version is checked</td><td>Integrity / Confidentiality</td><td><span class="sb sh">High</span></td><td>Verify installed version against affected range; patch if confirmed; remove unused plugins</td></tr>
           <tr><td>XML-RPC, readme.html, upload listing, WP-Cron all publicly exposed</td><td>W5-7</td><td>Multiple recon and abuse paths accessible from a single host state</td><td>Confidentiality / Availability</td><td><span class="sb sh">High</span></td><td>Restrict XML-RPC, disable directory listing, remove public deployment artefacts</td></tr>
-          <tr><td>Brute-force login exercise executed with no lockout</td><td>W5-4</td><td>Shows how enumeration can progress directly to credential attack activity</td><td>Confidentiality / Integrity</td><td><span class="sb sh">High</span></td><td>Apply rate limiting, MFA, stronger passwords, and login monitoring</td></tr>
+          <tr><td>Brute-force login exercise executed with no lockout</td><td>W5-4</td><td>Shows how enumeration can progress directly to credential attack activity</td><td>Confidentiality / Integrity</td><td><span class="sb sh">High</span></td><td>Apply rate limiting, <span class="tt" tabindex="0">MFA<span class="tt-text" role="tooltip">Multi-Factor Authentication — requiring two or more verification factors to access an account</span></span>, stronger passwords, and login monitoring</td></tr>
         </tbody>
       </table></div>
     </div>
@@ -161,7 +389,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
   </div>
   <div class="cb" id="w7-aim">
     <h3><span class="sec-tag">Aim</span></h3>
-    <p>The aim of this lab was to explore intentionally vulnerable web application behaviour in Juice Shop, complete challenges with screenshot evidence and explain the security failure behind each one [4], [5]. This lab addressed <strong>LO1</strong>, <strong>LO2</strong> and <strong>LO3</strong> because it covered injection, authentication bypass, session handling, client-side trust and directory exposure.</p>
+    <p>The aim of this lab was to explore intentionally vulnerable web application behaviour in Juice Shop, complete challenges with screenshot evidence and explain the security failure behind each one [4], [5]. This lab addressed <strong>LO1</strong>, <strong><span class="tt" tabindex="0">LO2<span class="tt-text" role="tooltip">Learning Outcome 2 — Apply cryptographic and authentication principles</span></span></strong> and <strong>LO3</strong> because it covered injection, authentication bypass, session handling, client-side trust and directory exposure.</p>
   </div>
   <div class="cb" id="w7-method">
     <h3><span class="sec-tag">Methodology</span></h3>
@@ -176,7 +404,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
         <thead><tr><th>Challenge</th><th>Difficulty</th><th>What Was Exploited</th><th>Broken Control</th><th>CIA / Privacy Impact</th><th>Mitigation Focus</th><th>Evidence</th></tr></thead>
         <tbody>
           <tr><td>Score Board</td><td><span class="sb s1">1 star</span></td><td>Hidden route discovery via client-side JS</td><td>Security through obscurity</td><td>Confidentiality / Privacy</td><td>Remove hidden-but-reachable routes from production builds</td><td>W7-3</td></tr>
-          <tr><td>DOM XSS</td><td><span class="sb s1">1 star</span></td><td>Script injection into search route</td><td>Unsafe client-side input handling</td><td>Integrity / Confidentiality</td><td>Output encoding, DOM sanitisation, CSP</td><td>W7-4</td></tr>
+          <tr><td>DOM XSS</td><td><span class="sb s1">1 star</span></td><td>Script injection into search route</td><td>Unsafe client-side input handling</td><td>Integrity / Confidentiality</td><td>Output encoding, DOM sanitisation, <span class="tt" tabindex="0">CSP<span class="tt-text" role="tooltip">Content Security Policy — an HTTP header that restricts which scripts and resources a browser may load</span></span></td><td>W7-4</td></tr>
           <tr><td>Bonus Payload</td><td><span class="sb s1">1 star</span></td><td>Extended iframe payload</td><td>Browser trust abuse</td><td>Integrity / Confidentiality</td><td>Input validation and client-side output controls</td><td>W7-5</td></tr>
           <tr><td>Confidential Document</td><td><span class="sb s1">1 star</span></td><td>Exposed /ftp/ directory and direct file access</td><td>Sensitive data exposure</td><td>Confidentiality / Privacy</td><td>Remove public file exposure, harden directory controls</td><td>W7-6, W7-7</td></tr>
           <tr><td>Error Handling</td><td><span class="sb s1">1 star</span></td><td>Unhandled application exception</td><td>Unsafe exception handling</td><td>Availability / Confidentiality</td><td>Graceful error handling and logging without disclosure</td><td>W7-8</td></tr>
@@ -195,9 +423,9 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-1" onclick="openLbx('images/image8.png','Figure W7-1 &mdash; Juice Shop server started on the lab VM')"><div class="ev-label">Figure W7-1</div><img src="images/image8.png" alt="Juice Shop server started" loading="lazy"><div class="ev-body"><div class="ev-claim">Juice Shop server started</div><div class="ev-support">Confirms the lab environment was live before any challenge work began.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-2" onclick="openLbx('images/image9.png','Figure W7-2 &mdash; Juice Shop loaded in browser on port 3000')"><div class="ev-label">Figure W7-2</div><img src="images/image9.png" alt="Application loaded in browser" loading="lazy"><div class="ev-body"><div class="ev-claim">Application loaded in browser</div><div class="ev-support">Baseline environment screenshot confirming the application was accessible and functioning normally.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-3" onclick="openLbx('images/image10.png','Figure W7-3 &mdash; Score Board reached by navigating to the hidden route directly')"><div class="ev-label">Figure W7-3</div><img src="images/image10.png" alt="Score Board &mdash; hidden route accessed" loading="lazy"><div class="ev-body"><div class="ev-claim">Score Board &mdash; hidden route accessed</div><div class="ev-support">A route that exists in client-side JS but is not linked in the navigation is still reachable. Obscurity alone is not access control.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-4" onclick="openLbx('images/image11.png','Figure W7-4 &mdash; DOM XSS challenge completed via search route injection')"><div class="ev-label">Figure W7-4</div><img src="images/image11.png" alt="DOM XSS &mdash; injected script executed" loading="lazy"><div class="ev-body"><div class="ev-claim">DOM XSS &mdash; injected script executed</div><div class="ev-support">User input inserted into the DOM without encoding. The browser executes attacker-controlled content &mdash; fix requires output encoding and CSP.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":30,"y":40,"label":"Injected payload","detail":"Script tag executes in the browser because the search route inserts user input into the DOM without encoding."},{"id":2,"x":70,"y":25,"label":"Challenge flag","detail":"Green banner confirms the application accepted and executed the attacker-controlled content."}]' tabindex="0" role="button" aria-label="View Figure W7-4" onclick="openLbx('images/image11.png','Figure W7-4 &mdash; DOM XSS challenge completed via search route injection')"><div class="ev-label">Figure W7-4</div><img src="images/image11.png" alt="DOM XSS &mdash; injected script executed" loading="lazy"><div class="ev-body"><div class="ev-claim">DOM XSS &mdash; injected script executed</div><div class="ev-support">User input inserted into the DOM without encoding. The browser executes attacker-controlled content &mdash; fix requires output encoding and CSP.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-5" onclick="openLbx('images/image12.png','Figure W7-5 &mdash; Bonus Payload completed using extended iframe injection')"><div class="ev-label">Figure W7-5</div><img src="images/image12.png" alt="Bonus Payload &mdash; iframe injection confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">Bonus Payload &mdash; iframe injection confirmed</div><div class="ev-support">Confirms the application does not strip or encode iframe tags. The same client-side trust failure as W7-4, extended.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-6" onclick="openLbx('images/image13.png','Figure W7-6 &mdash; /ftp/ directory browsable with no access control')"><div class="ev-label">Figure W7-6</div><img src="images/image13.png" alt="/ftp/ directory exposed &mdash; no access control" loading="lazy"><div class="ev-body"><div class="ev-claim">/ftp/ directory exposed &mdash; no access control</div><div class="ev-support">The directory is not linked anywhere on the site but the web server serves it without restriction. Existence alone does not equal protection.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":20,"y":35,"label":"Directory listing","detail":"The web server serves the /ftp/ directory contents without authentication or access control."},{"id":2,"x":50,"y":55,"label":"Sensitive files visible","detail":"Confidential documents are directly downloadable by anyone who discovers this path."}]' tabindex="0" role="button" aria-label="View Figure W7-6" onclick="openLbx('images/image13.png','Figure W7-6 &mdash; /ftp/ directory browsable with no access control')"><div class="ev-label">Figure W7-6</div><img src="images/image13.png" alt="/ftp/ directory exposed &mdash; no access control" loading="lazy"><div class="ev-body"><div class="ev-claim">/ftp/ directory exposed &mdash; no access control</div><div class="ev-support">The directory is not linked anywhere on the site but the web server serves it without restriction. Existence alone does not equal protection.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-7" onclick="openLbx('images/image14.png','Figure W7-7 &mdash; Confidential Document accessed from the exposed /ftp/ path')"><div class="ev-label">Figure W7-7</div><img src="images/image14.png" alt="Confidential Document downloaded without auth" loading="lazy"><div class="ev-body"><div class="ev-claim">Confidential Document downloaded without auth</div><div class="ev-support">Sensitive file retrieved directly from the exposed path. No authentication, no authorisation check, file fully readable.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-8" onclick="openLbx('images/image15.png','Figure W7-8 &mdash; Error Handling challenge triggered by deliberate bad input')"><div class="ev-label">Figure W7-8</div><img src="images/image15.png" alt="Error Handling &mdash; unhandled exception triggered" loading="lazy"><div class="ev-body"><div class="ev-claim">Error Handling &mdash; unhandled exception triggered</div><div class="ev-support">Deliberate bad input crashes the application and may disclose stack traces. Persistent fault injection could degrade service availability.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-9" onclick="openLbx('images/image16.png','Figure W7-9 &mdash; Login Admin challenge completed via auth bypass')"><div class="ev-label">Figure W7-9</div><img src="images/image16.png" alt="Login Admin &mdash; privileged session established" loading="lazy"><div class="ev-body"><div class="ev-claim">Login Admin &mdash; privileged session established</div><div class="ev-support">Authentication bypassed to gain admin access. Opens the chain to Admin Section (W7-10) and Five-Star Feedback (W7-11).</div></div></div>
@@ -208,7 +436,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
     </div>
     <div class="analysis-card">
       <div class="analysis-context"><strong>Why this chart exists:</strong> the ten selected challenges were not random &mdash; they were chosen to represent the four most consequential broken-control categories in modern web applications.</div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-14" onclick="openLbx('images/image21.png','Figure W7-14 &mdash; Analytic summary chart of challenges by broken control category')"><div class="ev-label">Figure W7-14</div><img src="images/image21.png" alt="Challenge breakdown by broken control" loading="lazy"><div class="ev-body"><div class="ev-claim">Challenge breakdown by broken control</div><div class="ev-support">The clustering of challenges around disclosure, injection, broken access control, and weak auth maps directly onto the OWASP Top Ten.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":25,"y":30,"label":"Gateway services","detail":"SSH (22/tcp) and NRPE (5666/tcp) visible — each is an administrative entry point."},{"id":2,"x":25,"y":60,"label":"WordPress host","detail":"SSH, HTTP, and MySQL all exposed — three distinct attack surfaces on one host."}]' tabindex="0" role="button" aria-label="View Figure W7-14" onclick="openLbx('images/image21.png','Figure W7-14 &mdash; Analytic summary chart of challenges by broken control category')"><div class="ev-label">Figure W7-14</div><img src="images/image21.png" alt="Challenge breakdown by broken control" loading="lazy"><div class="ev-body"><div class="ev-claim">Challenge breakdown by broken control</div><div class="ev-support">The clustering of challenges around disclosure, injection, broken access control, and weak auth maps directly onto the OWASP Top Ten.</div></div></div>
       <div class="analysis-takeaway"><strong>Takeaway:</strong> That clustering makes this lab the most direct evidence of LO3 in the entire portfolio.</div>
     </div>
   </div>
@@ -303,7 +531,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-12" onclick="openLbx('images/image33.png','Figure W8-12 &mdash; Public key copied to the gateway via ssh-copy-id')"><div class="ev-label">Figure W8-12</div><img src="images/image33.png" alt="Public key deployed to authorized_keys" loading="lazy"><div class="ev-body"><div class="ev-claim">Public key deployed to authorized_keys</div><div class="ev-support">Key delivered to the correct authorized_keys file. Security depends on this step being done correctly and the private key being protected.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-13" onclick="openLbx('images/image34.png','Figure W8-13 &mdash; SCP used to transfer a file securely over the SSH session')"><div class="ev-label">Figure W8-13</div><img src="images/image34.png" alt="SCP &mdash; encrypted file transfer confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">SCP &mdash; encrypted file transfer confirmed</div><div class="ev-support">Demonstrates confidentiality and integrity in file transfer. The same mechanism could be misused to exfiltrate data if SSH access is not governed.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-14" onclick="openLbx('images/image35.png','Figure W8-14 &mdash; Local port forwarding used to reach the WordPress service through the gateway')"><div class="ev-label">Figure W8-14</div><img src="images/image35.png" alt="Local port forwarding through the gateway" loading="lazy"><div class="ev-body"><div class="ev-claim">Local port forwarding through the gateway</div><div class="ev-support">Legitimate administrative technique. If left ungoverned, the same mechanism could be used to bypass network boundaries.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-15" onclick="openLbx('images/image36.png','Figure W8-15 &mdash; Remote port forwarding demonstrated over the SSH session')"><div class="ev-label">Figure W8-15</div><img src="images/image36.png" alt="Remote port forwarding demonstrated" loading="lazy"><div class="ev-body"><div class="ev-claim">Remote port forwarding demonstrated</div><div class="ev-support">Exposes a local service to the remote side. Useful for administration; requires governance to prevent unintended network exposure.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":40,"y":45,"label":"No password prompt","detail":"Key-based authentication confirmed — the full hardening chain from key generation to deployment is validated."}]' tabindex="0" role="button" aria-label="View Figure W8-15" onclick="openLbx('images/image36.png','Figure W8-15 &mdash; Remote port forwarding demonstrated over the SSH session')"><div class="ev-label">Figure W8-15</div><img src="images/image36.png" alt="Remote port forwarding demonstrated" loading="lazy"><div class="ev-body"><div class="ev-claim">Remote port forwarding demonstrated</div><div class="ev-support">Exposes a local service to the remote side. Useful for administration; requires governance to prevent unintended network exposure.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-16" onclick="openLbx('images/image37.png','Figure W8-16 &mdash; ControlMaster multiplexing configured for session reuse')"><div class="ev-label">Figure W8-16</div><img src="images/image37.png" alt="ControlMaster &mdash; session multiplexing configured" loading="lazy"><div class="ev-body"><div class="ev-claim">ControlMaster &mdash; session multiplexing configured</div><div class="ev-support">Reduces authentication overhead by reusing an existing connection. Improves operational efficiency without weakening security.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-17" onclick="openLbx('images/image38.png','Figure W8-17 &mdash; Passwordless SSH login confirmed after key-based auth was set up')"><div class="ev-label">Figure W8-17</div><img src="images/image38.png" alt="Passwordless login confirmed &mdash; key auth working" loading="lazy"><div class="ev-body"><div class="ev-claim">Passwordless login confirmed &mdash; key auth working</div><div class="ev-support">End-to-end validation of the hardening chain: strong key, correct deployment, verified login. Password auth is no longer required.</div></div></div>
     </div>
@@ -327,7 +555,7 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
   <div class="sec-hdr"><div class="lbl" style="color:var(--w9)">05 / Week 9</div><h2>Vulnerability Scanning and Mitigation Lab (Nessus)</h2><p class="desc">Automated vulnerability scanning of two hosts with structured severity output, host-to-host comparison, and context-dependent prioritisation.</p></div>
   <div class="takeaway"><div class="tk-icon">&#x1F4CA;</div><div class="tk-body"><div class="tk-title">Key Takeaway</div><div class="tk-sub">Main analytical point</div><div class="tk-text">Nessus turned raw scan data into structured severity output &mdash; but the IP Forwarding finding demonstrated that the severity label alone does not determine priority. A medium rating on a host whose job is to route traffic means something different from the same rating on a host that should not be forwarding at all. Nessus changed how I think about prioritisation because the host role and network context matter more than the colour code, and that judgement cannot be automated.</div></div></div>
   <div class="sub-nav" id="sub-nav-w9" role="navigation" aria-label="Nessus subsections"><a href="#w9-aim" class="active">Aim</a><a href="#w9-method">Methodology</a><a href="#w9-evidence">Evidence</a><a href="#w9-comparison">Comparison</a><a href="#w9-findings">Findings</a><a href="#w9-mit">Mitigations</a><a href="#w9-reflect">Reflection</a></div>
-  <div class="cb" id="w9-aim"><h3><span class="sec-tag">Aim</span></h3><p>The aim of this lab was to install, configure and use Nessus in order to scan at least two virtual machines and interpret the resulting findings [10], [11]. This lab addressed <strong>LO1</strong> because I identified host-level vulnerabilities and translated them into prioritised remediation steps, and <strong>LO2</strong> because findings such as the SSH Terrapin weakness and IP forwarding relate directly to confidentiality, integrity and availability.</p></div>
+  <div class="cb" id="w9-aim"><h3><span class="sec-tag">Aim</span></h3><p>The aim of this lab was to install, configure and use Nessus in order to scan at least two virtual machines and interpret the resulting findings [10], [11]. This lab addressed <strong>LO1</strong> because I identified host-level vulnerabilities and translated them into prioritised remediation steps, and <strong>LO2</strong> because findings such as the SSH <span class="tt" tabindex="0">Terrapin<span class="tt-text" role="tooltip">CVE-2023-48795 — a prefix truncation attack against the SSH protocol&#39;s handshake</span></span> weakness and IP forwarding relate directly to confidentiality, integrity and availability.</p></div>
   <div class="cb" id="w9-method"><h3><span class="sec-tag">Methodology</span></h3><p>I started the Nessus service on Kali Linux and connected to the interface at <code>https://localhost:8834</code>, completed the initial setup, selected the Basic Network Scan template and ran scans against two targets:</p><ul><li><code>192.168.123.1</code> &mdash; Master Gateway</li><li><code>192.168.123.30</code> &mdash; Ubuntu WordPress</li></ul><p>After launching both scans I reviewed the internal Nessus history screens, compared the severity counts and exported a report for each host. To add analytical depth I created a side-by-side chart from the exported data.</p></div>
   <div class="cb" id="w9-evidence"><h3><span class="sec-tag">Evidence</span></h3>
     <div class="ev-grid">
@@ -336,8 +564,8 @@ html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);c
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-3" onclick="openLbx('images/image41.png','Figure W9-3 &mdash; Nessus plugin database initialised')"><div class="ev-label">Figure W9-3</div><img src="images/image41.png" alt="Plugin database initialised" loading="lazy"><div class="ev-body"><div class="ev-claim">Plugin database initialised</div><div class="ev-support">Plugin population is the equivalent of WPScan's database update &mdash; without it, findings would miss recently disclosed vulnerabilities.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-4" onclick="openLbx('images/image42.png','Figure W9-4 &mdash; Basic Network Scan template selected')"><div class="ev-label">Figure W9-4</div><img src="images/image42.png" alt="Scan template selected" loading="lazy"><div class="ev-body"><div class="ev-claim">Scan template selected</div><div class="ev-support">Template selection determines the scope and depth of checks run &mdash; Basic Network Scan is appropriate for a general host-level assessment.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-5" onclick="openLbx('images/image43.png','Figure W9-5 &mdash; Scan configured for the Master Gateway at 192.168.123.1')"><div class="ev-label">Figure W9-5</div><img src="images/image43.png" alt="Gateway scan configured" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway scan configured</div><div class="ev-support">Target set to 192.168.123.1. Configuration screenshot confirms deliberate scan setup.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-6" onclick="openLbx('images/image44.png','Figure W9-6 &mdash; Internal Nessus history showing the completed Master Gateway scan')"><div class="ev-label">Figure W9-6</div><img src="images/image44.png" alt="Gateway scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway scan completed &mdash; history confirmed</div><div class="ev-support">Internal history view shows I navigated and used the Nessus interface directly, not just exported PDFs.</div></div></div>
-      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-7" onclick="openLbx('images/image45.png','Figure W9-7 &mdash; Internal Nessus history showing the completed Ubuntu WordPress scan')"><div class="ev-label">Figure W9-7</div><img src="images/image45.png" alt="WordPress scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">WordPress scan completed &mdash; history confirmed</div><div class="ev-support">Second scan confirmed via history. Both hosts were assessed and results retained within Nessus for review.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":35,"y":35,"label":"CVE-2023-48795","detail":"Terrapin vulnerability affects SSH handshake integrity — an unconditional patch target."},{"id":2,"x":60,"y":65,"label":"Severity counts","detail":"1 medium, 1 low, 35 informational — the medium finding is the most operationally significant."}]' tabindex="0" role="button" aria-label="View Figure W9-6" onclick="openLbx('images/image44.png','Figure W9-6 &mdash; Internal Nessus history showing the completed Master Gateway scan')"><div class="ev-label">Figure W9-6</div><img src="images/image44.png" alt="Gateway scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway scan completed &mdash; history confirmed</div><div class="ev-support">Internal history view shows I navigated and used the Nessus interface directly, not just exported PDFs.</div></div></div>
+      <div class="ev-card" data-annotations='[{"id":1,"x":35,"y":35,"label":"IP Forwarding","detail":"Expected on a routing host but a risk on any host that should not be forwarding packets."},{"id":2,"x":60,"y":60,"label":"Plugin ID 50686","detail":"Nessus flags this as medium severity — context determines whether it needs remediation."}]' tabindex="0" role="button" aria-label="View Figure W9-7" onclick="openLbx('images/image45.png','Figure W9-7 &mdash; Internal Nessus history showing the completed Ubuntu WordPress scan')"><div class="ev-label">Figure W9-7</div><img src="images/image45.png" alt="WordPress scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">WordPress scan completed &mdash; history confirmed</div><div class="ev-support">Second scan confirmed via history. Both hosts were assessed and results retained within Nessus for review.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-8" onclick="openLbx('images/image46.png','Figure W9-8 &mdash; Exported Nessus report for 192.168.123.30 showing Terrapin SSH finding (CVE-2023-48795)')"><div class="ev-label">Figure W9-8</div><img src="images/image46.png" alt="WordPress report &mdash; Terrapin SSH (CVE-2023-48795)" loading="lazy"><div class="ev-body"><div class="ev-claim">WordPress report &mdash; Terrapin SSH (CVE-2023-48795)</div><div class="ev-support">SSH protocol negotiation weakness directly relevant to LO2. Totals: 0 critical, 0 high, 1 medium, 1 low, 35 informational.</div></div></div>
       <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-9" onclick="openLbx('images/image47.png','Figure W9-9 &mdash; Exported Nessus report for 192.168.123.1 showing IP Forwarding Enabled')"><div class="ev-label">Figure W9-9</div><img src="images/image47.png" alt="Gateway report &mdash; IP Forwarding Enabled" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway report &mdash; IP Forwarding Enabled</div><div class="ev-support">Totals: 0 critical, 0 high, 1 medium, 1 low, 24 informational. Finding is context-dependent &mdash; expected on a routing host.</div></div></div>
     </div>
@@ -463,22 +691,86 @@ document.getElementById('mob-btn').addEventListener('click',toggleMob);
 var lbx=document.getElementById('lbx');
 var lbxImg=document.getElementById('lbx-img');
 var lbxCap=document.getElementById('lbx-cap');
+var lbxAnnotations=document.getElementById('lbx-annotations');
 var prevFocus=null;
-function openLbx(src,cap){
+var currentAnnotations=null;
+
+function openLbx(src,cap,annotationsJson){
   prevFocus=document.activeElement;
   lbxImg.src=src;lbxImg.alt=cap||'';lbxCap.textContent=cap||'';
+  lbxAnnotations.innerHTML='';
+  currentAnnotations=null;
+
+  if(annotationsJson){
+    try{
+      var anns=JSON.parse(annotationsJson);
+      currentAnnotations=anns;
+      renderAnnotations(anns);
+    }catch(e){}
+  }
+
   lbx.classList.add('open');document.body.style.overflow='hidden';
   document.getElementById('lbx-close').focus();
 }
+
+function renderAnnotations(anns){
+  if(!anns||!anns.length)return;
+  anns.forEach(function(a){
+    var pin=document.createElement('div');
+    pin.className='ann-pin';
+    pin.style.left=a.x+'%';
+    pin.style.top=a.y+'%';
+    pin.textContent=a.id;
+    pin.setAttribute('aria-label',a.label+': '+a.detail);
+    lbxAnnotations.appendChild(pin);
+  });
+  var legend=document.createElement('div');
+  legend.className='ann-legend';
+  anns.forEach(function(a){
+    var item=document.createElement('div');
+    item.className='ann-item';
+    item.innerHTML='<span class="ann-num">'+a.id+'</span><span><strong>'+a.label+'</strong> — '+a.detail+'</span>';
+    legend.appendChild(item);
+  });
+  lbxAnnotations.appendChild(legend);
+}
+
 function closeLbx(){
   lbx.classList.remove('open');document.body.style.overflow='';
+  lbxAnnotations.innerHTML='';currentAnnotations=null;
   if(prevFocus)prevFocus.focus();
 }
 window.openLbx=openLbx;
-lbx.addEventListener('click',function(e){if(e.target===lbx)closeLbx();});
+
+document.addEventListener('click',function(e){
+  var card=e.target.closest('.ev-card[data-annotations]');
+  if(card && card.dataset.annotations){
+    e.stopPropagation();
+    var img=card.querySelector('img');
+    var label=card.querySelector('.ev-label');
+    var claim=card.querySelector('.ev-claim');
+    var src=img?img.src:'';
+    var cap=(label?label.textContent:'')+(claim?' — '+claim.textContent:'');
+    openLbx(src,cap,card.dataset.annotations);
+    return;
+  }
+},true);
+
+lbx.addEventListener('click',function(e){if(e.target===lbx||e.target===lbx.querySelector('.lbx-content'))closeLbx();});
 lbxImg.addEventListener('click',function(e){e.stopPropagation();});
 document.getElementById('lbx-close').addEventListener('click',closeLbx);
-document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(lbx.classList.contains('open'))closeLbx();else dismissSearch();}});
+
+/* ===== KEYBOARD HANDLER ===== */
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){
+    if(lbx.classList.contains('open')){closeLbx();}
+    else{dismissSearch();}
+    var focused=document.querySelector('.tt:focus');
+    if(focused)focused.blur();
+  }
+});
+
+/* ===== EV-CARD KEYBOARD ===== */
 document.querySelectorAll('.ev-card[role="button"]').forEach(function(c){
   c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}});
 });
@@ -573,7 +865,7 @@ function buildSearchIndex(){
     var lbl=card.querySelector('.ev-label');
     var claim=card.querySelector('.ev-claim');
     if(lbl){
-      searchIdx.push({type:'figure',text:lbl.textContent.trim()+(claim?' \u2014 '+claim.textContent.trim():''),panel:panel?panel.id.replace('panel-',''):'',targetEl:card,priority:3});
+      searchIdx.push({type:'figure',text:lbl.textContent.trim()+(claim?' — '+claim.textContent.trim():''),panel:panel?panel.id.replace('panel-',''):'',targetEl:card,priority:3});
     }
   });
   document.querySelectorAll('.dataset[data-ds]').forEach(function(wrapper){
@@ -676,7 +968,7 @@ function applySearchFilter(query){
   var bar=activePanel.querySelector('.search-filter-bar');
   if(!bar){
     bar=document.createElement('div');bar.className='search-filter-bar';
-    bar.innerHTML='<span>Filtering: "'+q.replace(/</g,'&lt;')+'"</span><button aria-label="Clear filter">\u2715 Clear</button>';
+    bar.innerHTML='<span>Filtering: "'+q.replace(/</g,'&lt;')+'"</span><button aria-label="Clear filter">✕ Clear</button>';
     bar.querySelector('button').addEventListener('click',clearSearchFilter);
     activePanel.querySelector('.sec-hdr').insertAdjacentElement('afterend',bar);
   }
