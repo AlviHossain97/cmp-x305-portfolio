@@ -7,279 +7,53 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ===== RESET & BASE ===== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --bg: #0a0e17; --bg2: #0f1420; --card: #141926; --card2: #1a2030;
-  --border: #1e2a3a; --glow: #00ff8820;
-  --fg: #e0e6f0; --fg2: #8892a4; --fg3: #5a6478;
-  --green: #00ff88; --green2: #00cc6a; --greenbg: #00ff8810;
-  --cyan: #00d4ff; --purple: #a78bfa; --amber: #fbbf24; --red: #f87171; --teal: #2dd4bf;
-  --w5: #fbbf24; --w7: #34d399; --w8: #60a5fa; --w9: #a78bfa;
-  --mono: 'JetBrains Mono', monospace; --sans: 'Inter', system-ui, sans-serif;
-}
-html { scroll-behavior: smooth; }
-body { font-family: var(--sans); background: var(--bg); color: var(--fg); line-height: 1.7; overflow-x: hidden; }
-
-/* ===== MATRIX CANVAS ===== */
-#mc { position:fixed; top:0; left:0; width:100%; height:100%; z-index:0; opacity:.06; pointer-events:none; }
-
-/* ===== NAV ===== */
-.nav { position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(10,14,23,.88); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); }
-.nav.scrolled { box-shadow:0 4px 30px rgba(0,255,136,.06); }
-.nav-inner { max-width:1280px; margin:0 auto; padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:60px; }
-.nav-logo { font-family:var(--mono); font-size:.85rem; color:var(--green); font-weight:600; }
-.nav-logo span { color:var(--fg3); }
-.nav-tabs { display:flex; gap:.2rem; flex-wrap:wrap; }
-.nav-tab { font-family:var(--mono); font-size:.7rem; padding:.45rem .9rem; border:1px solid transparent; border-radius:6px; background:transparent; color:var(--fg2); cursor:pointer; transition:all .2s; text-transform:uppercase; letter-spacing:.05em; }
-.nav-tab:hover { color:var(--fg); background:var(--card); }
-.nav-tab.active { color:var(--green); background:var(--greenbg); border-color:var(--glow); }
-.mob-btn { display:none; background:none; border:1px solid var(--border); color:var(--green); padding:.4rem .8rem; border-radius:6px; font-family:var(--mono); font-size:.72rem; cursor:pointer; }
-.mob-nav { display:none; position:fixed; top:60px; left:0; right:0; background:rgba(10,14,23,.97); backdrop-filter:blur(20px); z-index:99; padding:1rem; border-bottom:1px solid var(--border); flex-direction:column; gap:.25rem; }
-.mob-nav.open { display:flex; }
-@media(max-width:900px){ .nav-tabs{display:none;} .mob-btn{display:block;} }
-
-/* ===== HERO ===== */
-.hero { position:relative; z-index:1; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:5rem 2rem 3rem; }
-.hero-inner { max-width:860px; text-align:center; }
-.badge { display:inline-block; font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.15em; color:var(--green); background:var(--greenbg); border:1px solid var(--glow); padding:.4rem 1.2rem; border-radius:999px; margin-bottom:1.75rem; }
-.hero h1 { font-size:clamp(2.2rem,5.5vw,3.8rem); font-weight:700; line-height:1.1; margin-bottom:1.25rem; background:linear-gradient(135deg,#e0e6f0,#00ff88); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-.hero-sub { font-size:1.05rem; color:var(--fg2); max-width:620px; margin:0 auto 2.5rem; }
-
-/* What this demonstrates strip */
-.demo-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:2rem 0 2.5rem; }
-.demo-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem 1rem; text-align:center; transition:border-color .25s; }
-.demo-card:hover { border-color:var(--glow); }
-.demo-card .icon { font-size:1.5rem; margin-bottom:.6rem; }
-.demo-card .demo-title { font-size:.8rem; font-weight:600; color:var(--fg); margin-bottom:.35rem; }
-.demo-card .demo-desc { font-size:.72rem; color:var(--fg3); line-height:1.5; }
-@media(max-width:680px){ .demo-strip{grid-template-columns:repeat(2,1fr);} }
-
-/* Terminal */
-.terminal { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:1.25rem 1.75rem; text-align:left; font-family:var(--mono); font-size:.78rem; max-width:500px; margin:0 auto; }
-.t-bar { display:flex; gap:6px; margin-bottom:.9rem; }
-.t-dot { width:10px; height:10px; border-radius:50%; }
-.t-dot:nth-child(1){background:#f87171;} .t-dot:nth-child(2){background:#fbbf24;} .t-dot:nth-child(3){background:#34d399;}
-.t-p { color:var(--green); } .t-c { color:var(--fg); } .t-o { color:var(--fg3); }
-.t-cur { display:inline-block; width:8px; height:15px; background:var(--green); animation:blink 1s infinite; vertical-align:text-bottom; margin-left:2px; }
-@keyframes blink { 0%,49%{opacity:1;} 50%,100%{opacity:0;} }
-
-/* Stats row */
-.stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin:2rem 0; }
-.stat { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.1rem; text-align:center; }
-.stat-v { font-family:var(--mono); font-size:1.8rem; font-weight:700; line-height:1; margin-bottom:.3rem; }
-.stat-l { font-size:.7rem; color:var(--fg3); text-transform:uppercase; letter-spacing:.05em; }
-@media(max-width:680px){ .stats{grid-template-columns:repeat(2,1fr);} }
-
-/* ===== MAIN ===== */
-.main { position:relative; z-index:1; max-width:1280px; margin:0 auto; padding:0 2rem 5rem; }
-
-/* ===== SECTION PANELS ===== */
-.panel { display:none; animation:fadeIn .35s ease; }
-.panel.active { display:block; }
-@keyframes fadeIn { from{opacity:0;transform:translateY(14px);} to{opacity:1;transform:translateY(0);} }
-
-/* Section header */
-.sec-hdr { padding:2.75rem 0 2rem; border-bottom:1px solid var(--border); margin-bottom:2.5rem; }
-.sec-hdr .lbl { font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.15em; margin-bottom:.6rem; }
-.sec-hdr h2 { font-size:1.9rem; font-weight:700; margin-bottom:.4rem; }
-.sec-hdr .desc { color:var(--fg2); font-size:.93rem; max-width:720px; }
-
-/* Key takeaway box */
-.takeaway { background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,212,255,.04)); border:1px solid rgba(0,255,136,.2); border-radius:10px; padding:1.25rem 1.5rem; margin:0 0 2.5rem; display:flex; gap:1rem; align-items:flex-start; }
-.takeaway .tk-icon { font-size:1.3rem; flex-shrink:0; margin-top:.1rem; }
-.takeaway .tk-body { }
-.takeaway .tk-title { font-size:.75rem; font-family:var(--mono); text-transform:uppercase; letter-spacing:.1em; color:var(--green); margin-bottom:.35rem; }
-.takeaway .tk-text { font-size:.88rem; color:var(--fg2); line-height:1.65; }
-
-/* In-lab sub-nav */
-.sub-nav { display:flex; gap:.5rem; flex-wrap:wrap; margin:0 0 2.5rem; padding:.75rem; background:var(--card); border:1px solid var(--border); border-radius:8px; }
-.sub-nav a { font-family:var(--mono); font-size:.7rem; color:var(--fg3); text-decoration:none; padding:.3rem .7rem; border-radius:4px; transition:all .2s; text-transform:uppercase; letter-spacing:.05em; }
-.sub-nav a:hover { color:var(--green); background:var(--greenbg); }
-
-/* Content blocks */
-.cb { margin-bottom:2.75rem; scroll-margin-top:80px; }
-.cb h3 { font-size:1.1rem; font-weight:600; margin-bottom:1rem; display:flex; align-items:center; gap:.6rem; }
-.cb h3 .sec-tag { font-family:var(--mono); font-size:.65rem; text-transform:uppercase; letter-spacing:.1em; padding:.2rem .6rem; border-radius:4px; font-weight:500; }
-.cb p, .cb li { color:var(--fg2); margin-bottom:.7rem; font-size:.93rem; }
-.cb ol, .cb ul { padding-left:1.5rem; }
-.cb strong { color:var(--fg); }
-.cb code { font-family:var(--mono); font-size:.83em; background:var(--card); padding:.15rem .4rem; border-radius:4px; color:var(--cyan); }
-
-/* Section tag colours per lab */
-.w5 .sec-tag { background:rgba(251,191,36,.12); color:var(--w5); }
-.w7 .sec-tag { background:rgba(52,211,153,.12); color:var(--w7); }
-.w8 .sec-tag { background:rgba(96,165,250,.12); color:var(--w8); }
-.w9 .sec-tag { background:rgba(167,139,250,.12); color:var(--w9); }
-.intro .sec-tag, .overall .sec-tag { background:rgba(0,255,136,.1); color:var(--green); }
-
-/* ===== TABLES — SOLID RENDERING ===== */
-.tbl-wrap { width:100%; overflow-x:auto; margin:1.25rem 0 2rem; border-radius:10px; border:1px solid var(--border); -webkit-overflow-scrolling:touch; }
-table.ft { width:100%; border-collapse:collapse; font-size:.82rem; min-width:580px; table-layout:auto; }
-table.ft th { background:var(--bg2); font-family:var(--mono); font-size:.66rem; text-transform:uppercase; letter-spacing:.08em; color:var(--fg3); padding:.7rem 1rem; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; }
-table.ft td { padding:.65rem 1rem; border-bottom:1px solid rgba(30,42,58,.7); color:var(--fg2); vertical-align:top; line-height:1.5; }
-table.ft tr:last-child td { border-bottom:none; }
-table.ft tr:hover td { background:rgba(0,255,136,.02); }
-table.ft td code { font-size:.78em; }
-
-/* Severity badges */
-.sb { display:inline-block; font-family:var(--mono); font-size:.67rem; padding:.15rem .55rem; border-radius:999px; font-weight:600; text-transform:uppercase; white-space:nowrap; }
-.sh { background:rgba(248,113,113,.15); color:var(--red); }
-.sm { background:rgba(251,191,36,.15); color:var(--amber); }
-.sl { background:rgba(96,165,250,.15); color:var(--cyan); }
-.si { background:rgba(90,100,120,.15); color:var(--fg3); }
-.s1 { background:rgba(52,211,153,.1); color:var(--w7); }
-.s2 { background:rgba(251,191,36,.1); color:var(--amber); }
-
-/* ===== EVIDENCE GRID ===== */
-.ev-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.1rem; margin:1.25rem 0 1rem; }
-.ev-card { background:var(--card); border:1px solid var(--border); border-radius:10px; overflow:hidden; transition:all .28s; cursor:pointer; }
-.ev-card:hover { border-color:var(--glow); transform:translateY(-2px); box-shadow:0 8px 28px rgba(0,255,136,.06); }
-.ev-card img { width:100%; display:block; aspect-ratio:16/10; object-fit:cover; filter:brightness(.88); transition:filter .25s; }
-.ev-card:hover img { filter:brightness(1.02); }
-.ev-cap { padding:.6rem 1rem; border-top:1px solid var(--border); }
-.ev-cap .fig-id { font-family:var(--mono); font-size:.68rem; color:var(--green2); font-weight:600; margin-bottom:.2rem; }
-.ev-cap .fig-title { font-size:.78rem; color:var(--fg2); line-height:1.4; }
-.ev-cap .fig-note { font-size:.73rem; color:var(--fg3); margin-top:.3rem; line-height:1.4; font-style:italic; }
-
-/* Chart context callout */
-.chart-note { background:var(--card); border-left:3px solid var(--green); border-radius:0 8px 8px 0; padding:.75rem 1.1rem; margin-bottom:1rem; font-size:.85rem; color:var(--fg2); }
-.chart-note strong { color:var(--fg); }
-
-/* ===== MITIGATION LIST ===== */
-.mit-list { list-style:none; padding:0; }
-.mit-list li { position:relative; padding:.65rem 0 .65rem 2rem; border-left:2px solid var(--border); margin-left:.5rem; font-size:.9rem; color:var(--fg2); }
-.mit-list li::before { content:'>'; position:absolute; left:-.55rem; font-family:var(--mono); color:var(--green); font-weight:700; background:var(--bg); padding:0 .1rem; }
-
-/* ===== LIGHTBOX ===== */
-.lbx { display:none; position:fixed; inset:0; z-index:200; background:rgba(0,0,0,.93); backdrop-filter:blur(10px); cursor:zoom-out; align-items:center; justify-content:center; padding:2rem; }
-.lbx.open { display:flex; }
-.lbx img { max-width:96%; max-height:88vh; border-radius:8px; box-shadow:0 0 60px rgba(0,255,136,.1); }
-.lbx-cap { position:absolute; bottom:1.25rem; left:50%; transform:translateX(-50%); font-family:var(--mono); font-size:.76rem; color:var(--fg2); background:var(--card); padding:.5rem 1.25rem; border-radius:8px; max-width:80%; text-align:center; border:1px solid var(--border); }
-
-/* ===== REFERENCES ===== */
-.ref-list { list-style:none; padding:0; counter-reset:ref; }
-.ref-list li { counter-increment:ref; padding:.55rem 0 .55rem 2.75rem; position:relative; font-size:.84rem; color:var(--fg3); border-bottom:1px solid rgba(30,42,58,.5); }
-.ref-list li:last-child { border-bottom:none; }
-.ref-list li::before { content:'[' counter(ref) ']'; position:absolute; left:0; font-family:var(--mono); color:var(--green2); font-size:.76rem; width:2.5rem; }
-.ref-list a { color:var(--cyan); text-decoration:none; }
-.ref-list a:hover { text-decoration:underline; }
-.dl-btn { display:inline-flex; align-items:center; gap:.6rem; margin-top:1.5rem; background:var(--greenbg); border:1px solid var(--glow); color:var(--green); font-family:var(--mono); font-size:.78rem; padding:.65rem 1.4rem; border-radius:8px; text-decoration:none; transition:all .25s; }
-.dl-btn:hover { background:rgba(0,255,136,.15); box-shadow:0 4px 20px rgba(0,255,136,.1); }
-
-/* AI declaration box */
-.ai-box { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1.25rem 1.5rem; margin-top:2rem; }
-.ai-box .ai-label { font-family:var(--mono); font-size:.68rem; text-transform:uppercase; letter-spacing:.1em; color:var(--fg3); margin-bottom:.6rem; }
-
-/* ===== FOOTER ===== */
-.footer { position:relative; z-index:1; border-top:1px solid var(--border); padding:2rem; text-align:center; font-size:.78rem; color:var(--fg3); }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{--s0:#0a0e17;--s1:#0f1420;--s2:#141926;--s3:#1a2030;--bd:#1e2a3a;--bd-hover:rgba(0,255,136,.3);--bd-active:rgba(0,255,136,.5);--tx:#e0e6f0;--tx2:#8892a4;--tx3:#5a6478;--acc:#00ff88;--acc2:#00cc6a;--acc-bg:rgba(0,255,136,.06);--acc-bd:rgba(0,255,136,.13);--cyan:#00d4ff;--purple:#a78bfa;--amber:#fbbf24;--red:#f87171;--teal:#2dd4bf;--w5:#fbbf24;--w7:#34d399;--w8:#60a5fa;--w9:#a78bfa;--r-sm:4px;--r-md:8px;--r-lg:12px;--r-xl:16px;--r-pill:999px;--sp1:4px;--sp2:8px;--sp3:12px;--sp4:16px;--sp5:20px;--sp6:24px;--sp7:32px;--sp8:40px;--sp9:48px;--sp10:64px;--sh-sm:0 2px 8px rgba(0,0,0,.2);--sh-md:0 4px 16px rgba(0,0,0,.3);--sh-lg:0 8px 32px rgba(0,0,0,.4);--sh-glow:0 4px 30px rgba(0,255,136,.06);--sh-glow-h:0 8px 28px rgba(0,255,136,.08);--ch-high-bg:rgba(248,113,113,.15);--ch-high:#f87171;--ch-med-bg:rgba(251,191,36,.15);--ch-med:#fbbf24;--ch-low-bg:rgba(96,165,250,.15);--ch-low:#00d4ff;--ch-info-bg:rgba(90,100,120,.15);--ch-info:#5a6478;--ch-s1-bg:rgba(52,211,153,.1);--ch-s1:#34d399;--ch-s2-bg:rgba(251,191,36,.1);--ch-s2:#fbbf24;--focus-ring:0 0 0 2px var(--acc);--focus-offset:0 0 0 4px var(--s0);--hl-bg:rgba(0,255,136,.12);--nav-h:60px;--subnav-h:44px;--sticky-top:calc(var(--nav-h) + var(--subnav-h) + 8px);--mono:'JetBrains Mono',monospace;--sans:'Inter',system-ui,sans-serif;}
+html{scroll-behavior:smooth;}body{font-family:var(--sans);background:var(--s0);color:var(--tx);line-height:1.7;overflow-x:hidden;}a{color:var(--cyan);text-decoration:none;}a:hover{text-decoration:underline;}
+.main{position:relative;z-index:1;max-width:1280px;margin:0 auto;padding:0 2rem 5rem;}#mc{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;opacity:.06;pointer-events:none;}
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,23,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--bd);}.nav.scrolled{box-shadow:var(--sh-glow);}.nav-inner{max-width:1280px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;justify-content:space-between;height:var(--nav-h);}.nav-logo{font-family:var(--mono);font-size:.85rem;color:var(--acc);font-weight:600;}.nav-logo span{color:var(--tx3);}.nav-tabs{display:flex;gap:.2rem;flex-wrap:wrap;}.nav-tab{font-family:var(--mono);font-size:.7rem;padding:.45rem .9rem;border:1px solid transparent;border-radius:var(--r-md);background:transparent;color:var(--tx2);cursor:pointer;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;}.nav-tab:hover{color:var(--tx);background:var(--s2);}.nav-tab.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}.nav-tab:focus-visible{outline:none;box-shadow:var(--focus-ring);}.mob-btn{display:none;background:none;border:1px solid var(--bd);color:var(--acc);padding:.4rem .8rem;border-radius:var(--r-md);font-family:var(--mono);font-size:.72rem;cursor:pointer;}.mob-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}.mob-nav{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(10,14,23,.97);backdrop-filter:blur(20px);z-index:99;padding:1rem;border-bottom:1px solid var(--bd);flex-direction:column;gap:.25rem;}.mob-nav.open{display:flex;}@media(max-width:900px){.nav-tabs{display:none;}.mob-btn{display:block;}}
+.sub-nav{position:sticky;top:var(--nav-h);z-index:50;display:flex;gap:var(--sp2);flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding:var(--sp3) var(--sp4);background:rgba(10,14,23,.92);backdrop-filter:blur(16px);border:1px solid var(--bd);border-radius:var(--r-md);margin:0 0 var(--sp6);scrollbar-width:none;}.sub-nav::-webkit-scrollbar{display:none;}.sub-nav a{font-family:var(--mono);font-size:.7rem;color:var(--tx3);text-decoration:none;padding:var(--sp2) var(--sp3);border-radius:var(--r-pill);white-space:nowrap;transition:all .2s;text-transform:uppercase;letter-spacing:.05em;flex-shrink:0;border:1px solid transparent;}.sub-nav a:hover{color:var(--acc);background:var(--acc-bg);}.sub-nav a.active{color:var(--acc);background:var(--acc-bg);border-color:var(--acc-bd);}.sub-nav a:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:5rem 2rem 3rem;}.hero-inner{max-width:860px;text-align:center;}.badge{display:inline-block;font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;color:var(--acc);background:var(--acc-bg);border:1px solid var(--acc-bd);padding:.4rem 1.2rem;border-radius:var(--r-pill);margin-bottom:1.75rem;}.hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);font-weight:700;line-height:1.1;margin-bottom:1.25rem;background:linear-gradient(135deg,#e0e6f0,#00ff88);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}.hero-sub{font-size:1.05rem;color:var(--tx2);max-width:620px;margin:0 auto 2.5rem;}.demo-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0 2.5rem;}.demo-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1rem;text-align:center;transition:border-color .25s,transform .25s;}.demo-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);}.demo-card .icon{font-size:1.5rem;margin-bottom:.6rem;}.demo-card .demo-title{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.35rem;}.demo-card .demo-desc{font-size:.72rem;color:var(--tx3);line-height:1.5;}@media(max-width:680px){.demo-strip{grid-template-columns:repeat(2,1fr);}}.terminal{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.75rem;text-align:left;font-family:var(--mono);font-size:.78rem;max-width:500px;margin:0 auto;}.t-bar{display:flex;gap:6px;margin-bottom:.9rem;}.t-dot{width:10px;height:10px;border-radius:50%;}.t-dot:nth-child(1){background:#f87171;}.t-dot:nth-child(2){background:#fbbf24;}.t-dot:nth-child(3){background:#34d399;}.t-p{color:var(--acc);}.t-c{color:var(--tx);}.t-o{color:var(--tx3);}.t-cur{display:inline-block;width:8px;height:15px;background:var(--acc);animation:blink 1s infinite;vertical-align:text-bottom;margin-left:2px;}@keyframes blink{0%,49%{opacity:1;}50%,100%{opacity:0;}}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin:2rem 0;}.stat{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.1rem;text-align:center;transition:border-color .25s;}.stat:hover{border-color:var(--bd-hover);}.stat-v{font-family:var(--mono);font-size:1.8rem;font-weight:700;line-height:1;margin-bottom:.3rem;}.stat-l{font-size:.7rem;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;}@media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr);}}
+.panel{display:none;animation:fadeIn .35s ease;}.panel.active{display:block;}@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}.sec-hdr{padding:2.75rem 0 2rem;border-bottom:1px solid var(--bd);margin-bottom:2.5rem;}.sec-hdr .lbl{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.15em;margin-bottom:.6rem;}.sec-hdr h2{font-size:1.9rem;font-weight:700;margin-bottom:.4rem;}.sec-hdr .desc{color:var(--tx2);font-size:.93rem;max-width:720px;}.takeaway{background:linear-gradient(135deg,rgba(0,255,136,.06),rgba(0,212,255,.04));border:1px solid rgba(0,255,136,.2);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin:0 0 2.5rem;display:flex;gap:1rem;align-items:flex-start;}.takeaway .tk-icon{font-size:1.3rem;flex-shrink:0;margin-top:.1rem;}.takeaway .tk-title{font-size:.75rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.1em;color:var(--acc);margin-bottom:.15rem;}.takeaway .tk-sub{font-size:.65rem;font-family:var(--mono);text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);margin-bottom:.45rem;}.takeaway .tk-text{font-size:.88rem;color:var(--tx2);line-height:1.65;}.cb{margin-bottom:2.75rem;scroll-margin-top:120px;}.cb h3{font-size:1.1rem;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.6rem;}.cb h3 .sec-tag{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;padding:.2rem .6rem;border-radius:var(--r-sm);font-weight:500;}.cb p,.cb li{color:var(--tx2);margin-bottom:.7rem;font-size:.93rem;}.cb ol,.cb ul{padding-left:1.5rem;}.cb strong{color:var(--tx);}.cb code{font-family:var(--mono);font-size:.83em;background:var(--s2);padding:.15rem .4rem;border-radius:var(--r-sm);color:var(--cyan);}.w5 .sec-tag{background:rgba(251,191,36,.12);color:var(--w5);}.w7 .sec-tag{background:rgba(52,211,153,.12);color:var(--w7);}.w8 .sec-tag{background:rgba(96,165,250,.12);color:var(--w8);}.w9 .sec-tag{background:rgba(167,139,250,.12);color:var(--w9);}.intro .sec-tag,.overall .sec-tag{background:rgba(0,255,136,.1);color:var(--acc);}
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.1rem;margin:1.25rem 0 1rem;}.ev-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;transition:all .28s;cursor:pointer;display:flex;flex-direction:column;}.ev-card:hover{border-color:var(--bd-hover);transform:translateY(-2px);box-shadow:var(--sh-glow-h);}.ev-card:focus-visible{outline:none;box-shadow:var(--focus-ring);border-color:var(--acc);}.ev-card .ev-label{font-family:var(--mono);font-size:.68rem;color:var(--acc2);font-weight:600;padding:.55rem 1rem .35rem;letter-spacing:.04em;}.ev-card img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover;filter:brightness(.88);transition:filter .25s;}.ev-card:hover img{filter:brightness(1.02);}.ev-card .ev-body{padding:.65rem 1rem .75rem;border-top:1px solid var(--bd);}.ev-card .ev-claim{font-size:.8rem;font-weight:600;color:var(--tx);margin-bottom:.3rem;line-height:1.4;}.ev-card .ev-support{font-size:.73rem;color:var(--tx3);line-height:1.5;font-style:italic;}.analysis-card{margin:1.5rem 0 2rem;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;}.analysis-card .analysis-context{padding:1rem 1.25rem .6rem;font-size:.85rem;color:var(--tx2);border-bottom:1px solid var(--bd);}.analysis-card .analysis-context strong{color:var(--tx);}.analysis-card .ev-card{border:none;border-radius:0;margin:0;}.analysis-card .ev-card:hover{transform:none;box-shadow:none;}.analysis-card .analysis-takeaway{padding:.75rem 1.25rem;font-size:.82rem;color:var(--tx2);border-top:1px solid var(--bd);background:rgba(0,255,136,.02);}.analysis-card .analysis-takeaway strong{color:var(--tx);}.chart-note{background:var(--s2);border-left:3px solid var(--acc);border-radius:0 var(--r-md) var(--r-md) 0;padding:.75rem 1.1rem;margin-bottom:1rem;font-size:.85rem;color:var(--tx2);}.chart-note strong{color:var(--tx);}
+.dataset{margin:1.25rem 0 2rem;}.tbl-wrap{width:100%;overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--bd);-webkit-overflow-scrolling:touch;}table.ft{width:100%;border-collapse:collapse;font-size:.82rem;min-width:580px;table-layout:auto;}table.ft thead{position:sticky;top:0;z-index:2;}table.ft th{background:var(--s1);font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);padding:.7rem 1rem;text-align:left;border-bottom:1px solid var(--bd);white-space:nowrap;}table.ft td{padding:.65rem 1rem;border-bottom:1px solid rgba(30,42,58,.7);color:var(--tx2);vertical-align:top;line-height:1.5;}table.ft tr:last-child td{border-bottom:none;}table.ft tr:hover td{background:rgba(0,255,136,.02);}table.ft td code{font-size:.78em;}.sb{display:inline-block;font-family:var(--mono);font-size:.67rem;padding:.15rem .55rem;border-radius:var(--r-pill);font-weight:600;text-transform:uppercase;white-space:nowrap;}.sh{background:var(--ch-high-bg);color:var(--ch-high);}.sm{background:var(--ch-med-bg);color:var(--ch-med);}.sl{background:var(--ch-low-bg);color:var(--ch-low);}.si{background:var(--ch-info-bg);color:var(--ch-info);}.s1{background:var(--ch-s1-bg);color:var(--ch-s1);}.s2{background:var(--ch-s2-bg);color:var(--ch-s2);}.dataset-cards{display:none;}@media(max-width:768px){.dataset .tbl-wrap{display:none;}.dataset-cards{display:flex;flex-direction:column;gap:var(--sp3);}.ds-card{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);overflow:hidden;font-size:.82rem;}.ds-card-primary{padding:.65rem 1rem;font-weight:600;color:var(--tx);border-bottom:1px solid var(--bd);font-size:.85rem;}.ds-card-field{display:flex;justify-content:space-between;gap:var(--sp3);padding:.45rem 1rem;border-bottom:1px solid rgba(30,42,58,.4);}.ds-card-field:last-child{border-bottom:none;}.ds-card-label{font-family:var(--mono);font-size:.65rem;text-transform:uppercase;letter-spacing:.06em;color:var(--tx3);flex-shrink:0;padding-top:.1rem;}.ds-card-value{color:var(--tx2);text-align:right;line-height:1.5;}}.mit-list{list-style:none;padding:0;}.mit-list li{position:relative;padding:.65rem 0 .65rem 2rem;border-left:2px solid var(--bd);margin-left:.5rem;font-size:.9rem;color:var(--tx2);}.mit-list li::before{content:'>';position:absolute;left:-.55rem;font-family:var(--mono);color:var(--acc);font-weight:700;background:var(--s0);padding:0 .1rem;}
+.search-module{position:relative;max-width:560px;margin:0 auto 2.5rem;z-index:60;}.search-box{position:relative;display:flex;align-items:center;}.search-box svg{position:absolute;left:14px;width:16px;height:16px;color:var(--tx3);pointer-events:none;}.search-box input{width:100%;font-family:var(--mono);font-size:.82rem;padding:.7rem 2.5rem .7rem 40px;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);color:var(--tx);outline:none;transition:border-color .2s;}.search-box input::placeholder{color:var(--tx3);}.search-box input:focus{border-color:var(--acc-bd);box-shadow:var(--sh-glow);}.search-clear{position:absolute;right:10px;background:none;border:none;color:var(--tx3);font-size:1.1rem;cursor:pointer;padding:4px 8px;border-radius:var(--r-sm);line-height:1;}.search-clear:hover{color:var(--tx);}.search-clear:focus-visible{outline:none;box-shadow:var(--focus-ring);}.search-suggestions{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-md);max-height:320px;overflow-y:auto;list-style:none;padding:var(--sp2) 0;box-shadow:var(--sh-lg);}.search-suggestions[hidden]{display:none;}.search-suggestions li{padding:.5rem 1rem;font-size:.8rem;color:var(--tx2);cursor:pointer;display:flex;align-items:center;gap:.6rem;transition:background .15s;}.search-suggestions li:hover,.search-suggestions li[aria-selected="true"]{background:var(--acc-bg);color:var(--tx);}.search-suggestions li .sr-type{font-family:var(--mono);font-size:.6rem;text-transform:uppercase;letter-spacing:.08em;color:var(--tx3);flex-shrink:0;min-width:70px;}.search-suggestions li .sr-text{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.search-suggestions li mark{background:var(--hl-bg);color:var(--acc);border-radius:2px;padding:0 1px;}.search-filter-active .ev-card.search-hidden{display:none;}.search-filter-active .dataset tbody tr.search-hidden{display:none;}.search-filter-active .ds-card.search-hidden{display:none;}.search-filter-bar{display:none;align-items:center;justify-content:space-between;padding:.5rem 1rem;background:var(--acc-bg);border:1px solid var(--acc-bd);border-radius:var(--r-md);margin-bottom:var(--sp4);font-family:var(--mono);font-size:.72rem;color:var(--acc);}.search-filter-active .search-filter-bar{display:flex;}.search-filter-bar button{background:none;border:none;color:var(--tx3);font-family:var(--mono);font-size:.72rem;cursor:pointer;padding:2px 6px;}.search-filter-bar button:hover{color:var(--tx);}.search-hl{animation:hlPulse 2s ease-out;}@keyframes hlPulse{0%,20%{outline:2px solid var(--acc);outline-offset:4px;background:var(--hl-bg);}100%{outline-color:transparent;background:transparent;}}
+.lbx{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);backdrop-filter:blur(10px);cursor:zoom-out;align-items:center;justify-content:center;padding:2rem;}.lbx.open{display:flex;}.lbx img{max-width:96%;max-height:88vh;border-radius:var(--r-md);box-shadow:0 0 60px rgba(0,255,136,.1);cursor:default;}.lbx-cap{position:absolute;bottom:1.25rem;left:50%;transform:translateX(-50%);font-family:var(--mono);font-size:.76rem;color:var(--tx2);background:var(--s2);padding:.5rem 1.25rem;border-radius:var(--r-md);max-width:80%;text-align:center;border:1px solid var(--bd);}.lbx-close{position:absolute;top:1rem;right:1.5rem;background:var(--s2);border:1px solid var(--bd);color:var(--tx2);font-size:1.5rem;width:40px;height:40px;border-radius:var(--r-md);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;z-index:201;}.lbx-close:hover{color:var(--tx);border-color:var(--bd-hover);}.lbx-close:focus-visible{outline:none;box-shadow:var(--focus-ring);}
+.ref-list{list-style:none;padding:0;counter-reset:ref;}.ref-list li{counter-increment:ref;padding:.55rem 0 .55rem 2.75rem;position:relative;font-size:.84rem;color:var(--tx3);border-bottom:1px solid rgba(30,42,58,.5);}.ref-list li:last-child{border-bottom:none;}.ref-list li::before{content:'[' counter(ref) ']';position:absolute;left:0;font-family:var(--mono);color:var(--acc2);font-size:.76rem;width:2.5rem;}.ref-list a{color:var(--cyan);text-decoration:none;}.ref-list a:hover{text-decoration:underline;}.dl-btn{display:inline-flex;align-items:center;gap:.6rem;margin-top:1.5rem;background:var(--acc-bg);border:1px solid var(--acc-bd);color:var(--acc);font-family:var(--mono);font-size:.78rem;padding:.65rem 1.4rem;border-radius:var(--r-md);text-decoration:none;transition:all .25s;}.dl-btn:hover{background:rgba(0,255,136,.15);box-shadow:0 4px 20px rgba(0,255,136,.1);text-decoration:none;}.dl-btn:focus-visible{outline:none;box-shadow:var(--focus-ring);}.ai-box{background:var(--s2);border:1px solid var(--bd);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-top:2rem;}.ai-box .ai-label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--tx3);margin-bottom:.6rem;}.footer{position:relative;z-index:1;border-top:1px solid var(--bd);padding:2rem;text-align:center;font-size:.78rem;color:var(--tx3);}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto;}#mc{display:none;}.t-cur{animation:none;opacity:.7;}.panel{animation:none;}.ev-card:hover{transform:none;}.demo-card:hover{transform:none;}.search-hl{animation:none;outline:2px solid var(--acc);outline-offset:4px;}}:focus-visible{outline:none;box-shadow:var(--focus-ring);}.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
 </style>
 </head>
 <body>
-
 <canvas id="mc"></canvas>
-
-<!-- Lightbox -->
-<div class="lbx" id="lbx" onclick="closeLbx()">
-  <img id="lbx-img" src="" alt="">
-  <div class="lbx-cap" id="lbx-cap"></div>
-</div>
-
-<!-- Nav -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <div class="nav-logo">alvi<span>@</span>cmp-x305<span>:~$</span></div>
-    <div class="nav-tabs" id="nav-tabs">
-      <button class="nav-tab active" data-s="intro">Overview</button>
-      <button class="nav-tab" data-s="w5">WPScan</button>
-      <button class="nav-tab" data-s="w7">Juice Shop</button>
-      <button class="nav-tab" data-s="w8">Nmap &amp; SSH</button>
-      <button class="nav-tab" data-s="w9">Nessus</button>
-      <button class="nav-tab" data-s="overall">Reflection</button>
-      <button class="nav-tab" data-s="refs">References</button>
-    </div>
-    <button class="mob-btn" onclick="toggleMob()">MENU</button>
-  </div>
-</nav>
-<div class="mob-nav" id="mob-nav">
-  <button class="nav-tab active" data-s="intro">Overview</button>
-  <button class="nav-tab" data-s="w5">WPScan</button>
-  <button class="nav-tab" data-s="w7">Juice Shop</button>
-  <button class="nav-tab" data-s="w8">Nmap &amp; SSH</button>
-  <button class="nav-tab" data-s="w9">Nessus</button>
-  <button class="nav-tab" data-s="overall">Reflection</button>
-  <button class="nav-tab" data-s="refs">References</button>
-</div>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="hero-inner">
-    <div class="badge">CMP-X305 &mdash; Cyber Security &mdash; Coursework Portfolio 1</div>
-    <h1>Cybersecurity Portfolio</h1>
-    <p class="hero-sub">Four hands-on security labs covering application reconnaissance, vulnerability exploitation, secure administration, and automated risk prioritisation.</p>
-
-    <div class="demo-strip">
-      <div class="demo-card">
-        <div class="icon">🔍</div>
-        <div class="demo-title">Application Recon</div>
-        <div class="demo-desc">WPScan exposes attack surface at the plugin and resource level, not just open ports.</div>
-      </div>
-      <div class="demo-card">
-        <div class="icon">⚡</div>
-        <div class="demo-title">Exploit Analysis</div>
-        <div class="demo-desc">Juice Shop demonstrates how broken controls chain together into serious risk.</div>
-      </div>
-      <div class="demo-card">
-        <div class="icon">🔐</div>
-        <div class="demo-title">Secure Administration</div>
-        <div class="demo-desc">Nmap discovery paired with SSH hardening links what is exposed to how to lock it down.</div>
-      </div>
-      <div class="demo-card">
-        <div class="icon">📊</div>
-        <div class="demo-title">Risk Prioritisation</div>
-        <div class="demo-desc">Nessus turns raw findings into severity-based output that requires context to interpret correctly.</div>
-      </div>
-    </div>
-
-    <div class="terminal">
-      <div class="t-bar"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div>
-      <div><span class="t-p">$</span> <span class="t-c">whoami</span></div>
-      <div><span class="t-o">Alvi Hossain &mdash; HOS22555470 &mdash; BSc CS &amp; SE</span></div>
-      <div><span class="t-p">$</span> <span class="t-c">ls labs/</span></div>
-      <div><span class="t-o">WPScan/&nbsp;&nbsp;JuiceShop/&nbsp;&nbsp;Nmap-SSH/&nbsp;&nbsp;Nessus/</span></div>
-      <div><span class="t-p">$</span> <span class="t-cur"></span></div>
-    </div>
-  </div>
-</section>
-
+<div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Image viewer"><button class="lbx-close" id="lbx-close" aria-label="Close image viewer">&times;</button><img id="lbx-img" src="" alt=""><div class="lbx-cap" id="lbx-cap"></div></div>
+<nav class="nav" id="nav" aria-label="Main navigation"><div class="nav-inner"><div class="nav-logo">alvi<span>@</span>cmp-x305<span>:~$</span></div><div class="nav-tabs" id="nav-tabs" role="tablist"><button class="nav-tab active" data-s="intro" role="tab" aria-label="Overview section" aria-selected="true">Overview</button><button class="nav-tab" data-s="w5" role="tab" aria-label="WPScan lab section" aria-selected="false">WPScan</button><button class="nav-tab" data-s="w7" role="tab" aria-label="Juice Shop lab section" aria-selected="false">Juice Shop</button><button class="nav-tab" data-s="w8" role="tab" aria-label="Nmap and SSH lab section" aria-selected="false">Nmap &amp; SSH</button><button class="nav-tab" data-s="w9" role="tab" aria-label="Nessus lab section" aria-selected="false">Nessus</button><button class="nav-tab" data-s="overall" role="tab" aria-label="Reflection section" aria-selected="false">Reflection</button><button class="nav-tab" data-s="refs" role="tab" aria-label="References section" aria-selected="false">References</button></div><button class="mob-btn" id="mob-btn" aria-label="Toggle mobile navigation menu" aria-expanded="false">MENU</button></div></nav>
+<div class="mob-nav" id="mob-nav" role="navigation" aria-label="Mobile navigation"><button class="nav-tab active" data-s="intro" aria-label="Overview section">Overview</button><button class="nav-tab" data-s="w5" aria-label="WPScan lab section">WPScan</button><button class="nav-tab" data-s="w7" aria-label="Juice Shop lab section">Juice Shop</button><button class="nav-tab" data-s="w8" aria-label="Nmap and SSH lab section">Nmap &amp; SSH</button><button class="nav-tab" data-s="w9" aria-label="Nessus lab section">Nessus</button><button class="nav-tab" data-s="overall" aria-label="Reflection section">Reflection</button><button class="nav-tab" data-s="refs" aria-label="References section">References</button></div>
+<section class="hero"><div class="hero-inner"><div class="badge">CMP-X305 &mdash; Cyber Security &mdash; Coursework Portfolio 1</div><h1>Cybersecurity Portfolio</h1><p class="hero-sub">Four hands-on security labs covering application reconnaissance, vulnerability exploitation, secure administration, and automated risk prioritisation.</p><div class="demo-strip"><div class="demo-card"><div class="icon">&#x1F50D;</div><div class="demo-title">Application Recon</div><div class="demo-desc">WPScan exposes attack surface at the plugin and resource level, not just open ports.</div></div><div class="demo-card"><div class="icon">&#x26A1;</div><div class="demo-title">Exploit Analysis</div><div class="demo-desc">Juice Shop demonstrates how broken controls chain together into serious risk.</div></div><div class="demo-card"><div class="icon">&#x1F510;</div><div class="demo-title">Secure Administration</div><div class="demo-desc">Nmap discovery paired with SSH hardening links what is exposed to how to lock it down.</div></div><div class="demo-card"><div class="icon">&#x1F4CA;</div><div class="demo-title">Risk Prioritisation</div><div class="demo-desc">Nessus turns raw findings into severity-based output that requires context to interpret correctly.</div></div></div><div class="terminal"><div class="t-bar"><div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div></div><div><span class="t-p">$</span> <span class="t-c">whoami</span></div><div><span class="t-o">Alvi Hossain &mdash; HOS22555470 &mdash; BSc CS &amp; SE</span></div><div><span class="t-p">$</span> <span class="t-c">ls labs/</span></div><div><span class="t-o">WPScan/&nbsp;&nbsp;JuiceShop/&nbsp;&nbsp;Nmap-SSH/&nbsp;&nbsp;Nessus/</span></div><div><span class="t-p">$</span> <span class="t-cur"></span></div></div></div></section>
 <div class="main">
-
+<div class="search-module" id="search-module"><div class="search-box"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><input type="search" id="search-input" placeholder="Search labs, figures, findings..." aria-label="Search portfolio content" autocomplete="off"><button class="search-clear" id="search-clear" aria-label="Clear search" hidden>&times;</button></div><ul class="search-suggestions" id="search-suggestions" role="listbox" aria-label="Search results" hidden></ul></div>
 <!-- ===================== INTRO ===================== -->
 <div class="panel active intro" id="panel-intro">
   <div class="sec-hdr">
-    <div class="lbl" style="color:var(--green)">01 / Overview</div>
+    <div class="lbl" style="color:var(--acc)">01 / Overview</div>
     <h2>Introduction</h2>
-    <p class="desc">Four practical labs covering discovery, exploitation, secure administration and automated assessment — all within an isolated Kali Linux virtual environment.</p>
+    <p class="desc">Four practical labs covering discovery, exploitation, secure administration and automated assessment &mdash; all within an isolated Kali Linux virtual environment.</p>
   </div>
-
   <div class="stats">
     <div class="stat"><div class="stat-v" style="color:var(--w5)">W5</div><div class="stat-l">WPScan</div></div>
     <div class="stat"><div class="stat-v" style="color:var(--w7)">W7</div><div class="stat-l">Juice Shop</div></div>
     <div class="stat"><div class="stat-v" style="color:var(--w8)">W8</div><div class="stat-l">Nmap &amp; SSH</div></div>
     <div class="stat"><div class="stat-v" style="color:var(--w9)">W9</div><div class="stat-l">Nessus</div></div>
   </div>
-
   <div class="cb">
     <p>In this portfolio I have documented four practical cyber security labs that I completed for CMP-X305. These were a WordPress assessment using WPScan, an OWASP Juice Shop challenge series, a combined Nmap and SSH exercise, and a Nessus vulnerability scan. Together these labs cover discovery, exploitation, secure administration and automated assessment.</p>
     <p>All of the activity took place inside an isolated virtual lab that used Kali Linux and intentionally vulnerable systems, which is important because it means nothing was done against real-world targets.</p>
     <p>Something I noticed across all four labs was that small weaknesses become much more serious when you combine them. Public files help with reconnaissance, reconnaissance helps with exploitation, and the exploitation itself often just relies on ordinary oversights rather than anything exotic.</p>
   </div>
-
   <div class="stats">
-    <div class="stat"><div class="stat-v" style="color:var(--green)">48</div><div class="stat-l">Screenshots</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--acc)">48</div><div class="stat-l">Screenshots</div></div>
     <div class="stat"><div class="stat-v" style="color:var(--cyan)">3</div><div class="stat-l">Learning Outcomes</div></div>
     <div class="stat"><div class="stat-v" style="color:var(--amber)">4</div><div class="stat-l">Security Tools</div></div>
-    <div class="stat"><div class="stat-v" style="color:var(--purple)">12</div><div class="stat-l">References</div></div>
+    <div class="stat"><div class="stat-v" style="color:var(--purple)">11</div><div class="stat-l">References</div></div>
   </div>
 </div>
 
@@ -290,29 +64,21 @@ table.ft td code { font-size:.78em; }
     <h2>Web Application Security Lab (WPScan)</h2>
     <p class="desc">Application-layer reconnaissance against a WordPress instance to map the full attack surface: themes, plugins, resources, and credential exposure.</p>
   </div>
-
   <div class="takeaway">
-    <div class="tk-icon">🎯</div>
+    <div class="tk-icon">&#x1F3AF;</div>
     <div class="tk-body">
       <div class="tk-title">Key Takeaway</div>
-      <div class="tk-text">WPScan works at the application layer, not just the network layer. It flagged the active theme version, an Akismet advisory requiring version validation, exposed resources including robots.txt and XML-RPC, and demonstrated how quickly reconnaissance can progress to a brute-force login attempt. Each finding needed manual version confirmation before being treated as a confirmed vulnerability — that distinction between flagged and confirmed is the core analytical lesson of this lab.</div>
+      <div class="tk-sub">Main analytical point</div>
+      <div class="tk-text">WPScan works at the application layer, not just the network layer. It flagged the active theme version, an Akismet advisory requiring version validation, exposed resources including robots.txt and XML-RPC, and demonstrated how quickly reconnaissance can progress to a brute-force login attempt. Each finding needed manual version confirmation before being treated as a confirmed vulnerability &mdash; that distinction between flagged and confirmed is the core analytical lesson of this lab.</div>
     </div>
   </div>
-
-  <div class="sub-nav">
-    <a href="#w5-aim">Aim</a>
-    <a href="#w5-method">Methodology</a>
-    <a href="#w5-evidence">Evidence</a>
-    <a href="#w5-findings">Findings</a>
-    <a href="#w5-mit">Mitigations</a>
-    <a href="#w5-reflect">Reflection</a>
+  <div class="sub-nav" id="sub-nav-w5" role="navigation" aria-label="WPScan subsections">
+    <a href="#w5-aim" class="active">Aim</a><a href="#w5-method">Methodology</a><a href="#w5-evidence">Evidence</a><a href="#w5-findings">Findings</a><a href="#w5-mit">Mitigations</a><a href="#w5-reflect">Reflection</a>
   </div>
-
   <div class="cb" id="w5-aim">
     <h3><span class="sec-tag">Aim</span></h3>
     <p>The aim of this lab was to use WPScan from Kali Linux in order to assess a WordPress instance at <code>http://192.168.123.30</code> and identify any exposed themes, plugins and resources, then interpret the security risks from the results [2], [3]. This lab addressed <strong>LO1</strong> because I was able to translate the scan output into concrete hardening actions, and <strong>LO3</strong> because it showed how publicly exposed WordPress components can reduce user privacy.</p>
   </div>
-
   <div class="cb" id="w5-method">
     <h3><span class="sec-tag">Methodology</span></h3>
     <p>The target WordPress server was hosted at <code>192.168.123.30</code> and WPScan ran from a Kali Linux VM. I followed the structure of the lab sheet rather than making up my own order because the sequence builds on itself:</p>
@@ -325,93 +91,37 @@ table.ft td code { font-size:.78em; }
     </ol>
     <p>That sequence mattered because the later steps depended on the earlier ones. Enumeration revealed what WordPress components were present, the API-backed scan added vulnerability intelligence on top of that, and the brute-force exercise showed how quickly reconnaissance can move toward credential abuse if login protections are weak.</p>
   </div>
-
   <div class="cb" id="w5-evidence">
     <h3><span class="sec-tag">Evidence</span></h3>
     <div class="ev-grid">
-      <div class="ev-card" onclick="openLbx('images/image1.png','Figure W5-1 — WPScan database update completed')">
-        <img src="images/image1.png" alt="W5-1" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-1</div><div class="fig-title">WPScan database update completed</div><div class="fig-note">Confirms the latest WPVulnDB advisories are loaded. Skipping this step would silently miss newly disclosed CVEs.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image2.png','Figure W5-2 — Full WPScan launched with API token and aggressive plugin enumeration')">
-        <img src="images/image2.png" alt="W5-2" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-2</div><div class="fig-title">Full WPScan launched with API token</div><div class="fig-note">API token enables CVE-level enrichment — without it the scan only detects installed plugins without advisory cross-referencing.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image3.png','Figure W5-3 — Active travel-booking theme identified with version number')">
-        <img src="images/image3.png" alt="W5-3" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-3</div><div class="fig-title">Active theme and version identified</div><div class="fig-note">Theme version disclosure gives an attacker a specific component to check against the NVD — needs patching or version suppression.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image4.png','Figure W5-4 — Brute-force password exercise launched against the login endpoint')">
-        <img src="images/image4.png" alt="W5-4" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-4</div><div class="fig-title">Brute-force exercise launched</div><div class="fig-note">Demonstrates how a site with no lockout policy gives automated password guessing unlimited attempts.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image5.png','Figure W5-5 — WPScan confirmed successful use of the API during scanning')">
-        <img src="images/image5.png" alt="W5-5" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-5</div><div class="fig-title">API-backed enrichment confirmed</div><div class="fig-note">Confirms WPVulnDB was actively queried. Advisory matches are version-dependent and still require manual validation.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image6.png','Figure W5-6 — Akismet stored XSS advisory flagged via API enrichment')">
-        <img src="images/image6.png" alt="W5-6" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-6</div><div class="fig-title">Akismet XSS advisory flagged</div><div class="fig-note">Advisory indicates a potential unauthenticated stored XSS — the installed version must be confirmed against the affected range before treating this as a confirmed finding.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image7.png','Figure W5-7 — robots.txt, XML-RPC, readme.html, uploads, and WP-Cron all exposed')">
-        <img src="images/image7.png" alt="W5-7" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W5-7</div><div class="fig-title">Exposed resources: robots.txt, XML-RPC, readme, uploads</div><div class="fig-note">The strongest single recon screenshot — five separate exposure types that together reduce the effort needed for every subsequent attack stage.</div></div>
-      </div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-1" onclick="openLbx('images/image1.png','Figure W5-1 &mdash; WPScan database update completed')"><div class="ev-label">Figure W5-1</div><img src="images/image1.png" alt="WPScan database update completed" loading="lazy"><div class="ev-body"><div class="ev-claim">WPScan database update completed</div><div class="ev-support">Confirms the latest WPVulnDB advisories are loaded. Skipping this step would silently miss newly disclosed CVEs.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-2" onclick="openLbx('images/image2.png','Figure W5-2 &mdash; Full WPScan launched with API token and aggressive plugin enumeration')"><div class="ev-label">Figure W5-2</div><img src="images/image2.png" alt="Full WPScan launched with API token" loading="lazy"><div class="ev-body"><div class="ev-claim">Full WPScan launched with API token</div><div class="ev-support">API token enables CVE-level enrichment &mdash; without it the scan only detects installed plugins without advisory cross-referencing.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-3" onclick="openLbx('images/image3.png','Figure W5-3 &mdash; Active travel-booking theme identified with version number')"><div class="ev-label">Figure W5-3</div><img src="images/image3.png" alt="Active theme and version identified" loading="lazy"><div class="ev-body"><div class="ev-claim">Active theme and version identified</div><div class="ev-support">Theme version disclosure gives an attacker a specific component to check against the NVD &mdash; needs patching or version suppression.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-4" onclick="openLbx('images/image4.png','Figure W5-4 &mdash; Brute-force password exercise launched against the login endpoint')"><div class="ev-label">Figure W5-4</div><img src="images/image4.png" alt="Brute-force exercise launched" loading="lazy"><div class="ev-body"><div class="ev-claim">Brute-force exercise launched</div><div class="ev-support">Demonstrates how a site with no lockout policy gives automated password guessing unlimited attempts.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-5" onclick="openLbx('images/image5.png','Figure W5-5 &mdash; WPScan confirmed successful use of the API during scanning')"><div class="ev-label">Figure W5-5</div><img src="images/image5.png" alt="API-backed enrichment confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">API-backed enrichment confirmed</div><div class="ev-support">Confirms WPVulnDB was actively queried. Advisory matches are version-dependent and still require manual validation.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-6" onclick="openLbx('images/image6.png','Figure W5-6 &mdash; Akismet stored XSS advisory flagged via API enrichment')"><div class="ev-label">Figure W5-6</div><img src="images/image6.png" alt="Akismet XSS advisory flagged" loading="lazy"><div class="ev-body"><div class="ev-claim">Akismet XSS advisory flagged</div><div class="ev-support">Advisory indicates a potential unauthenticated stored XSS &mdash; the installed version must be confirmed against the affected range before treating this as a confirmed finding.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-7" onclick="openLbx('images/image7.png','Figure W5-7 &mdash; robots.txt, XML-RPC, readme.html, uploads, and WP-Cron all exposed')"><div class="ev-label">Figure W5-7</div><img src="images/image7.png" alt="Exposed resources: robots.txt, XML-RPC, readme, uploads" loading="lazy"><div class="ev-body"><div class="ev-claim">Exposed resources: robots.txt, XML-RPC, readme, uploads</div><div class="ev-support">The strongest single recon screenshot &mdash; five separate exposure types that together reduce the effort needed for every subsequent attack stage.</div></div></div>
     </div>
   </div>
-
   <div class="cb" id="w5-findings">
     <h3><span class="sec-tag">Findings and Analysis</span></h3>
     <p>For me the most useful result was not one single finding but the way WPScan assembled the application's attack surface. Figure W5-3 identified the active theme and its version, and then Figure W5-7 revealed <code>robots.txt</code>, XML-RPC, the readme and discoverable uploads. Together these gave me a checklist of entry points to document and address.</p>
-
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Finding</th><th>Evidence</th><th>Security Impact</th><th>CIA Impact</th><th>Priority</th><th>Recommended Action</th></tr>
-        </thead>
+    <div class="dataset" data-ds="w5-findings">
+      <div class="tbl-wrap"><table class="ft">
+        <thead><tr><th>Finding</th><th>Evidence</th><th>Security Impact</th><th>CIA Impact</th><th>Priority</th><th>Recommended Action</th></tr></thead>
         <tbody>
-          <tr>
-            <td>Active theme disclosure — travel-booking 1.4.0</td>
-            <td>W5-3</td>
-            <td>Reduces uncertainty about the stack; supports targeted research</td>
-            <td>Confidentiality</td>
-            <td><span class="sb sm">Medium</span></td>
-            <td>Patch, remove unused themes, suppress version disclosure</td>
-          </tr>
-          <tr>
-            <td>Plugin advisory (Akismet stored XSS — flagged, version validation required)</td>
-            <td>W5-5, W5-6</td>
-            <td>Indicates a potentially vulnerable component — not confirmed until version is checked</td>
-            <td>Integrity / Confidentiality</td>
-            <td><span class="sb sh">High</span></td>
-            <td>Verify installed version against affected range; patch if confirmed; remove unused plugins</td>
-          </tr>
-          <tr>
-            <td>XML-RPC, readme.html, upload listing, WP-Cron all publicly exposed</td>
-            <td>W5-7</td>
-            <td>Multiple recon and abuse paths accessible from a single host state</td>
-            <td>Confidentiality / Availability</td>
-            <td><span class="sb sh">High</span></td>
-            <td>Restrict XML-RPC, disable directory listing, remove public deployment artefacts</td>
-          </tr>
-          <tr>
-            <td>Brute-force login exercise executed with no lockout</td>
-            <td>W5-4</td>
-            <td>Shows how enumeration can progress directly to credential attack activity</td>
-            <td>Confidentiality / Integrity</td>
-            <td><span class="sb sh">High</span></td>
-            <td>Apply rate limiting, MFA, stronger passwords, and login monitoring</td>
-          </tr>
+          <tr><td>Active theme disclosure &mdash; travel-booking 1.4.0</td><td>W5-3</td><td>Reduces uncertainty about the stack; supports targeted research</td><td>Confidentiality</td><td><span class="sb sm">Medium</span></td><td>Patch, remove unused themes, suppress version disclosure</td></tr>
+          <tr><td>Plugin advisory (Akismet stored XSS &mdash; flagged, version validation required)</td><td>W5-5, W5-6</td><td>Indicates a potentially vulnerable component &mdash; not confirmed until version is checked</td><td>Integrity / Confidentiality</td><td><span class="sb sh">High</span></td><td>Verify installed version against affected range; patch if confirmed; remove unused plugins</td></tr>
+          <tr><td>XML-RPC, readme.html, upload listing, WP-Cron all publicly exposed</td><td>W5-7</td><td>Multiple recon and abuse paths accessible from a single host state</td><td>Confidentiality / Availability</td><td><span class="sb sh">High</span></td><td>Restrict XML-RPC, disable directory listing, remove public deployment artefacts</td></tr>
+          <tr><td>Brute-force login exercise executed with no lockout</td><td>W5-4</td><td>Shows how enumeration can progress directly to credential attack activity</td><td>Confidentiality / Integrity</td><td><span class="sb sh">High</span></td><td>Apply rate limiting, MFA, stronger passwords, and login monitoring</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
-
-    <p>Plugin enumeration added more context to the scan. Figure W5-6 showed akismet and ninja-forms, and WPScan attached an advisory for an unauthenticated stored XSS in akismet. That advisory only came through because I ran the scan with the API token. Without the token the scanner would only detect which plugins are installed; with the token it cross-references versions against WPVulnDB and returns matched advisories. The advisory is a lead — it indicates a potentially vulnerable component that still requires version confirmation before it can be treated as a confirmed finding.</p>
+    <p>Plugin enumeration added more context to the scan. Figure W5-6 showed akismet and ninja-forms, and WPScan attached an advisory for an unauthenticated stored XSS in akismet. That advisory only came through because I ran the scan with the API token. Without the token the scanner would only detect which plugins are installed; with the token it cross-references versions against WPVulnDB and returns matched advisories. The advisory is a lead &mdash; it indicates a potentially vulnerable component that still requires version confirmation before it can be treated as a confirmed finding.</p>
     <p>The lab brute-force task was also important to include because it showed the progression from discovery to attempted account abuse. Figure W5-4 shows WPScan performing a dictionary attack against the login endpoint. If a WordPress site has no lockout policy then automated password guessing has unlimited attempts, and the enumeration work done in the earlier steps feeds directly into which username to target.</p>
     <p>Figure W5-7 was the strongest single reconnaissance screenshot. <code>robots.txt</code> exposed administrative paths, XML-RPC was enabled, <code>readme.html</code> was public and several upload directories were browsable. These reconnaissance findings lower the effort required for every subsequent attack stage.</p>
-    <p>This lab helped cover the CIA model. Exposed files and paths affect <strong>confidentiality</strong> by disclosing information that makes later attacks easier. The stored XSS advisory, if confirmed exploitable, could affect <strong>integrity</strong> by modifying page content. And sustained brute-force via XML-RPC could affect <strong>availability</strong>. This section addresses <strong>LO1</strong> directly — the findings translate into concrete hardening actions — and <strong>LO3</strong> because WordPress component disclosure reduces user privacy.</p>
+    <p>This lab helped cover the CIA model. Exposed files and paths affect <strong>confidentiality</strong> by disclosing information that makes later attacks easier. The stored XSS advisory, if confirmed exploitable, could affect <strong>integrity</strong> by modifying page content. And sustained brute-force via XML-RPC could affect <strong>availability</strong>. This section addresses <strong>LO1</strong> directly &mdash; the findings translate into concrete hardening actions &mdash; and <strong>LO3</strong> because WordPress component disclosure reduces user privacy.</p>
   </div>
-
   <div class="cb" id="w5-mit">
     <h3><span class="sec-tag">Recommended Mitigations</span></h3>
     <ul class="mit-list">
@@ -424,7 +134,6 @@ table.ft td code { font-size:.78em; }
       <li>Verify flagged plugin advisories against exact installed versions before prioritising patching</li>
     </ul>
   </div>
-
   <div class="cb" id="w5-reflect">
     <h3><span class="sec-tag">Reflection</span></h3>
     <p>WPScan was useful because it worked at the application layer rather than just the network layer. A general port scan might tell me that <code>80/tcp</code> is open but WPScan told me which WordPress theme and plugins were installed, whether they had known advisories and what resources were discoverable from the outside. That level of detail is what made the lab findings actionable rather than just theoretical.</p>
@@ -439,44 +148,32 @@ table.ft td code { font-size:.78em; }
     <h2>Juice Shop Lab</h2>
     <p class="desc">Hands-on exploitation of intentionally vulnerable web application behaviour across ten challenges, with per-challenge broken-control analysis.</p>
   </div>
-
   <div class="takeaway">
-    <div class="tk-icon">⚡</div>
+    <div class="tk-icon">&#x26A1;</div>
     <div class="tk-body">
       <div class="tk-title">Key Takeaway</div>
-      <div class="tk-text">Juice Shop was the most analytically useful lab in the portfolio because it forced me to think like an attacker. The ten challenges documented here are not random — they cluster around information disclosure, client-side injection, broken access control, and weak authentication, which maps directly onto the OWASP Top Ten. No single challenge was dramatic on its own, but the chain from hidden routes to directory exposure to admin login to privileged data manipulation shows how ordinary oversights compound into serious risk. This lab provides the strongest evidence for LO1, LO2, and LO3 in the portfolio.</div>
+      <div class="tk-sub">Main analytical point</div>
+      <div class="tk-text">Juice Shop was the most analytically useful lab in the portfolio because it forced me to think like an attacker. The ten challenges documented here are not random &mdash; they cluster around information disclosure, client-side injection, broken access control, and weak authentication, which maps directly onto the OWASP Top Ten. No single challenge was dramatic on its own, but the chain from hidden routes to directory exposure to admin login to privileged data manipulation shows how ordinary oversights compound into serious risk. This lab provides the strongest evidence for LO1, LO2, and LO3 in the portfolio.</div>
     </div>
   </div>
-
-  <div class="sub-nav">
-    <a href="#w7-aim">Aim</a>
-    <a href="#w7-method">Methodology</a>
-    <a href="#w7-coverage">Challenge Coverage</a>
-    <a href="#w7-evidence">Evidence</a>
-    <a href="#w7-findings">Findings</a>
-    <a href="#w7-mit">Mitigations</a>
-    <a href="#w7-reflect">Reflection</a>
+  <div class="sub-nav" id="sub-nav-w7" role="navigation" aria-label="Juice Shop subsections">
+    <a href="#w7-aim" class="active">Aim</a><a href="#w7-method">Methodology</a><a href="#w7-coverage">Coverage</a><a href="#w7-evidence">Evidence</a><a href="#w7-findings">Findings</a><a href="#w7-mit">Mitigations</a><a href="#w7-reflect">Reflection</a>
   </div>
-
   <div class="cb" id="w7-aim">
     <h3><span class="sec-tag">Aim</span></h3>
     <p>The aim of this lab was to explore intentionally vulnerable web application behaviour in Juice Shop, complete challenges with screenshot evidence and explain the security failure behind each one [4], [5]. This lab addressed <strong>LO1</strong>, <strong>LO2</strong> and <strong>LO3</strong> because it covered injection, authentication bypass, session handling, client-side trust and directory exposure.</p>
   </div>
-
   <div class="cb" id="w7-method">
     <h3><span class="sec-tag">Methodology</span></h3>
     <p>I started Juice Shop locally on the lab VM on port 3000. After confirming the application loaded successfully I worked through the challenges one at a time and took a screenshot whenever a challenge flag appeared.</p>
     <p>I approached the lab by asking myself what security control had failed in each case. I felt this produced a better analysis than simply collecting green completion banners because it forced me to explain not just what I did but why it worked.</p>
   </div>
-
   <div class="cb" id="w7-coverage">
     <h3><span class="sec-tag">Challenge Coverage</span></h3>
     <p>The score board showed eleven solved challenges overall. I selected ten representative challenges for detailed write-up because the brief asks for quality of analysis rather than volume.</p>
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Challenge</th><th>Difficulty</th><th>What Was Exploited</th><th>Broken Control</th><th>CIA / Privacy Impact</th><th>Mitigation Focus</th><th>Evidence</th></tr>
-        </thead>
+    <div class="dataset" data-ds="w7-coverage">
+      <div class="tbl-wrap"><table class="ft">
+        <thead><tr><th>Challenge</th><th>Difficulty</th><th>What Was Exploited</th><th>Broken Control</th><th>CIA / Privacy Impact</th><th>Mitigation Focus</th><th>Evidence</th></tr></thead>
         <tbody>
           <tr><td>Score Board</td><td><span class="sb s1">1 star</span></td><td>Hidden route discovery via client-side JS</td><td>Security through obscurity</td><td>Confidentiality / Privacy</td><td>Remove hidden-but-reachable routes from production builds</td><td>W7-3</td></tr>
           <tr><td>DOM XSS</td><td><span class="sb s1">1 star</span></td><td>Script injection into search route</td><td>Unsafe client-side input handling</td><td>Integrity / Confidentiality</td><td>Output encoding, DOM sanitisation, CSP</td><td>W7-4</td></tr>
@@ -489,86 +186,42 @@ table.ft td code { font-size:.78em; }
           <tr><td>Five-Star Feedback</td><td><span class="sb s2">2 stars</span></td><td>Privileged manipulation of user feedback records</td><td>Excessive administrative trust</td><td>Integrity</td><td>Audit logging and tighter admin action controls</td><td>W7-11</td></tr>
           <tr><td>Password Strength</td><td><span class="sb s2">2 stars</span></td><td>Weak admin credentials cracked by dictionary approach</td><td>Weak credential policy</td><td>Confidentiality / Integrity</td><td>Strong password policy, modern hashing, MFA, lockout</td><td>W7-12</td></tr>
         </tbody>
-      </table>
+      </table></div>
     </div>
   </div>
-
   <div class="cb" id="w7-evidence">
     <h3><span class="sec-tag">Evidence</span></h3>
     <div class="ev-grid">
-      <div class="ev-card" onclick="openLbx('images/image8.png','Figure W7-1 — Juice Shop server started on the lab VM')">
-        <img src="images/image8.png" alt="W7-1" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-1</div><div class="fig-title">Juice Shop server started</div><div class="fig-note">Confirms the lab environment was live before any challenge work began.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image9.png','Figure W7-2 — Juice Shop loaded in browser on port 3000')">
-        <img src="images/image9.png" alt="W7-2" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-2</div><div class="fig-title">Application loaded in browser</div><div class="fig-note">Baseline environment screenshot confirming the application was accessible and functioning normally.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image10.png','Figure W7-3 — Score Board reached by navigating to the hidden route directly')">
-        <img src="images/image10.png" alt="W7-3" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-3</div><div class="fig-title">Score Board — hidden route accessed</div><div class="fig-note">A route that exists in client-side JS but is not linked in the navigation is still reachable. Obscurity alone is not access control.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image11.png','Figure W7-4 — DOM XSS challenge completed via search route injection')">
-        <img src="images/image11.png" alt="W7-4" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-4</div><div class="fig-title">DOM XSS — injected script executed</div><div class="fig-note">User input inserted into the DOM without encoding. The browser executes attacker-controlled content — fix requires output encoding and CSP.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image12.png','Figure W7-5 — Bonus Payload completed using extended iframe injection')">
-        <img src="images/image12.png" alt="W7-5" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-5</div><div class="fig-title">Bonus Payload — iframe injection confirmed</div><div class="fig-note">Confirms the application does not strip or encode iframe tags. The same client-side trust failure as W7-4, extended.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image13.png','Figure W7-6 — /ftp/ directory browsable with no access control')">
-        <img src="images/image13.png" alt="W7-6" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-6</div><div class="fig-title">/ftp/ directory exposed — no access control</div><div class="fig-note">The directory is not linked anywhere on the site but the web server serves it without restriction. Existence alone does not equal protection.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image14.png','Figure W7-7 — Confidential Document accessed from the exposed /ftp/ path')">
-        <img src="images/image14.png" alt="W7-7" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-7</div><div class="fig-title">Confidential Document downloaded without auth</div><div class="fig-note">Sensitive file retrieved directly from the exposed path. No authentication, no authorisation check, file fully readable.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image15.png','Figure W7-8 — Error Handling challenge triggered by deliberate bad input')">
-        <img src="images/image15.png" alt="W7-8" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-8</div><div class="fig-title">Error Handling — unhandled exception triggered</div><div class="fig-note">Deliberate bad input crashes the application and may disclose stack traces. Persistent fault injection could degrade service availability.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image16.png','Figure W7-9 — Login Admin challenge completed via auth bypass')">
-        <img src="images/image16.png" alt="W7-9" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-9</div><div class="fig-title">Login Admin — privileged session established</div><div class="fig-note">Authentication bypassed to gain admin access. Opens the chain to Admin Section (W7-10) and Five-Star Feedback (W7-11).</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image17.png','Figure W7-10 — Admin Section accessed — no server-side authorisation enforced')">
-        <img src="images/image17.png" alt="W7-10" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-10</div><div class="fig-title">Admin Section — access control not enforced</div><div class="fig-note">Access granted to admin-only functions. Server-side authorisation checks are absent — privilege escalation confirmed.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image18.png','Figure W7-11 — Five-Star Feedback deleted via privileged admin access')">
-        <img src="images/image18.png" alt="W7-11" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-11</div><div class="fig-title">Five-Star Feedback — record manipulation confirmed</div><div class="fig-note">Demonstrates integrity impact: user-generated data modified by an attacker using the admin session gained in W7-9 and W7-10.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image19.png','Figure W7-12 — Password Strength challenge completed via weak admin credentials')">
-        <img src="images/image19.png" alt="W7-12" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-12</div><div class="fig-title">Password Strength — weak credentials confirmed</div><div class="fig-note">Admin account used a common password. Hashing alone does not protect weak passwords — sufficient entropy is required to resist offline cracking.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image20.png','Figure W7-13 — Score board confirming 11 challenges solved in total')">
-        <img src="images/image20.png" alt="W7-13" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-13</div><div class="fig-title">Score board — 11 challenges solved</div><div class="fig-note">Overview confirms total challenge count including Exposed Metrics and Privacy Policy beyond the ten documented in detail.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image21.png','Figure W7-14 — Analytic summary chart of challenges by broken control category')">
-        <img src="images/image21.png" alt="W7-14" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W7-14</div><div class="fig-title">Challenge breakdown by broken control</div><div class="fig-note">The clustering of challenges around disclosure, injection, broken access control, and weak auth maps directly onto the OWASP Top Ten.</div></div>
-      </div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-1" onclick="openLbx('images/image8.png','Figure W7-1 &mdash; Juice Shop server started on the lab VM')"><div class="ev-label">Figure W7-1</div><img src="images/image8.png" alt="Juice Shop server started" loading="lazy"><div class="ev-body"><div class="ev-claim">Juice Shop server started</div><div class="ev-support">Confirms the lab environment was live before any challenge work began.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-2" onclick="openLbx('images/image9.png','Figure W7-2 &mdash; Juice Shop loaded in browser on port 3000')"><div class="ev-label">Figure W7-2</div><img src="images/image9.png" alt="Application loaded in browser" loading="lazy"><div class="ev-body"><div class="ev-claim">Application loaded in browser</div><div class="ev-support">Baseline environment screenshot confirming the application was accessible and functioning normally.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-3" onclick="openLbx('images/image10.png','Figure W7-3 &mdash; Score Board reached by navigating to the hidden route directly')"><div class="ev-label">Figure W7-3</div><img src="images/image10.png" alt="Score Board &mdash; hidden route accessed" loading="lazy"><div class="ev-body"><div class="ev-claim">Score Board &mdash; hidden route accessed</div><div class="ev-support">A route that exists in client-side JS but is not linked in the navigation is still reachable. Obscurity alone is not access control.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-4" onclick="openLbx('images/image11.png','Figure W7-4 &mdash; DOM XSS challenge completed via search route injection')"><div class="ev-label">Figure W7-4</div><img src="images/image11.png" alt="DOM XSS &mdash; injected script executed" loading="lazy"><div class="ev-body"><div class="ev-claim">DOM XSS &mdash; injected script executed</div><div class="ev-support">User input inserted into the DOM without encoding. The browser executes attacker-controlled content &mdash; fix requires output encoding and CSP.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-5" onclick="openLbx('images/image12.png','Figure W7-5 &mdash; Bonus Payload completed using extended iframe injection')"><div class="ev-label">Figure W7-5</div><img src="images/image12.png" alt="Bonus Payload &mdash; iframe injection confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">Bonus Payload &mdash; iframe injection confirmed</div><div class="ev-support">Confirms the application does not strip or encode iframe tags. The same client-side trust failure as W7-4, extended.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-6" onclick="openLbx('images/image13.png','Figure W7-6 &mdash; /ftp/ directory browsable with no access control')"><div class="ev-label">Figure W7-6</div><img src="images/image13.png" alt="/ftp/ directory exposed &mdash; no access control" loading="lazy"><div class="ev-body"><div class="ev-claim">/ftp/ directory exposed &mdash; no access control</div><div class="ev-support">The directory is not linked anywhere on the site but the web server serves it without restriction. Existence alone does not equal protection.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-7" onclick="openLbx('images/image14.png','Figure W7-7 &mdash; Confidential Document accessed from the exposed /ftp/ path')"><div class="ev-label">Figure W7-7</div><img src="images/image14.png" alt="Confidential Document downloaded without auth" loading="lazy"><div class="ev-body"><div class="ev-claim">Confidential Document downloaded without auth</div><div class="ev-support">Sensitive file retrieved directly from the exposed path. No authentication, no authorisation check, file fully readable.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-8" onclick="openLbx('images/image15.png','Figure W7-8 &mdash; Error Handling challenge triggered by deliberate bad input')"><div class="ev-label">Figure W7-8</div><img src="images/image15.png" alt="Error Handling &mdash; unhandled exception triggered" loading="lazy"><div class="ev-body"><div class="ev-claim">Error Handling &mdash; unhandled exception triggered</div><div class="ev-support">Deliberate bad input crashes the application and may disclose stack traces. Persistent fault injection could degrade service availability.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-9" onclick="openLbx('images/image16.png','Figure W7-9 &mdash; Login Admin challenge completed via auth bypass')"><div class="ev-label">Figure W7-9</div><img src="images/image16.png" alt="Login Admin &mdash; privileged session established" loading="lazy"><div class="ev-body"><div class="ev-claim">Login Admin &mdash; privileged session established</div><div class="ev-support">Authentication bypassed to gain admin access. Opens the chain to Admin Section (W7-10) and Five-Star Feedback (W7-11).</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-10" onclick="openLbx('images/image17.png','Figure W7-10 &mdash; Admin Section accessed &mdash; no server-side authorisation enforced')"><div class="ev-label">Figure W7-10</div><img src="images/image17.png" alt="Admin Section &mdash; access control not enforced" loading="lazy"><div class="ev-body"><div class="ev-claim">Admin Section &mdash; access control not enforced</div><div class="ev-support">Access granted to admin-only functions. Server-side authorisation checks are absent &mdash; privilege escalation confirmed.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-11" onclick="openLbx('images/image18.png','Figure W7-11 &mdash; Five-Star Feedback deleted via privileged admin access')"><div class="ev-label">Figure W7-11</div><img src="images/image18.png" alt="Five-Star Feedback &mdash; record manipulation confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">Five-Star Feedback &mdash; record manipulation confirmed</div><div class="ev-support">Demonstrates integrity impact: user-generated data modified by an attacker using the admin session gained in W7-9 and W7-10.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-12" onclick="openLbx('images/image19.png','Figure W7-12 &mdash; Password Strength challenge completed via weak admin credentials')"><div class="ev-label">Figure W7-12</div><img src="images/image19.png" alt="Password Strength &mdash; weak credentials confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">Password Strength &mdash; weak credentials confirmed</div><div class="ev-support">Admin account used a common password. Hashing alone does not protect weak passwords &mdash; sufficient entropy is required to resist offline cracking.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-13" onclick="openLbx('images/image20.png','Figure W7-13 &mdash; Score board confirming 11 challenges solved in total')"><div class="ev-label">Figure W7-13</div><img src="images/image20.png" alt="Score board &mdash; 11 challenges solved" loading="lazy"><div class="ev-body"><div class="ev-claim">Score board &mdash; 11 challenges solved</div><div class="ev-support">Overview confirms total challenge count including Privacy Policy beyond the ten documented in detail.</div></div></div>
     </div>
-    <div class="chart-note">
-      <strong>Reading Figure W7-14:</strong> the chart is not decorative. It shows that the ten selected challenges were not random — they were chosen to represent the four most consequential broken-control categories in modern web applications. That clustering makes this lab the most direct evidence of LO3 in the entire portfolio.
+    <div class="analysis-card">
+      <div class="analysis-context"><strong>Why this chart exists:</strong> the ten selected challenges were not random &mdash; they were chosen to represent the four most consequential broken-control categories in modern web applications.</div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W7-14" onclick="openLbx('images/image21.png','Figure W7-14 &mdash; Analytic summary chart of challenges by broken control category')"><div class="ev-label">Figure W7-14</div><img src="images/image21.png" alt="Challenge breakdown by broken control" loading="lazy"><div class="ev-body"><div class="ev-claim">Challenge breakdown by broken control</div><div class="ev-support">The clustering of challenges around disclosure, injection, broken access control, and weak auth maps directly onto the OWASP Top Ten.</div></div></div>
+      <div class="analysis-takeaway"><strong>Takeaway:</strong> That clustering makes this lab the most direct evidence of LO3 in the entire portfolio.</div>
     </div>
   </div>
-
   <div class="cb" id="w7-findings">
     <h3><span class="sec-tag">Findings and Analysis</span></h3>
-    <p>The first theme I noticed was hidden functionality. The Score Board challenge in Figure W7-3 showed that the application trusted obscurity too much. If a route exists in the client-side JavaScript and the only protection is that it is not linked in the navigation, an attacker can still reach it just by reading the page source. The same idea applies to the <code>/ftp/</code> directory in Figure W7-6 — the files were not linked anywhere but were still served without access control.</p>
-    <p>The DOM XSS and Bonus Payload challenges in Figures W7-4 and W7-5 showed how dangerous client-side trust can be. The browser executed attacker-controlled HTML because the application inserted user input into the DOM without encoding or sanitisation. In terms of <strong>LO1</strong> the fix is output encoding and Content Security Policy. In terms of <strong>LO3</strong>, persistent XSS could steal session tokens or personal data — both a privacy risk and an integrity risk.</p>
+    <p>The first theme I noticed was hidden functionality. The Score Board challenge in Figure W7-3 showed that the application trusted obscurity too much. If a route exists in the client-side JavaScript and the only protection is that it is not linked in the navigation, an attacker can still reach it just by reading the page source. The same idea applies to the <code>/ftp/</code> directory in Figure W7-6 &mdash; the files were not linked anywhere but were still served without access control.</p>
+    <p>The DOM XSS and Bonus Payload challenges in Figures W7-4 and W7-5 showed how dangerous client-side trust can be. The browser executed attacker-controlled HTML because the application inserted user input into the DOM without encoding or sanitisation. In terms of <strong>LO1</strong> the fix is output encoding and Content Security Policy. In terms of <strong>LO3</strong>, persistent XSS could steal session tokens or personal data &mdash; both a privacy risk and an integrity risk.</p>
     <p>The strongest admin-related chain was Login Admin, Admin Section and Five-Star Feedback in Figures W7-9 to W7-11. Once privileged access is established the attacker gains visibility into user data and the ability to modify it. Deletion of user-generated feedback demonstrates the integrity impact, and the same access level would expose email addresses or order details, extending the privacy consequence.</p>
     <p>The Password Strength challenge in Figure W7-12 is where <strong>LO2</strong> needed more explicit treatment. Weak passwords are a problem even when a system uses one-way hashing because common passwords appear in pre-computed lists. Hashing protects stored passwords only if the original password has enough entropy to resist offline cracking.</p>
     <p>Login Admin also points toward session security. After authentication succeeds the platform still needs cryptographically unpredictable session and password-reset tokens, or even a patched login flow can be undermined by predictable session handling.</p>
     <p>Availability was easier to miss but it is present here too. The Error Handling challenge in Figure W7-8 shows unstable application behaviour. If deliberate bad input can provoke a crash or disclose a stack trace then more persistent fault injection could degrade the service entirely.</p>
     <p>This section addresses all three learning outcomes. It addresses <strong>LO1</strong> by showing what controls failed and what needs to be fixed; <strong>LO2</strong> by connecting hashing and session tokens to the Password Strength and Login Admin challenges; and <strong>LO3</strong> by showing how directory exposure, admin access and XSS all create privacy consequences. The cumulative effect across all ten challenges makes this lab the strongest demonstration that <strong>LO3</strong> is not a single-issue concern.</p>
   </div>
-
   <div class="cb" id="w7-mit">
     <h3><span class="sec-tag">Recommended Mitigations</span></h3>
     <ul class="mit-list">
@@ -581,14 +234,12 @@ table.ft td code { font-size:.78em; }
       <li>Log privileged actions such as feedback deletion so integrity-impacting changes can be traced and reviewed</li>
     </ul>
   </div>
-
   <div class="cb" id="w7-reflect">
     <h3><span class="sec-tag">Reflection</span></h3>
     <p>This was the most useful lab in the portfolio for me because it forced me to think like an attacker rather than like a tool operator. WPScan and Nessus are good at producing lists of issues but Juice Shop made me exploit those issues step by step and understand why each control failed. That process gave me a much better understanding of how vulnerabilities connect to each other.</p>
     <p>What I learnt most clearly was that insecure web applications rarely fail in one dramatic way. They usually fail through a series of ordinary mistakes, none of which look critical on their own, but which chain together into something serious. Juice Shop changed how I think about chained risk because no single challenge was dramatic on its own but the combination of disclosure, injection and broken access control created a much larger attack surface than any one weakness suggested.</p>
   </div>
 </div>
-
 <!-- ===================== W8 NMAP & SSH ===================== -->
 <div class="panel w8" id="panel-w8">
   <div class="sec-hdr">
@@ -596,510 +247,475 @@ table.ft td code { font-size:.78em; }
     <h2>Vulnerability Assessment Lab (Nmap and SSH)</h2>
     <p class="desc">Network-level host and service discovery with Nmap, followed by secure administration using SSH key-based authentication, tunnelling, and multiplexing.</p>
   </div>
-
   <div class="takeaway">
-    <div class="tk-icon">🔐</div>
+    <div class="tk-icon">&#x1F510;</div>
     <div class="tk-body">
       <div class="tk-title">Key Takeaway</div>
-      <div class="tk-text">This lab worked because the two halves supported each other. Nmap showed what an attacker could see from the outside; SSH showed the right way to administer the same exposed systems. Without the discovery phase, SSH hardening would have been done in isolation without understanding the threat model. Without the SSH exercises, the Nmap findings would have stopped at a list of ports. This lab changed how I think about the relationship between discovery and administration — knowing what is exposed is only useful if you also know how to lock it down properly.</div>
+      <div class="tk-sub">Main analytical point</div>
+      <div class="tk-text">This lab worked because the two halves supported each other. Nmap showed what an attacker could see from the outside; SSH showed the right way to administer the same exposed systems. Without the discovery phase, SSH hardening would have been done in isolation without understanding the threat model. Without the SSH exercises, the Nmap findings would have stopped at a list of ports. This lab changed how I think about the relationship between discovery and administration &mdash; knowing what is exposed is only useful if you also know how to lock it down properly.</div>
     </div>
   </div>
-
-  <div class="sub-nav">
-    <a href="#w8-aim">Aim</a>
-    <a href="#w8-method">Methodology</a>
-    <a href="#w8-nmap-ev">Nmap Evidence</a>
-    <a href="#w8-nmap-find">Nmap Findings</a>
-    <a href="#w8-ssh-ev">SSH Evidence</a>
-    <a href="#w8-ssh-find">SSH Findings</a>
-    <a href="#w8-mit">Mitigations</a>
-    <a href="#w8-reflect">Reflection</a>
-  </div>
-
-  <div class="cb" id="w8-aim">
-    <h3><span class="sec-tag">Aim</span></h3>
-    <p>The aim of this lab was to assess a small lab network using Nmap and then administer the discovered systems securely using SSH [6]–[9]. It addressed <strong>LO1</strong> because I identified exposed services and translated the scan output into risk-based recommendations, and <strong>LO2</strong> because SSH was a practical demonstration of confidentiality, integrity and authentication through cryptographic primitives.</p>
-  </div>
-
-  <div class="cb" id="w8-method">
-    <h3><span class="sec-tag">Methodology</span></h3>
-    <p>I treated the lab as two connected tasks rather than two separate tool demonstrations.</p>
-    <p>For the Nmap portion I carried out host discovery, focused TCP scans, UDP scanning, service and OS detection, NSE vulnerability checks, traceroute, IPv6 scanning and several advanced options including decoys, fragmentation and ACK scans.</p>
-    <p>For the SSH portion I connected to the gateway, created a 4096-bit RSA key pair, deployed the public key, tested SCP, used both local and remote port forwarding, configured <code>ControlMaster</code> multiplexing and confirmed passwordless key-based login.</p>
-  </div>
-
-  <div class="cb" id="w8-nmap-ev">
-    <h3><span class="sec-tag">Evidence — Nmap Assessment</span></h3>
+  <div class="sub-nav" id="sub-nav-w8" role="navigation" aria-label="Nmap and SSH subsections"><a href="#w8-aim" class="active">Aim</a><a href="#w8-method">Methodology</a><a href="#w8-nmap-ev">Nmap Evidence</a><a href="#w8-nmap-find">Nmap Findings</a><a href="#w8-ssh-ev">SSH Evidence</a><a href="#w8-ssh-find">SSH Findings</a><a href="#w8-mit">Mitigations</a><a href="#w8-reflect">Reflection</a></div>
+  <div class="cb" id="w8-aim"><h3><span class="sec-tag">Aim</span></h3><p>The aim of this lab was to assess a small lab network using Nmap and then administer the discovered systems securely using SSH [6]&ndash;[9]. It addressed <strong>LO1</strong> because I identified exposed services and translated the scan output into risk-based recommendations, and <strong>LO2</strong> because SSH was a practical demonstration of confidentiality, integrity and authentication through cryptographic primitives.</p></div>
+  <div class="cb" id="w8-method"><h3><span class="sec-tag">Methodology</span></h3><p>I treated the lab as two connected tasks rather than two separate tool demonstrations.</p><p>For the Nmap portion I carried out host discovery, focused TCP scans, UDP scanning, service and OS detection, NSE vulnerability checks, traceroute, IPv6 scanning and several advanced options including decoys, fragmentation and ACK scans.</p><p>For the SSH portion I connected to the gateway, created a 4096-bit RSA key pair, deployed the public key, tested SCP, used both local and remote port forwarding, configured <code>ControlMaster</code> multiplexing and confirmed passwordless key-based login.</p></div>
+  <div class="cb" id="w8-nmap-ev"><h3><span class="sec-tag">Evidence &mdash; Nmap Assessment</span></h3>
     <div class="ev-grid">
-      <div class="ev-card" onclick="openLbx('images/image22.png','Figure W8-1 — Host discovery identified three live hosts on the 192.168.123.0/24 subnet')">
-        <img src="images/image22.png" alt="W8-1" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-1</div><div class="fig-title">Host discovery — three live hosts found</div><div class="fig-note">The essential first step. Establishes the target list before any deeper scanning begins.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image23.png','Figure W8-2 — Focused TCP scan separated hosts by open port profile')">
-        <img src="images/image23.png" alt="W8-2" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-2</div><div class="fig-title">TCP scan — service profiles per host</div><div class="fig-note">Gateway: 22/tcp and 5666/tcp. WordPress server: 22/tcp, 80/tcp, 3306/tcp. Each open port is an administrative question.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image24.png','Figure W8-3 — UDP scan of the gateway revealed DNS, DHCP, NTP and SNMP-related ports')">
-        <img src="images/image24.png" alt="W8-3" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-3</div><div class="fig-title">UDP scan — gateway footprint wider than TCP alone</div><div class="fig-note">UDP services are often ignored in TCP-only assessments but can carry their own risks, for example SNMP with a default community string.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image25.png','Figure W8-4 — Aggressive scan added version info, OS guess, and default scripts for the WordPress host')">
-        <img src="images/image25.png" alt="W8-4" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-4</div><div class="fig-title">Aggressive scan — version and OS data added</div><div class="fig-note">Version information and OS fingerprinting give an attacker specific components to research. These are leads for follow-up, not confirmed exploits.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image26.png','Figure W8-5 — NSE scripts flagged possible SQL injection and CSRF leads on the WordPress target')">
-        <img src="images/image26.png" alt="W8-5" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-5</div><div class="fig-title">NSE scripts — SQLi and CSRF leads flagged</div><div class="fig-note">Scripted checks, not confirmed exploits. Treated as leads requiring manual validation — not evidence of actual compromise.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image27.png','Figure W8-6 — Advanced options including decoys and packet fragmentation demonstrated')">
-        <img src="images/image27.png" alt="W8-6" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-6</div><div class="fig-title">Decoys and fragmentation — IDS evasion techniques</div><div class="fig-note">Useful as methodology evidence. Demonstrates awareness of IDS evasion but does not prove successful evasion.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image28.png','Figure W8-7 — ACK scanning assessed filtering behaviour rather than listing open ports')">
-        <img src="images/image28.png" alt="W8-7" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-7</div><div class="fig-title">ACK scan — filtering behaviour mapped</div><div class="fig-note">ACK scanning reveals whether ports are filtered, not which services are open. A different question, a different tool.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image29.png','Figure W8-8 — Traceroute confirmed the gateway is one hop away')">
-        <img src="images/image29.png" alt="W8-8" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-8</div><div class="fig-title">Traceroute — lab topology confirmed</div><div class="fig-note">One-hop path to gateway confirms the expected lab network layout and is consistent with the directed scan results in W8-2.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image30.png','Figure W8-9 — IPv6 scan showed SSH and HTTP accessible over a second protocol stack')">
-        <img src="images/image30.png" alt="W8-9" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-9</div><div class="fig-title">IPv6 scan — dual-stack exposure confirmed</div><div class="fig-note">If IPv4 is hardened but IPv6 is not, the host remains accessible. Both protocol stacks must receive the same hardening decisions.</div></div>
-      </div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-1" onclick="openLbx('images/image22.png','Figure W8-1 &mdash; Host discovery identified three live hosts on the 192.168.123.0/24 subnet')"><div class="ev-label">Figure W8-1</div><img src="images/image22.png" alt="Host discovery &mdash; three live hosts found" loading="lazy"><div class="ev-body"><div class="ev-claim">Host discovery &mdash; three live hosts found</div><div class="ev-support">The essential first step. Establishes the target list before any deeper scanning begins.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-2" onclick="openLbx('images/image23.png','Figure W8-2 &mdash; Focused TCP scan separated hosts by open port profile')"><div class="ev-label">Figure W8-2</div><img src="images/image23.png" alt="TCP scan &mdash; service profiles per host" loading="lazy"><div class="ev-body"><div class="ev-claim">TCP scan &mdash; service profiles per host</div><div class="ev-support">Gateway: 22/tcp and 5666/tcp. WordPress server: 22/tcp, 80/tcp, 3306/tcp. Each open port is an administrative question.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-3" onclick="openLbx('images/image24.png','Figure W8-3 &mdash; UDP scan of the gateway revealed DNS, DHCP, NTP and SNMP-related ports')"><div class="ev-label">Figure W8-3</div><img src="images/image24.png" alt="UDP scan &mdash; gateway footprint wider than TCP alone" loading="lazy"><div class="ev-body"><div class="ev-claim">UDP scan &mdash; gateway footprint wider than TCP alone</div><div class="ev-support">UDP services are often ignored in TCP-only assessments but can carry their own risks, for example SNMP with a default community string.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-4" onclick="openLbx('images/image25.png','Figure W8-4 &mdash; Aggressive scan added version info, OS guess, and default scripts for the WordPress host')"><div class="ev-label">Figure W8-4</div><img src="images/image25.png" alt="Aggressive scan &mdash; version and OS data added" loading="lazy"><div class="ev-body"><div class="ev-claim">Aggressive scan &mdash; version and OS data added</div><div class="ev-support">Version information and OS fingerprinting give an attacker specific components to research. These are leads for follow-up, not confirmed exploits.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-5" onclick="openLbx('images/image26.png','Figure W8-5 &mdash; NSE scripts flagged possible SQL injection and CSRF leads on the WordPress target')"><div class="ev-label">Figure W8-5</div><img src="images/image26.png" alt="NSE scripts &mdash; SQLi and CSRF leads flagged" loading="lazy"><div class="ev-body"><div class="ev-claim">NSE scripts &mdash; SQLi and CSRF leads flagged</div><div class="ev-support">Scripted checks, not confirmed exploits. Treated as leads requiring manual validation &mdash; not evidence of actual compromise.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-6" onclick="openLbx('images/image27.png','Figure W8-6 &mdash; Advanced options including decoys and packet fragmentation demonstrated')"><div class="ev-label">Figure W8-6</div><img src="images/image27.png" alt="Decoys and fragmentation &mdash; IDS evasion techniques" loading="lazy"><div class="ev-body"><div class="ev-claim">Decoys and fragmentation &mdash; IDS evasion techniques</div><div class="ev-support">Useful as methodology evidence. Demonstrates awareness of IDS evasion but does not prove successful evasion.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-7" onclick="openLbx('images/image28.png','Figure W8-7 &mdash; ACK scanning assessed filtering behaviour rather than listing open ports')"><div class="ev-label">Figure W8-7</div><img src="images/image28.png" alt="ACK scan &mdash; filtering behaviour mapped" loading="lazy"><div class="ev-body"><div class="ev-claim">ACK scan &mdash; filtering behaviour mapped</div><div class="ev-support">ACK scanning reveals whether ports are filtered, not which services are open. A different question, a different tool.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-8" onclick="openLbx('images/image29.png','Figure W8-8 &mdash; Traceroute confirmed the gateway is one hop away')"><div class="ev-label">Figure W8-8</div><img src="images/image29.png" alt="Traceroute &mdash; lab topology confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">Traceroute &mdash; lab topology confirmed</div><div class="ev-support">One-hop path to gateway confirms the expected lab network layout and is consistent with the directed scan results in W8-2.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-9" onclick="openLbx('images/image30.png','Figure W8-9 &mdash; IPv6 scan showed SSH and HTTP accessible over a second protocol stack')"><div class="ev-label">Figure W8-9</div><img src="images/image30.png" alt="IPv6 scan &mdash; dual-stack exposure confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">IPv6 scan &mdash; dual-stack exposure confirmed</div><div class="ev-support">If IPv4 is hardened but IPv6 is not, the host remains accessible. Both protocol stacks must receive the same hardening decisions.</div></div></div>
     </div>
   </div>
-
-  <div class="cb" id="w8-nmap-find">
-    <h3><span class="sec-tag">Nmap Findings and Analysis</span></h3>
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Host</th><th>Protocol / Port</th><th>Service</th><th>Why It Matters</th><th>Defensive Question</th><th>Evidence</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><code>192.168.123.1</code></td><td>22/tcp</td><td>SSH</td><td>Direct administrative path to the gateway</td><td>Restrict to trusted admin hosts and key-based auth only</td><td>W8-2</td></tr>
-          <tr><td><code>192.168.123.1</code></td><td>5666/tcp</td><td>NRPE</td><td>Monitoring service visible from the scanning segment</td><td>Does this port need to be reachable from this network at all?</td><td>W8-2</td></tr>
-          <tr><td><code>192.168.123.1</code></td><td>53, 68, 123, 161 / udp</td><td>DNS, DHCP, NTP, SNMP</td><td>Multiple UDP services expand the gateway footprint</td><td>Review firewall policy and interface exposure per service</td><td>W8-3</td></tr>
-          <tr><td><code>192.168.123.30</code></td><td>22/tcp</td><td>SSH</td><td>Management access to the WordPress server</td><td>Restrict and harden authentication</td><td>W8-2, W8-4</td></tr>
-          <tr><td><code>192.168.123.30</code></td><td>80/tcp</td><td>Apache HTTP</td><td>Public application surface</td><td>Patch the web stack and reduce information leakage</td><td>W8-4</td></tr>
-          <tr><td><code>192.168.123.30</code></td><td>3306/tcp</td><td>MySQL</td><td>Database exposure increases lateral attack options</td><td>Restrict MySQL to only the required hosts</td><td>W8-2, W8-4</td></tr>
-          <tr><td><code>fe80::...aa02</code></td><td>22/tcp, 80/tcp</td><td>SSH + HTTP over IPv6</td><td>Same host reachable on a second protocol stack</td><td>Apply the same hardening policy to IPv6 as IPv4</td><td>W8-9</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Technique</th><th>Purpose</th><th>Result</th><th>Confidence Note</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Host discovery (<code>-sn</code>)</td><td>Identify live hosts</td><td>Three live systems found</td><td>High-confidence first pass on the lab subnet</td></tr>
-          <tr><td>Focused TCP scan</td><td>Map exposed TCP services</td><td>Gateway and WordPress host profiled</td><td>Strong evidence of attack surface; not evidence of compromise</td></tr>
-          <tr><td>UDP scan</td><td>Check for services beyond TCP</td><td>Several gateway services returned open|filtered</td><td>UDP results are less reliable; treat as leads for follow-up</td></tr>
-          <tr><td>Aggressive scan (<code>-O</code>)</td><td>Add version and OS data</td><td>Apache, MySQL, SSH, Linux metadata identified</td><td>Good enrichment; banners and fingerprints can still be incomplete</td></tr>
-          <tr><td>NSE vuln scripts</td><td>Surface likely weaknesses</td><td>SQLi and CSRF leads flagged against WordPress</td><td>Scripted checks only — must be treated as leads, not confirmed exploits</td></tr>
-          <tr><td>Decoys and fragmentation</td><td>Demonstrate evasion techniques</td><td>Commands executed and results captured</td><td>Useful as methodology evidence; not proof of successful evasion</td></tr>
-          <tr><td>ACK scan (<code>-sA</code>)</td><td>Assess filtering behaviour</td><td>Filtering state results returned</td><td>Tells us about filtering rules, not which services are open</td></tr>
-          <tr><td>IPv6 scan (<code>-6</code>)</td><td>Check dual-stack exposure</td><td>SSH and HTTP visible over IPv6</td><td>Reminds defenders to harden both protocol stacks consistently</td></tr>
-        </tbody>
-      </table>
-    </div>
-
+  <div class="cb" id="w8-nmap-find"><h3><span class="sec-tag">Nmap Findings and Analysis</span></h3>
+    <div class="dataset" data-ds="w8-services"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Protocol / Port</th><th>Service</th><th>Why It Matters</th><th>Defensive Question</th><th>Evidence</th></tr></thead><tbody>
+      <tr><td><code>192.168.123.1</code></td><td>22/tcp</td><td>SSH</td><td>Direct administrative path to the gateway</td><td>Restrict to trusted admin hosts and key-based auth only</td><td>W8-2</td></tr>
+      <tr><td><code>192.168.123.1</code></td><td>5666/tcp</td><td>NRPE</td><td>Monitoring service visible from the scanning segment</td><td>Does this port need to be reachable from this network at all?</td><td>W8-2</td></tr>
+      <tr><td><code>192.168.123.1</code></td><td>53, 68, 123, 161 / udp</td><td>DNS, DHCP, NTP, SNMP</td><td>Multiple UDP services expand the gateway footprint</td><td>Review firewall policy and interface exposure per service</td><td>W8-3</td></tr>
+      <tr><td><code>192.168.123.30</code></td><td>22/tcp</td><td>SSH</td><td>Management access to the WordPress server</td><td>Restrict and harden authentication</td><td>W8-2, W8-4</td></tr>
+      <tr><td><code>192.168.123.30</code></td><td>80/tcp</td><td>Apache HTTP</td><td>Public application surface</td><td>Patch the web stack and reduce information leakage</td><td>W8-4</td></tr>
+      <tr><td><code>192.168.123.30</code></td><td>3306/tcp</td><td>MySQL</td><td>Database exposure increases lateral attack options</td><td>Restrict MySQL to only the required hosts</td><td>W8-2, W8-4</td></tr>
+      <tr><td><code>fe80::...aa02</code></td><td>22/tcp, 80/tcp</td><td>SSH + HTTP over IPv6</td><td>Same host reachable on a second protocol stack</td><td>Apply the same hardening policy to IPv6 as IPv4</td><td>W8-9</td></tr>
+    </tbody></table></div></div>
+    <div class="dataset" data-ds="w8-techniques"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Technique</th><th>Purpose</th><th>Result</th><th>Confidence Note</th></tr></thead><tbody>
+      <tr><td>Host discovery (<code>-sn</code>)</td><td>Identify live hosts</td><td>Three live systems found</td><td>High-confidence first pass on the lab subnet</td></tr>
+      <tr><td>Focused TCP scan</td><td>Map exposed TCP services</td><td>Gateway and WordPress host profiled</td><td>Strong evidence of attack surface; not evidence of compromise</td></tr>
+      <tr><td>UDP scan</td><td>Check for services beyond TCP</td><td>Several gateway services returned open|filtered</td><td>UDP results are less reliable; treat as leads for follow-up</td></tr>
+      <tr><td>Aggressive scan (<code>-O</code>)</td><td>Add version and OS data</td><td>Apache, MySQL, SSH, Linux metadata identified</td><td>Good enrichment; banners and fingerprints can still be incomplete</td></tr>
+      <tr><td>NSE vuln scripts</td><td>Surface likely weaknesses</td><td>SQLi and CSRF leads flagged against WordPress</td><td>Scripted checks only &mdash; must be treated as leads, not confirmed exploits</td></tr>
+      <tr><td>Decoys and fragmentation</td><td>Demonstrate evasion techniques</td><td>Commands executed and results captured</td><td>Useful as methodology evidence; not proof of successful evasion</td></tr>
+      <tr><td>ACK scan (<code>-sA</code>)</td><td>Assess filtering behaviour</td><td>Filtering state results returned</td><td>Tells us about filtering rules, not which services are open</td></tr>
+      <tr><td>IPv6 scan (<code>-6</code>)</td><td>Check dual-stack exposure</td><td>SSH and HTTP visible over IPv6</td><td>Reminds defenders to harden both protocol stacks consistently</td></tr>
+    </tbody></table></div></div>
     <p>Host discovery identified three live systems on the <code>192.168.123.0/24</code> range. The directed TCP scans in Figure W8-2 separated those hosts by open port profile. Together these first two steps established the target list and gave structure to everything that followed.</p>
-    <p>The gateway exposed <code>22/tcp</code> and <code>5666/tcp</code> while the WordPress server exposed <code>22/tcp</code>, <code>80/tcp</code> and <code>3306/tcp</code>. Aggressive scanning in Figure W8-4 added version information and OS guesses — the kind of details an attacker would collect before attempting exploitation.</p>
+    <p>The gateway exposed <code>22/tcp</code> and <code>5666/tcp</code> while the WordPress server exposed <code>22/tcp</code>, <code>80/tcp</code> and <code>3306/tcp</code>. Aggressive scanning in Figure W8-4 added version information and OS guesses &mdash; the kind of details an attacker would collect before attempting exploitation.</p>
     <p>The NSE results in Figure W8-5 were useful but needed caution. Nmap flagged possible SQL injection and CSRF issues against the WordPress service but these are scripted checks, not confirmed exploits. They indicated where to investigate further, not that exploitation had succeeded.</p>
     <p>IPv6 scanning in Figure W8-9 was a useful reminder that the attack surface may exist on more than one protocol stack. If defenders only harden IPv4 and leave IPv6 open, the dual-stack host becomes a bypass.</p>
   </div>
-
-  <div class="cb" id="w8-ssh-ev">
-    <h3><span class="sec-tag">Evidence — SSH Administration</span></h3>
+  <div class="cb" id="w8-ssh-ev"><h3><span class="sec-tag">Evidence &mdash; SSH Administration</span></h3>
     <div class="ev-grid">
-      <div class="ev-card" onclick="openLbx('images/image31.png','Figure W8-10 — Initial SSH connection to the gateway using password auth')">
-        <img src="images/image31.png" alt="W8-10" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-10</div><div class="fig-title">Initial SSH connection established</div><div class="fig-note">Baseline connection using password auth before hardening. This is the configuration that subsequent steps improve upon.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image32.png','Figure W8-11 — 4096-bit RSA key pair generated with ssh-keygen')">
-        <img src="images/image32.png" alt="W8-11" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-11</div><div class="fig-title">4096-bit RSA key pair created</div><div class="fig-note">Strong key material is the foundation. The key size alone does not provide security — the full deployment chain matters.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image33.png','Figure W8-12 — Public key copied to the gateway via ssh-copy-id')">
-        <img src="images/image33.png" alt="W8-12" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-12</div><div class="fig-title">Public key deployed to authorized_keys</div><div class="fig-note">Key delivered to the correct authorized_keys file. Security depends on this step being done correctly and the private key being protected.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image34.png','Figure W8-13 — SCP used to transfer a file securely over the SSH session')">
-        <img src="images/image34.png" alt="W8-13" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-13</div><div class="fig-title">SCP — encrypted file transfer confirmed</div><div class="fig-note">Demonstrates confidentiality and integrity in file transfer. The same mechanism could be misused to exfiltrate data if SSH access is not governed.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image35.png','Figure W8-14 — Local port forwarding used to reach the WordPress service through the gateway')">
-        <img src="images/image35.png" alt="W8-14" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-14</div><div class="fig-title">Local port forwarding through the gateway</div><div class="fig-note">Legitimate administrative technique. If left ungoverned, the same mechanism could be used to bypass network boundaries.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image36.png','Figure W8-15 — Remote port forwarding demonstrated over the SSH session')">
-        <img src="images/image36.png" alt="W8-15" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-15</div><div class="fig-title">Remote port forwarding demonstrated</div><div class="fig-note">Exposes a local service to the remote side. Useful for administration; requires governance to prevent unintended network exposure.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image37.png','Figure W8-16 — ControlMaster multiplexing configured for session reuse')">
-        <img src="images/image37.png" alt="W8-16" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-16</div><div class="fig-title">ControlMaster — session multiplexing configured</div><div class="fig-note">Reduces authentication overhead by reusing an existing connection. Improves operational efficiency without weakening security.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image38.png','Figure W8-17 — Passwordless SSH login confirmed after key-based auth was set up')">
-        <img src="images/image38.png" alt="W8-17" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W8-17</div><div class="fig-title">Passwordless login confirmed — key auth working</div><div class="fig-note">End-to-end validation of the hardening chain: strong key, correct deployment, verified login. Password auth is no longer required.</div></div>
-      </div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-10" onclick="openLbx('images/image31.png','Figure W8-10 &mdash; Initial SSH connection to the gateway using password auth')"><div class="ev-label">Figure W8-10</div><img src="images/image31.png" alt="Initial SSH connection established" loading="lazy"><div class="ev-body"><div class="ev-claim">Initial SSH connection established</div><div class="ev-support">Baseline connection using password auth before hardening. This is the configuration that subsequent steps improve upon.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-11" onclick="openLbx('images/image32.png','Figure W8-11 &mdash; 4096-bit RSA key pair generated with ssh-keygen')"><div class="ev-label">Figure W8-11</div><img src="images/image32.png" alt="4096-bit RSA key pair created" loading="lazy"><div class="ev-body"><div class="ev-claim">4096-bit RSA key pair created</div><div class="ev-support">Strong key material is the foundation. The key size alone does not provide security &mdash; the full deployment chain matters.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-12" onclick="openLbx('images/image33.png','Figure W8-12 &mdash; Public key copied to the gateway via ssh-copy-id')"><div class="ev-label">Figure W8-12</div><img src="images/image33.png" alt="Public key deployed to authorized_keys" loading="lazy"><div class="ev-body"><div class="ev-claim">Public key deployed to authorized_keys</div><div class="ev-support">Key delivered to the correct authorized_keys file. Security depends on this step being done correctly and the private key being protected.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-13" onclick="openLbx('images/image34.png','Figure W8-13 &mdash; SCP used to transfer a file securely over the SSH session')"><div class="ev-label">Figure W8-13</div><img src="images/image34.png" alt="SCP &mdash; encrypted file transfer confirmed" loading="lazy"><div class="ev-body"><div class="ev-claim">SCP &mdash; encrypted file transfer confirmed</div><div class="ev-support">Demonstrates confidentiality and integrity in file transfer. The same mechanism could be misused to exfiltrate data if SSH access is not governed.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-14" onclick="openLbx('images/image35.png','Figure W8-14 &mdash; Local port forwarding used to reach the WordPress service through the gateway')"><div class="ev-label">Figure W8-14</div><img src="images/image35.png" alt="Local port forwarding through the gateway" loading="lazy"><div class="ev-body"><div class="ev-claim">Local port forwarding through the gateway</div><div class="ev-support">Legitimate administrative technique. If left ungoverned, the same mechanism could be used to bypass network boundaries.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-15" onclick="openLbx('images/image36.png','Figure W8-15 &mdash; Remote port forwarding demonstrated over the SSH session')"><div class="ev-label">Figure W8-15</div><img src="images/image36.png" alt="Remote port forwarding demonstrated" loading="lazy"><div class="ev-body"><div class="ev-claim">Remote port forwarding demonstrated</div><div class="ev-support">Exposes a local service to the remote side. Useful for administration; requires governance to prevent unintended network exposure.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-16" onclick="openLbx('images/image37.png','Figure W8-16 &mdash; ControlMaster multiplexing configured for session reuse')"><div class="ev-label">Figure W8-16</div><img src="images/image37.png" alt="ControlMaster &mdash; session multiplexing configured" loading="lazy"><div class="ev-body"><div class="ev-claim">ControlMaster &mdash; session multiplexing configured</div><div class="ev-support">Reduces authentication overhead by reusing an existing connection. Improves operational efficiency without weakening security.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-17" onclick="openLbx('images/image38.png','Figure W8-17 &mdash; Passwordless SSH login confirmed after key-based auth was set up')"><div class="ev-label">Figure W8-17</div><img src="images/image38.png" alt="Passwordless login confirmed &mdash; key auth working" loading="lazy"><div class="ev-body"><div class="ev-claim">Passwordless login confirmed &mdash; key auth working</div><div class="ev-support">End-to-end validation of the hardening chain: strong key, correct deployment, verified login. Password auth is no longer required.</div></div></div>
     </div>
   </div>
-
-  <div class="cb" id="w8-ssh-find">
-    <h3><span class="sec-tag">SSH Findings and Analysis</span></h3>
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Security Property</th><th>What SSH Provided in This Lab</th><th>Residual Risk if Mishandled</th></tr>
-        </thead>
-        <tbody>
-          <tr><td>Confidentiality</td><td>Encrypted administration sessions, SCP transfers, and forwarded traffic</td><td>Weakens quickly if keys are stolen or tunnels are exposed carelessly</td></tr>
-          <tr><td>Integrity</td><td>Host verification and authenticated sessions reduce risk of tampering in transit</td><td>Trust depends on key protection and correct host validation</td></tr>
-          <tr><td>Availability</td><td>Secure remote administration without exposing every internal service directly</td><td>Overuse of tunnelling or broken key management can create operational fragility</td></tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="cb" id="w8-ssh-find"><h3><span class="sec-tag">SSH Findings and Analysis</span></h3>
+    <div class="dataset" data-ds="w8-ssh"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Security Property</th><th>What SSH Provided in This Lab</th><th>Residual Risk if Mishandled</th></tr></thead><tbody>
+      <tr><td>Confidentiality</td><td>Encrypted administration sessions, SCP transfers, and forwarded traffic</td><td>Weakens quickly if keys are stolen or tunnels are exposed carelessly</td></tr>
+      <tr><td>Integrity</td><td>Host verification and authenticated sessions reduce risk of tampering in transit</td><td>Trust depends on key protection and correct host validation</td></tr>
+      <tr><td>Availability</td><td>Secure remote administration without exposing every internal service directly</td><td>Overuse of tunnelling or broken key management can create operational fragility</td></tr>
+    </tbody></table></div></div>
     <p>This part of the lab made <strong>LO2</strong> much more concrete than a theoretical discussion of cryptography would have. SSH protects confidentiality by encrypting administrative traffic, integrity through MACs that detect tampering, and authentication through key-based identity. Using these properties in practice rather than just describing them made the learning outcome much clearer.</p>
-    <p>Generating a 4096-bit RSA key pair and deploying it with <code>ssh-copy-id</code> showed why the full chain matters — a strong key delivered to the correct <code>authorized_keys</code> file, verified by a subsequent passwordless login. Key size alone is not enough if the deployment step is careless.</p>
+    <p>Generating a 4096-bit RSA key pair and deploying it with <code>ssh-copy-id</code> showed why the full chain matters &mdash; a strong key delivered to the correct <code>authorized_keys</code> file, verified by a subsequent passwordless login. Key size alone is not enough if the deployment step is careless.</p>
     <p>SCP and the tunnelling exercises in Figures W8-13 to W8-15 showed that SSH can carry file transfers, forward local ports, or expose a local service to the remote side. All three are useful for legitimate administration but all three could also be abused to bypass network controls if SSH access is not properly governed. This section addresses <strong>LO1</strong> by identifying which services should be reduced or segmented, and <strong>LO2</strong> by showing how SSH's cryptographic primitives protect every operation in the evidence.</p>
   </div>
-
-  <div class="cb" id="w8-mit">
-    <h3><span class="sec-tag">Recommended Mitigations</span></h3>
-    <ul class="mit-list">
-      <li>Restrict SSH, NRPE, MySQL, and unnecessary UDP services to only the hosts or interfaces that genuinely need them</li>
-      <li>Apply the same service-hardening decisions to IPv6 exposure as to IPv4 exposure</li>
-      <li>Treat NSE findings as leads for validation rather than automatic proof of compromise</li>
-      <li>Prefer key-based SSH authentication over reusable passwords and protect private keys with strong local controls</li>
-      <li>Monitor and govern SSH tunnelling so legitimate administrative use does not silently bypass network boundaries</li>
-      <li>Document which advanced scan techniques produced reliable evidence and which did not, so future assessments start from the strongest methods</li>
-    </ul>
-  </div>
-
-  <div class="cb" id="w8-reflect">
-    <h3><span class="sec-tag">Reflection</span></h3>
-    <p>My main takeaway was that secure administration is not just about having SSH available. It is about using it deliberately: keys instead of reusable passwords, tunnelling scoped to what is needed rather than left open by default, and multiplexing for operational efficiency. What I would do differently next time is document which scan techniques produced reliable evidence and which did not, so that future assessments start from the strongest methods instead of repeating everything.</p>
-    <p>Nmap and SSH changed how I think about the relationship between discovery and administration because knowing what is exposed is only useful if you also know how to lock it down properly.</p>
-  </div>
+  <div class="cb" id="w8-mit"><h3><span class="sec-tag">Recommended Mitigations</span></h3><ul class="mit-list"><li>Restrict SSH, NRPE, MySQL, and unnecessary UDP services to only the hosts or interfaces that genuinely need them</li><li>Apply the same service-hardening decisions to IPv6 exposure as to IPv4 exposure</li><li>Treat NSE findings as leads for validation rather than automatic proof of compromise</li><li>Prefer key-based SSH authentication over reusable passwords and protect private keys with strong local controls</li><li>Monitor and govern SSH tunnelling so legitimate administrative use does not silently bypass network boundaries</li><li>Document which advanced scan techniques produced reliable evidence and which did not, so future assessments start from the strongest methods</li></ul></div>
+  <div class="cb" id="w8-reflect"><h3><span class="sec-tag">Reflection</span></h3><p>My main takeaway was that secure administration is not just about having SSH available. It is about using it deliberately: keys instead of reusable passwords, tunnelling scoped to what is needed rather than left open by default, and multiplexing for operational efficiency. What I would do differently next time is document which scan techniques produced reliable evidence and which did not, so that future assessments start from the strongest methods instead of repeating everything.</p><p>Nmap and SSH changed how I think about the relationship between discovery and administration because knowing what is exposed is only useful if you also know how to lock it down properly.</p></div>
 </div>
 
 <!-- ===================== W9 NESSUS ===================== -->
 <div class="panel w9" id="panel-w9">
-  <div class="sec-hdr">
-    <div class="lbl" style="color:var(--w9)">05 / Week 9</div>
-    <h2>Vulnerability Scanning and Mitigation Lab (Nessus)</h2>
-    <p class="desc">Automated vulnerability scanning of two hosts with structured severity output, host-to-host comparison, and context-dependent prioritisation.</p>
-  </div>
-
-  <div class="takeaway">
-    <div class="tk-icon">📊</div>
-    <div class="tk-body">
-      <div class="tk-title">Key Takeaway</div>
-      <div class="tk-text">Nessus turned raw scan data into structured severity output — but the IP Forwarding finding demonstrated that the severity label alone does not determine priority. A medium rating on a host whose job is to route traffic means something different from the same rating on a host that should not be forwarding at all. Nessus changed how I think about prioritisation because the host role and network context matter more than the colour code, and that judgement cannot be automated.</div>
-    </div>
-  </div>
-
-  <div class="sub-nav">
-    <a href="#w9-aim">Aim</a>
-    <a href="#w9-method">Methodology</a>
-    <a href="#w9-evidence">Evidence</a>
-    <a href="#w9-comparison">Severity Comparison</a>
-    <a href="#w9-findings">Findings</a>
-    <a href="#w9-mit">Mitigations</a>
-    <a href="#w9-reflect">Reflection</a>
-  </div>
-
-  <div class="cb" id="w9-aim">
-    <h3><span class="sec-tag">Aim</span></h3>
-    <p>The aim of this lab was to install, configure and use Nessus in order to scan at least two virtual machines and interpret the resulting findings [10], [11]. This lab addressed <strong>LO1</strong> because I identified host-level vulnerabilities and translated them into prioritised remediation steps, and <strong>LO2</strong> because findings such as the SSH Terrapin weakness and IP forwarding relate directly to confidentiality, integrity and availability.</p>
-  </div>
-
-  <div class="cb" id="w9-method">
-    <h3><span class="sec-tag">Methodology</span></h3>
-    <p>I started the Nessus service on Kali Linux and connected to the interface at <code>https://localhost:8834</code>, completed the initial setup, selected the Basic Network Scan template and ran scans against two targets:</p>
-    <ul>
-      <li><code>192.168.123.1</code> — Master Gateway</li>
-      <li><code>192.168.123.30</code> — Ubuntu WordPress</li>
-    </ul>
-    <p>After launching both scans I reviewed the internal Nessus history screens, compared the severity counts and exported a report for each host. To add analytical depth I created a side-by-side chart from the exported data.</p>
-  </div>
-
-  <div class="cb" id="w9-evidence">
-    <h3><span class="sec-tag">Evidence</span></h3>
+  <div class="sec-hdr"><div class="lbl" style="color:var(--w9)">05 / Week 9</div><h2>Vulnerability Scanning and Mitigation Lab (Nessus)</h2><p class="desc">Automated vulnerability scanning of two hosts with structured severity output, host-to-host comparison, and context-dependent prioritisation.</p></div>
+  <div class="takeaway"><div class="tk-icon">&#x1F4CA;</div><div class="tk-body"><div class="tk-title">Key Takeaway</div><div class="tk-sub">Main analytical point</div><div class="tk-text">Nessus turned raw scan data into structured severity output &mdash; but the IP Forwarding finding demonstrated that the severity label alone does not determine priority. A medium rating on a host whose job is to route traffic means something different from the same rating on a host that should not be forwarding at all. Nessus changed how I think about prioritisation because the host role and network context matter more than the colour code, and that judgement cannot be automated.</div></div></div>
+  <div class="sub-nav" id="sub-nav-w9" role="navigation" aria-label="Nessus subsections"><a href="#w9-aim" class="active">Aim</a><a href="#w9-method">Methodology</a><a href="#w9-evidence">Evidence</a><a href="#w9-comparison">Comparison</a><a href="#w9-findings">Findings</a><a href="#w9-mit">Mitigations</a><a href="#w9-reflect">Reflection</a></div>
+  <div class="cb" id="w9-aim"><h3><span class="sec-tag">Aim</span></h3><p>The aim of this lab was to install, configure and use Nessus in order to scan at least two virtual machines and interpret the resulting findings [10], [11]. This lab addressed <strong>LO1</strong> because I identified host-level vulnerabilities and translated them into prioritised remediation steps, and <strong>LO2</strong> because findings such as the SSH Terrapin weakness and IP forwarding relate directly to confidentiality, integrity and availability.</p></div>
+  <div class="cb" id="w9-method"><h3><span class="sec-tag">Methodology</span></h3><p>I started the Nessus service on Kali Linux and connected to the interface at <code>https://localhost:8834</code>, completed the initial setup, selected the Basic Network Scan template and ran scans against two targets:</p><ul><li><code>192.168.123.1</code> &mdash; Master Gateway</li><li><code>192.168.123.30</code> &mdash; Ubuntu WordPress</li></ul><p>After launching both scans I reviewed the internal Nessus history screens, compared the severity counts and exported a report for each host. To add analytical depth I created a side-by-side chart from the exported data.</p></div>
+  <div class="cb" id="w9-evidence"><h3><span class="sec-tag">Evidence</span></h3>
     <div class="ev-grid">
-      <div class="ev-card" onclick="openLbx('images/image39.png','Figure W9-1 — Nessus service started on Kali Linux')">
-        <img src="images/image39.png" alt="W9-1" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-1</div><div class="fig-title">Nessus service started</div><div class="fig-note">Scanner running and ready. Essential baseline before scanning can begin.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image40.png','Figure W9-2 — Nessus web interface reached at https://localhost:8834')">
-        <img src="images/image40.png" alt="W9-2" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-2</div><div class="fig-title">Nessus web interface connected</div><div class="fig-note">Confirms the scanner is accessible and usable — not just running as a background service.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image41.png','Figure W9-3 — Nessus plugin database initialised')">
-        <img src="images/image41.png" alt="W9-3" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-3</div><div class="fig-title">Plugin database initialised</div><div class="fig-note">Plugin population is the equivalent of WPScan's database update — without it, findings would miss recently disclosed vulnerabilities.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image42.png','Figure W9-4 — Basic Network Scan template selected for the lab scans')">
-        <img src="images/image42.png" alt="W9-4" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-4</div><div class="fig-title">Scan template selected</div><div class="fig-note">Template selection determines the scope and depth of checks run — Basic Network Scan is appropriate for a general host-level assessment.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image43.png','Figure W9-5 — Scan configured for the Master Gateway at 192.168.123.1')">
-        <img src="images/image43.png" alt="W9-5" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-5</div><div class="fig-title">Gateway scan configured</div><div class="fig-note">Target set to 192.168.123.1. Configuration screenshot confirms deliberate scan setup rather than default targeting.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image44.png','Figure W9-6 — Internal Nessus history showing the completed Master Gateway scan')">
-        <img src="images/image44.png" alt="W9-6" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-6</div><div class="fig-title">Gateway scan completed — history confirmed</div><div class="fig-note">Internal history view shows I navigated and used the Nessus interface directly, not just exported PDFs.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image45.png','Figure W9-7 — Internal Nessus history showing the completed Ubuntu WordPress scan')">
-        <img src="images/image45.png" alt="W9-7" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-7</div><div class="fig-title">WordPress scan completed — history confirmed</div><div class="fig-note">Second scan confirmed via history. Both hosts were assessed and results retained within Nessus for review.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image46.png','Figure W9-8 — Exported Nessus report for 192.168.123.30 showing Terrapin SSH finding (CVE-2023-48795)')">
-        <img src="images/image46.png" alt="W9-8" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-8</div><div class="fig-title">WordPress report — Terrapin SSH (CVE-2023-48795)</div><div class="fig-note">SSH protocol negotiation weakness directly relevant to LO2. Totals: 0 critical, 0 high, 1 medium, 1 low, 35 informational.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image47.png','Figure W9-9 — Exported Nessus report for 192.168.123.1 showing IP Forwarding Enabled')">
-        <img src="images/image47.png" alt="W9-9" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-9</div><div class="fig-title">Gateway report — IP Forwarding Enabled</div><div class="fig-note">Totals: 0 critical, 0 high, 1 medium, 1 low, 24 informational. Finding is context-dependent — expected on a routing host.</div></div>
-      </div>
-      <div class="ev-card" onclick="openLbx('images/image48.png','Figure W9-10 — Severity comparison chart for both hosts side-by-side')">
-        <img src="images/image48.png" alt="W9-10" loading="lazy">
-        <div class="ev-cap"><div class="fig-id">Figure W9-10</div><div class="fig-title">Severity comparison — both hosts</div><div class="fig-note">The WordPress host has more informational findings but the Gateway's IP Forwarding finding has greater operational impact. Raw counts do not determine priority.</div></div>
-      </div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-1" onclick="openLbx('images/image39.png','Figure W9-1 &mdash; Nessus service started on Kali Linux')"><div class="ev-label">Figure W9-1</div><img src="images/image39.png" alt="Nessus service started" loading="lazy"><div class="ev-body"><div class="ev-claim">Nessus service started</div><div class="ev-support">Scanner running and ready. Essential baseline before scanning can begin.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-2" onclick="openLbx('images/image40.png','Figure W9-2 &mdash; Nessus web interface reached')"><div class="ev-label">Figure W9-2</div><img src="images/image40.png" alt="Nessus web interface connected" loading="lazy"><div class="ev-body"><div class="ev-claim">Nessus web interface connected</div><div class="ev-support">Confirms the scanner is accessible and usable &mdash; not just running as a background service.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-3" onclick="openLbx('images/image41.png','Figure W9-3 &mdash; Nessus plugin database initialised')"><div class="ev-label">Figure W9-3</div><img src="images/image41.png" alt="Plugin database initialised" loading="lazy"><div class="ev-body"><div class="ev-claim">Plugin database initialised</div><div class="ev-support">Plugin population is the equivalent of WPScan's database update &mdash; without it, findings would miss recently disclosed vulnerabilities.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-4" onclick="openLbx('images/image42.png','Figure W9-4 &mdash; Basic Network Scan template selected')"><div class="ev-label">Figure W9-4</div><img src="images/image42.png" alt="Scan template selected" loading="lazy"><div class="ev-body"><div class="ev-claim">Scan template selected</div><div class="ev-support">Template selection determines the scope and depth of checks run &mdash; Basic Network Scan is appropriate for a general host-level assessment.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-5" onclick="openLbx('images/image43.png','Figure W9-5 &mdash; Scan configured for the Master Gateway at 192.168.123.1')"><div class="ev-label">Figure W9-5</div><img src="images/image43.png" alt="Gateway scan configured" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway scan configured</div><div class="ev-support">Target set to 192.168.123.1. Configuration screenshot confirms deliberate scan setup.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-6" onclick="openLbx('images/image44.png','Figure W9-6 &mdash; Internal Nessus history showing the completed Master Gateway scan')"><div class="ev-label">Figure W9-6</div><img src="images/image44.png" alt="Gateway scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway scan completed &mdash; history confirmed</div><div class="ev-support">Internal history view shows I navigated and used the Nessus interface directly, not just exported PDFs.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-7" onclick="openLbx('images/image45.png','Figure W9-7 &mdash; Internal Nessus history showing the completed Ubuntu WordPress scan')"><div class="ev-label">Figure W9-7</div><img src="images/image45.png" alt="WordPress scan completed" loading="lazy"><div class="ev-body"><div class="ev-claim">WordPress scan completed &mdash; history confirmed</div><div class="ev-support">Second scan confirmed via history. Both hosts were assessed and results retained within Nessus for review.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-8" onclick="openLbx('images/image46.png','Figure W9-8 &mdash; Exported Nessus report for 192.168.123.30 showing Terrapin SSH finding (CVE-2023-48795)')"><div class="ev-label">Figure W9-8</div><img src="images/image46.png" alt="WordPress report &mdash; Terrapin SSH (CVE-2023-48795)" loading="lazy"><div class="ev-body"><div class="ev-claim">WordPress report &mdash; Terrapin SSH (CVE-2023-48795)</div><div class="ev-support">SSH protocol negotiation weakness directly relevant to LO2. Totals: 0 critical, 0 high, 1 medium, 1 low, 35 informational.</div></div></div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-9" onclick="openLbx('images/image47.png','Figure W9-9 &mdash; Exported Nessus report for 192.168.123.1 showing IP Forwarding Enabled')"><div class="ev-label">Figure W9-9</div><img src="images/image47.png" alt="Gateway report &mdash; IP Forwarding Enabled" loading="lazy"><div class="ev-body"><div class="ev-claim">Gateway report &mdash; IP Forwarding Enabled</div><div class="ev-support">Totals: 0 critical, 0 high, 1 medium, 1 low, 24 informational. Finding is context-dependent &mdash; expected on a routing host.</div></div></div>
     </div>
-    <div class="chart-note">
-      <strong>Reading Figure W9-10:</strong> the chart gives a visual baseline for risk prioritisation but the key conclusion is that equal severity counts do not mean equal risk. The gateway's IP Forwarding finding is context-dependent — it may be expected on a routing host — while the WordPress Terrapin finding is an unconditional patch target. Severity ratings must be read alongside host role and network context.
+    <div class="analysis-card">
+      <div class="analysis-context"><strong>Why this chart exists:</strong> it gives a visual baseline for risk prioritisation, but the key conclusion is that equal severity counts do not mean equal risk.</div>
+      <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W9-10" onclick="openLbx('images/image48.png','Figure W9-10 &mdash; Severity comparison chart for both hosts side-by-side')"><div class="ev-label">Figure W9-10</div><img src="images/image48.png" alt="Severity comparison &mdash; both hosts" loading="lazy"><div class="ev-body"><div class="ev-claim">Severity comparison &mdash; both hosts</div><div class="ev-support">The WordPress host has more informational findings but the Gateway's IP Forwarding finding has greater operational impact. Raw counts do not determine priority.</div></div></div>
+      <div class="analysis-takeaway"><strong>Takeaway:</strong> The gateway's IP Forwarding finding is context-dependent &mdash; it may be expected on a routing host &mdash; while the WordPress Terrapin finding is an unconditional patch target. Severity ratings must be read alongside host role and network context.</div>
     </div>
   </div>
-
-  <div class="cb" id="w9-comparison">
-    <h3><span class="sec-tag">Severity Comparison</span></h3>
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Host</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Informational</th><th>Most Notable Finding</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Master Gateway (<code>192.168.123.1</code>)</td>
-            <td>0</td><td>0</td>
-            <td><span class="sb sm">1</span></td>
-            <td><span class="sb sl">1</span></td>
-            <td><span class="sb si">24</span></td>
-            <td>50686 — IP Forwarding Enabled</td>
-          </tr>
-          <tr>
-            <td>Ubuntu WordPress (<code>192.168.123.30</code>)</td>
-            <td>0</td><td>0</td>
-            <td><span class="sb sm">1</span></td>
-            <td><span class="sb sl">1</span></td>
-            <td><span class="sb si">35</span></td>
-            <td>187315 — SSH Terrapin Prefix Truncation (CVE-2023-48795)</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div class="cb" id="w9-comparison"><h3><span class="sec-tag">Severity Comparison</span></h3>
+    <div class="dataset" data-ds="w9-severity"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Critical</th><th>High</th><th>Medium</th><th>Low</th><th>Informational</th><th>Most Notable Finding</th></tr></thead><tbody>
+      <tr><td>Master Gateway (<code>192.168.123.1</code>)</td><td>0</td><td>0</td><td><span class="sb sm">1</span></td><td><span class="sb sl">1</span></td><td><span class="sb si">24</span></td><td>50686 &mdash; IP Forwarding Enabled</td></tr>
+      <tr><td>Ubuntu WordPress (<code>192.168.123.30</code>)</td><td>0</td><td>0</td><td><span class="sb sm">1</span></td><td><span class="sb sl">1</span></td><td><span class="sb si">35</span></td><td>187315 &mdash; SSH Terrapin Prefix Truncation (CVE-2023-48795)</td></tr>
+    </tbody></table></div></div>
   </div>
-
-  <div class="cb" id="w9-findings">
-    <h3><span class="sec-tag">Findings and Analysis</span></h3>
+  <div class="cb" id="w9-findings"><h3><span class="sec-tag">Findings and Analysis</span></h3>
     <p>The internal Nessus screens in Figures W9-6 and W9-7 matter because they show I directly used the scanner rather than just relying on exported PDFs. They demonstrate that I navigated the Nessus interface, monitored scan progress and reviewed history.</p>
-    <p>The Master Gateway report showed 0 critical, 0 high, 1 medium, 1 low and 24 informational findings. The most notable was IP Forwarding Enabled. In a production network unnecessary packet forwarding can be misused for man-in-the-middle attacks or lateral movement, but in this lab context the gateway is expected to route traffic — so the finding is more of a design decision to document than a misconfiguration to remediate immediately.</p>
+    <p>The Master Gateway report showed 0 critical, 0 high, 1 medium, 1 low and 24 informational findings. The most notable was IP Forwarding Enabled. In a production network unnecessary packet forwarding can be misused for man-in-the-middle attacks or lateral movement, but in this lab context the gateway is expected to route traffic &mdash; so the finding is more of a design decision to document than a misconfiguration to remediate immediately.</p>
     <p>The Ubuntu WordPress report showed 0 critical, 0 high, 1 medium, 1 low and 35 informational findings. The most important finding was the Terrapin SSH vulnerability (<strong>CVE-2023-48795</strong>). This affects SSH protocol negotiation, making it directly relevant to <strong>LO2</strong> and the cryptographic integrity of remote administration. Unlike the IP Forwarding finding, this is an unconditional patch target regardless of host role.</p>
-    <p>The comparison chart and table make one additional point clear: raw counts are not enough. The WordPress host had more informational findings but the Gateway's IP Forwarding finding had more potential operational impact in a different environment. Severity ratings must be read alongside the role and exposure of the host. That is why I included the comparison chart — it provides a visual baseline for risk prioritisation rather than treating all medium findings as equivalent.</p>
+    <p>The comparison chart and table make one additional point clear: raw counts are not enough. The WordPress host had more informational findings but the Gateway's IP Forwarding finding had more potential operational impact in a different environment. Severity ratings must be read alongside the role and exposure of the host.</p>
   </div>
-
-  <div class="cb" id="w9-mit">
-    <h3><span class="sec-tag">Mitigation Actions and Recommendations</span></h3>
-    <div class="tbl-wrap">
-      <table class="ft">
-        <thead>
-          <tr><th>Host</th><th>Finding</th><th>Severity</th><th>Why It Matters in Context</th><th>Immediate Action</th><th>Validation</th></tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Ubuntu WordPress</td>
-            <td>SSH Terrapin (CVE-2023-48795)</td>
-            <td><span class="sb sm">Medium</span></td>
-            <td>Weakness in the management channel — unconditional patch target regardless of host role</td>
-            <td>Patch OpenSSH; review recommended algorithm hardening</td>
-            <td>Rescan after patching to confirm the finding no longer appears</td>
-          </tr>
-          <tr>
-            <td>Ubuntu WordPress</td>
-            <td>Broad service exposure (SSH + MySQL)</td>
-            <td><span class="sb sl">Low–Info</span></td>
-            <td>Exposure multiplies attack paths even when individual items are not critical</td>
-            <td>Restrict SSH and MySQL to the smallest required scope</td>
-            <td>Re-run scan after firewall changes and compare exposure</td>
-          </tr>
-          <tr>
-            <td>Master Gateway</td>
-            <td>IP Forwarding Enabled</td>
-            <td><span class="sb sm">Medium</span></td>
-            <td>Expected on a routing host; risk level depends on whether this role is intended and documented</td>
-            <td>Confirm intended role; enforce strict inter-interface firewall policy</td>
-            <td>Rescan after configuration review; confirm only intended routing behaviour remains</td>
-          </tr>
-          <tr>
-            <td>Master Gateway</td>
-            <td>Large informational footprint</td>
-            <td><span class="sb si">Info</span></td>
-            <td>Banner and service leakage still helps an attacker prioritise targets</td>
-            <td>Reduce unnecessary disclosure where practical</td>
-            <td>Use the next scan to check whether informational noise has been reduced</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <ul class="mit-list">
-      <li>Patch OpenSSH and related packages on the Ubuntu WordPress host to address the Terrapin weakness</li>
-      <li>Restrict SSH exposure to trusted administrative hosts only</li>
-      <li>Review whether MySQL should be reachable from the same segment as the web service</li>
-      <li>If the gateway must forward packets, document that role and enforce strict interface-level firewall policy</li>
-      <li>If the gateway does not need to route traffic in another environment, disable IP forwarding</li>
-      <li>Use Nessus findings as a prioritisation tool but validate the host role of each issue before treating it as a misconfiguration</li>
-      <li>Rescan after patching so the evidence shows improvement, not just initial exposure</li>
-    </ul>
+  <div class="cb" id="w9-mit"><h3><span class="sec-tag">Mitigation Actions and Recommendations</span></h3>
+    <div class="dataset" data-ds="w9-mitigations"><div class="tbl-wrap"><table class="ft"><thead><tr><th>Host</th><th>Finding</th><th>Severity</th><th>Why It Matters in Context</th><th>Immediate Action</th><th>Validation</th></tr></thead><tbody>
+      <tr><td>Ubuntu WordPress</td><td>SSH Terrapin (CVE-2023-48795)</td><td><span class="sb sm">Medium</span></td><td>Weakness in the management channel &mdash; unconditional patch target regardless of host role</td><td>Patch OpenSSH; review recommended algorithm hardening</td><td>Rescan after patching to confirm the finding no longer appears</td></tr>
+      <tr><td>Ubuntu WordPress</td><td>Broad service exposure (SSH + MySQL)</td><td><span class="sb sl">Low&ndash;Info</span></td><td>Exposure multiplies attack paths even when individual items are not critical</td><td>Restrict SSH and MySQL to the smallest required scope</td><td>Re-run scan after firewall changes and compare exposure</td></tr>
+      <tr><td>Master Gateway</td><td>IP Forwarding Enabled</td><td><span class="sb sm">Medium</span></td><td>Expected on a routing host; risk level depends on whether this role is intended and documented</td><td>Confirm intended role; enforce strict inter-interface firewall policy</td><td>Rescan after configuration review; confirm only intended routing behaviour remains</td></tr>
+      <tr><td>Master Gateway</td><td>Large informational footprint</td><td><span class="sb si">Info</span></td><td>Banner and service leakage still helps an attacker prioritise targets</td><td>Reduce unnecessary disclosure where practical</td><td>Use the next scan to check whether informational noise has been reduced</td></tr>
+    </tbody></table></div></div>
+    <ul class="mit-list"><li>Patch OpenSSH and related packages on the Ubuntu WordPress host to address the Terrapin weakness</li><li>Restrict SSH exposure to trusted administrative hosts only</li><li>Review whether MySQL should be reachable from the same segment as the web service</li><li>If the gateway must forward packets, document that role and enforce strict interface-level firewall policy</li><li>If the gateway does not need to route traffic in another environment, disable IP forwarding</li><li>Use Nessus findings as a prioritisation tool but validate the host role of each issue before treating it as a misconfiguration</li><li>Rescan after patching so the evidence shows improvement, not just initial exposure</li></ul>
   </div>
-
-  <div class="cb" id="w9-reflect">
-    <h3><span class="sec-tag">Reflection</span></h3>
-    <p>Nessus was the clearest tool in the portfolio for turning technical exposure into prioritised management output. Compared with Nmap which is good at discovery but leaves prioritisation to the analyst, Nessus produces structured severity ratings, remediation guidance and evidence that is already formatted for reporting.</p>
-    <p>Its limitation is also what makes it useful: it abstracts aggressively. That helps with prioritisation but it can tempt an analyst into treating every medium finding as identical when in reality the operational context matters more than the severity label. The IP forwarding finding showed that clearly because a medium rating on a host whose job is to route traffic means something different from the same rating on a host that should not be forwarding at all. That is the kind of judgement that Nessus cannot make for you, and learning to apply it is what I will take forward from this lab.</p>
-  </div>
+  <div class="cb" id="w9-reflect"><h3><span class="sec-tag">Reflection</span></h3><p>Nessus was the clearest tool in the portfolio for turning technical exposure into prioritised management output. Compared with Nmap which is good at discovery but leaves prioritisation to the analyst, Nessus produces structured severity ratings, remediation guidance and evidence that is already formatted for reporting.</p><p>Its limitation is also what makes it useful: it abstracts aggressively. That helps with prioritisation but it can tempt an analyst into treating every medium finding as identical when in reality the operational context matters more than the severity label. The IP forwarding finding showed that clearly because a medium rating on a host whose job is to route traffic means something different from the same rating on a host that should not be forwarding at all. That is the kind of judgement that Nessus cannot make for you, and learning to apply it is what I will take forward from this lab.</p></div>
 </div>
 
 <!-- ===================== OVERALL REFLECTION ===================== -->
 <div class="panel overall" id="panel-overall">
-  <div class="sec-hdr">
-    <div class="lbl" style="color:var(--green)">06 / Overall</div>
-    <h2>Overall Reflection</h2>
-    <p class="desc">Cross-lab learning, tool effectiveness, and what I would do differently next time.</p>
-  </div>
-
-  <div class="takeaway">
-    <div class="tk-icon">💡</div>
-    <div class="tk-body">
-      <div class="tk-title">Overarching Lesson</div>
-      <div class="tk-text">Each tool in this portfolio does a different job — and understanding where each one stops is as important as understanding what it can do. WPScan finds leads that need validation. Juice Shop shows how controls fail in combination. Nmap maps the surface. SSH secures the access to what Nmap found. And Nessus prioritises — but only if you apply the context that the scanner cannot supply itself.</div>
-    </div>
-  </div>
-
-  <div class="cb">
-    <p>Each lab taught me a different part of the same lesson.</p>
-    <p>WPScan showed me how quickly application-specific reconnaissance can expose useful information. Juice Shop showed me what those kinds of weaknesses look like from the inside. Nmap and SSH linked network-level discovery with secure management. And Nessus turned all of that into structured severity-based output that can be used for prioritisation and reporting.</p>
-    <p>What I would do differently next time is capture even more comparative evidence while I am in the lab instead of relying on cleanup later. The extra Juice Shop analysis chart and the Nessus severity comparison were the most valuable additions to the write-up, and I could have produced even more of those if I had planned the visuals from the start.</p>
-    <p>WPScan changed how I think about version validation because it showed me that a plugin advisory is only a lead until you confirm the installed version matches the affected range. Juice Shop changed how I think about chained risk because no single challenge was dramatic on its own but the combination of disclosure, injection and broken access control created a much larger attack surface than any one weakness suggested. Nmap and SSH changed how I think about the relationship between discovery and administration because knowing what is exposed is only useful if you also know how to lock it down properly. And Nessus changed how I think about prioritisation because the severity label alone did not tell me which finding mattered most without understanding the host role and network context.</p>
-    <p>The biggest overall learning point was that security tools do different jobs. WPScan and Nmap are strong at discovery, SSH is about secure operation and Nessus is about triage and prioritisation. Knowing what each tool is for and where its limits are is what turns technical output into a useful security assessment.</p>
-  </div>
+  <div class="sec-hdr"><div class="lbl" style="color:var(--acc)">06 / Overall</div><h2>Overall Reflection</h2><p class="desc">Cross-lab learning, tool effectiveness, and what I would do differently next time.</p></div>
+  <div class="takeaway"><div class="tk-icon">&#x1F4A1;</div><div class="tk-body"><div class="tk-title">Overarching Lesson</div><div class="tk-sub">Main analytical point</div><div class="tk-text">Each tool in this portfolio does a different job &mdash; and understanding where each one stops is as important as understanding what it can do. WPScan finds leads that need validation. Juice Shop shows how controls fail in combination. Nmap maps the surface. SSH secures the access to what Nmap found. And Nessus prioritises &mdash; but only if you apply the context that the scanner cannot supply itself.</div></div></div>
+  <div class="cb"><p>Each lab taught me a different part of the same lesson.</p><p>WPScan showed me how quickly application-specific reconnaissance can expose useful information. Juice Shop showed me what those kinds of weaknesses look like from the inside. Nmap and SSH linked network-level discovery with secure management. And Nessus turned all of that into structured severity-based output that can be used for prioritisation and reporting.</p><p>What I would do differently next time is capture even more comparative evidence while I am in the lab instead of relying on cleanup later. The extra Juice Shop analysis chart and the Nessus severity comparison were the most valuable additions to the write-up, and I could have produced even more of those if I had planned the visuals from the start.</p><p>WPScan changed how I think about version validation because it showed me that a plugin advisory is only a lead until you confirm the installed version matches the affected range. Juice Shop changed how I think about chained risk because no single challenge was dramatic on its own but the combination of disclosure, injection and broken access control created a much larger attack surface than any one weakness suggested. Nmap and SSH changed how I think about the relationship between discovery and administration because knowing what is exposed is only useful if you also know how to lock it down properly. And Nessus changed how I think about prioritisation because the severity label alone did not tell me which finding mattered most without understanding the host role and network context.</p><p>The biggest overall learning point was that security tools do different jobs. WPScan and Nmap are strong at discovery, SSH is about secure operation and Nessus is about triage and prioritisation. Knowing what each tool is for and where its limits are is what turns technical output into a useful security assessment.</p></div>
 </div>
 
 <!-- ===================== REFERENCES ===================== -->
 <div class="panel" id="panel-refs">
-  <div class="sec-hdr">
-    <div class="lbl" style="color:var(--fg3)">07 / References</div>
-    <h2>References</h2>
-    <p class="desc">IEEE-style references for all sources cited across the four lab sections.</p>
-  </div>
-
+  <div class="sec-hdr"><div class="lbl" style="color:var(--tx3)">07 / References</div><h2>References</h2><p class="desc">IEEE-style references for all sources cited across the four lab sections.</p></div>
   <div class="cb">
     <ol class="ref-list">
-      <li>University of Roehampton London, "Assessment Brief: Coursework Portfolio 1, CMP-X305 Cyber Security," 2026.</li>
-      <li>University of Roehampton London, "Portfolio Lab on WPScan for Penetration Testing of a WordPress Site," course lab sheet, 2026.</li>
-      <li>WPScan, "WordPress Security Scanner," [Online]. Available: <a href="https://wpscan.com/" target="_blank">https://wpscan.com/</a> [Accessed: 24 Mar. 2026].</li>
-      <li>University of Roehampton London, "Web Application Vulnerabilities (OWASP Juice Shop Lab)," course lab sheet, 2026.</li>
-      <li>OWASP Foundation, "OWASP Juice Shop," [Online]. Available: <a href="https://owasp.org/www-project-juice-shop/" target="_blank">https://owasp.org/www-project-juice-shop/</a> [Accessed: 24 Mar. 2026].</li>
-      <li>Course handout, "An Introduction to NMAP," 2026.</li>
-      <li>Nmap Project, "Nmap Reference Guide," [Online]. Available: <a href="https://nmap.org/book/man.html" target="_blank">https://nmap.org/book/man.html</a> [Accessed: 24 Mar. 2026].</li>
-      <li>Course handout, "Introduction to SSH (Secure Shell)," 2026.</li>
-      <li>OpenSSH, "OpenSSH Manual Pages," [Online]. Available: <a href="https://www.openssh.com/manual.html" target="_blank">https://www.openssh.com/manual.html</a> [Accessed: 24 Mar. 2026].</li>
-      <li>University of Roehampton London, "Nessus Lab," course lab sheet, 2026.</li>
-      <li>Tenable, "Nessus Vulnerability Scanner," [Online]. Available: <a href="https://www.tenable.com/products/nessus" target="_blank">https://www.tenable.com/products/nessus</a> [Accessed: 24 Mar. 2026].</li>
+      <li>University of Roehampton London, &ldquo;Assessment Brief: Coursework Portfolio 1, CMP-X305 Cyber Security,&rdquo; 2026.</li>
+      <li>University of Roehampton London, &ldquo;Portfolio Lab on WPScan for Penetration Testing of a WordPress Site,&rdquo; course lab sheet, 2026.</li>
+      <li>WPScan, &ldquo;WordPress Security Scanner,&rdquo; [Online]. Available: <a href="https://wpscan.com/" target="_blank">https://wpscan.com/</a> [Accessed: 24 Mar. 2026].</li>
+      <li>University of Roehampton London, &ldquo;Web Application Vulnerabilities (OWASP Juice Shop Lab),&rdquo; course lab sheet, 2026.</li>
+      <li>OWASP Foundation, &ldquo;OWASP Juice Shop,&rdquo; [Online]. Available: <a href="https://owasp.org/www-project-juice-shop/" target="_blank">https://owasp.org/www-project-juice-shop/</a> [Accessed: 24 Mar. 2026].</li>
+      <li>Course handout, &ldquo;An Introduction to NMAP,&rdquo; 2026.</li>
+      <li>Nmap Project, &ldquo;Nmap Reference Guide,&rdquo; [Online]. Available: <a href="https://nmap.org/book/man.html" target="_blank">https://nmap.org/book/man.html</a> [Accessed: 24 Mar. 2026].</li>
+      <li>Course handout, &ldquo;Introduction to SSH (Secure Shell),&rdquo; 2026.</li>
+      <li>OpenSSH, &ldquo;OpenSSH Manual Pages,&rdquo; [Online]. Available: <a href="https://www.openssh.com/manual.html" target="_blank">https://www.openssh.com/manual.html</a> [Accessed: 24 Mar. 2026].</li>
+      <li>University of Roehampton London, &ldquo;Nessus Lab,&rdquo; course lab sheet, 2026.</li>
+      <li>Tenable, &ldquo;Nessus Vulnerability Scanner,&rdquo; [Online]. Available: <a href="https://www.tenable.com/products/nessus" target="_blank">https://www.tenable.com/products/nessus</a> [Accessed: 24 Mar. 2026].</li>
     </ol>
-
-    <a class="dl-btn" href="Alvi_Hossain_CMP-X305_Portfolio_FINAL.docx">
-      ⬇ Download Full Portfolio (.docx)
-    </a>
+    <a class="dl-btn" href="Alvi_Hossain_CMP-X305_Portfolio_FINAL.docx" aria-label="Download full portfolio document">&#x2B07; Download Full Portfolio (.docx)</a>
   </div>
-
-  <div class="ai-box">
-    <div class="ai-label">AI Use Declaration</div>
-    <p>I did not use AI tools during the lab sessions themselves or for executing any technical commands or analysis.</p>
-    <p>All practical activity in this portfolio including the use of Kali Linux, WPScan, OWASP Juice Shop, Nmap, SSH, Nessus, the commands executed, the results observed and the screenshots captured was carried out by me during scheduled lab sessions or independent study on the provided virtual environment.</p>
-  </div>
+  <div class="ai-box"><div class="ai-label">AI Use Declaration</div><p>I did not use AI tools during the lab sessions themselves or for executing any technical commands or analysis.</p><p>All practical activity in this portfolio including the use of Kali Linux, WPScan, OWASP Juice Shop, Nmap, SSH, Nessus, the commands executed, the results observed and the screenshots captured was carried out by me during scheduled lab sessions or independent study on the provided virtual environment.</p></div>
 </div>
 
 </div><!-- /main -->
-
-<footer class="footer">
-  <p>Alvi Hossain &mdash; HOS22555470 &mdash; BSc Computer Science and Software Engineering</p>
-  <p style="margin-top:.4rem;">CMP-X305 Cyber Security &bull; University of Roehampton &bull; 2026</p>
-</footer>
-
+<footer class="footer"><p>Alvi Hossain &mdash; HOS22555470 &mdash; BSc Computer Science and Software Engineering</p><p style="margin-top:.4rem;">CMP-X305 Cyber Security &bull; University of Roehampton &bull; 2026</p></footer>
 <script>
-// Matrix rain
-const canvas = document.getElementById('mc');
-const ctx = canvas.getContext('2d');
-function resize(){ canvas.width=window.innerWidth; canvas.height=window.innerHeight; }
-resize(); window.addEventListener('resize', resize);
-const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
-const fs = 14; let cols, drops;
-function initD(){ cols=Math.floor(canvas.width/fs); drops=Array(cols).fill(1); }
-initD(); window.addEventListener('resize', initD);
-function draw(){
-  ctx.fillStyle='rgba(10,14,23,.05)'; ctx.fillRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle='#00ff88'; ctx.font=fs+'px monospace';
-  for(let i=0;i<drops.length;i++){
-    ctx.fillText(chars[Math.floor(Math.random()*chars.length)], i*fs, drops[i]*fs);
-    if(drops[i]*fs>canvas.height && Math.random()>.975) drops[i]=0;
-    drops[i]++;
+(function(){
+'use strict';
+var NAV_H=60,SUBNAV_H=44;
+var rmq=window.matchMedia('(prefers-reduced-motion:reduce)');
+
+/* ===== MATRIX RAIN ===== */
+var cv=document.getElementById('mc'),cx=cv.getContext('2d');
+function rsz(){cv.width=innerWidth;cv.height=innerHeight;}
+rsz();addEventListener('resize',rsz);
+var mch='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';
+var mfs=14,mcols,mdrops;
+function initM(){mcols=Math.floor(cv.width/mfs);mdrops=Array(mcols).fill(1);}
+initM();addEventListener('resize',initM);
+var mTimer;
+function drawM(){
+  cx.fillStyle='rgba(10,14,23,.05)';cx.fillRect(0,0,cv.width,cv.height);
+  cx.fillStyle='#00ff88';cx.font=mfs+'px monospace';
+  for(var i=0;i<mdrops.length;i++){
+    cx.fillText(mch[Math.floor(Math.random()*mch.length)],i*mfs,mdrops[i]*mfs);
+    if(mdrops[i]*mfs>cv.height&&Math.random()>.975)mdrops[i]=0;mdrops[i]++;
   }
 }
-setInterval(draw,50);
+function startMatrix(){if(!rmq.matches){mTimer=setInterval(drawM,50);}}
+function stopMatrix(){clearInterval(mTimer);}
+startMatrix();
+rmq.addEventListener('change',function(){if(rmq.matches)stopMatrix();else startMatrix();});
 
-// Tab navigation
-const allTabs = document.querySelectorAll('.nav-tab');
-const allPanels = document.querySelectorAll('.panel');
-
+/* ===== TAB NAVIGATION ===== */
+var allTabs=document.querySelectorAll('.nav-tab');
+var allPanels=document.querySelectorAll('.panel');
 function switchTo(s){
-  allTabs.forEach(t => t.classList.toggle('active', t.dataset.s === s));
-  allPanels.forEach(p => {
-    p.classList.remove('active');
-    if(p.id === 'panel-' + s) p.classList.add('active');
+  allTabs.forEach(function(t){
+    var isActive=t.dataset.s===s;
+    t.classList.toggle('active',isActive);
+    if(t.hasAttribute('aria-selected'))t.setAttribute('aria-selected',isActive);
   });
-  const mainTop = document.querySelector('.main').offsetTop - 72;
-  window.scrollTo({ top: mainTop, behavior: 'smooth' });
+  allPanels.forEach(function(p){p.classList.remove('active');if(p.id==='panel-'+s)p.classList.add('active');});
+  var mt=document.querySelector('.main').offsetTop-NAV_H-12;
+  window.scrollTo({top:mt,behavior:rmq.matches?'auto':'smooth'});
   document.getElementById('mob-nav').classList.remove('open');
+  document.getElementById('mob-btn').setAttribute('aria-expanded','false');
+  clearSearchFilter();
+  setupActiveSubnav();
 }
+allTabs.forEach(function(t){t.addEventListener('click',function(){switchTo(t.dataset.s);});});
+addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>50);});
 
-allTabs.forEach(t => t.addEventListener('click', () => switchTo(t.dataset.s)));
+/* ===== MOBILE NAV ===== */
+function toggleMob(){
+  var mn=document.getElementById('mob-nav');
+  var btn=document.getElementById('mob-btn');
+  mn.classList.toggle('open');
+  btn.setAttribute('aria-expanded',mn.classList.contains('open'));
+}
+document.getElementById('mob-btn').addEventListener('click',toggleMob);
 
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-});
-
-function toggleMob(){ document.getElementById('mob-nav').classList.toggle('open'); }
-
-// Lightbox
-function openLbx(src, cap){
-  document.getElementById('lbx-img').src = src;
-  document.getElementById('lbx-cap').textContent = cap;
-  document.getElementById('lbx').classList.add('open');
-  document.body.style.overflow = 'hidden';
+/* ===== LIGHTBOX ===== */
+var lbx=document.getElementById('lbx');
+var lbxImg=document.getElementById('lbx-img');
+var lbxCap=document.getElementById('lbx-cap');
+var prevFocus=null;
+function openLbx(src,cap){
+  prevFocus=document.activeElement;
+  lbxImg.src=src;lbxImg.alt=cap||'';lbxCap.textContent=cap||'';
+  lbx.classList.add('open');document.body.style.overflow='hidden';
+  document.getElementById('lbx-close').focus();
 }
 function closeLbx(){
-  document.getElementById('lbx').classList.remove('open');
-  document.body.style.overflow = '';
+  lbx.classList.remove('open');document.body.style.overflow='';
+  if(prevFocus)prevFocus.focus();
 }
-document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLbx(); });
+window.openLbx=openLbx;
+lbx.addEventListener('click',function(e){if(e.target===lbx)closeLbx();});
+lbxImg.addEventListener('click',function(e){e.stopPropagation();});
+document.getElementById('lbx-close').addEventListener('click',closeLbx);
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){if(lbx.classList.contains('open'))closeLbx();else dismissSearch();}});
+document.querySelectorAll('.ev-card[role="button"]').forEach(function(c){
+  c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();c.click();}});
+});
+
+/* ===== STICKY SUB-NAV + INTERSECTION OBSERVER ===== */
+var activeObservers=[];
+function clearObservers(){activeObservers.forEach(function(o){o.disconnect();});activeObservers=[];}
+function setupActiveSubnav(){
+  clearObservers();
+  var activePanel=document.querySelector('.panel.active');
+  if(!activePanel)return;
+  var subNav=activePanel.querySelector('.sub-nav');
+  if(!subNav)return;
+  var pills=Array.from(subNav.querySelectorAll('a'));
+  var sections=[];
+  pills.forEach(function(pill){
+    var href=pill.getAttribute('href');
+    if(href&&href.charAt(0)==='#'){
+      var target=document.getElementById(href.substring(1));
+      if(target)sections.push({pill:pill,target:target});
+    }
+  });
+  if(!sections.length)return;
+  var visibleSet=new Set();
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting)visibleSet.add(entry.target);
+      else visibleSet.delete(entry.target);
+    });
+    var activePill=null;
+    for(var i=0;i<sections.length;i++){if(visibleSet.has(sections[i].target)){activePill=sections[i].pill;break;}}
+    if(activePill){pills.forEach(function(p){p.classList.remove('active');});activePill.classList.add('active');}
+  },{rootMargin:'-'+(NAV_H+10)+'px 0px -40% 0px',threshold:0});
+  sections.forEach(function(s){obs.observe(s.target);});
+  activeObservers.push(obs);
+  pills.forEach(function(pill){
+    pill.addEventListener('click',function(e){
+      e.preventDefault();
+      var target=document.getElementById(pill.getAttribute('href').substring(1));
+      if(target)target.scrollIntoView({behavior:rmq.matches?'auto':'smooth'});
+      pills.forEach(function(p){p.classList.remove('active');});pill.classList.add('active');
+    });
+  });
+}
+setupActiveSubnav();
+
+/* ===== MOBILE DATASET CARDS ===== */
+var DS_CFG={'w5-findings':{primary:0},'w7-coverage':{primary:0},'w8-services':{primary:0},'w8-techniques':{primary:0},'w8-ssh':{primary:0},'w9-severity':{primary:0},'w9-mitigations':{primary:1}};
+document.querySelectorAll('.dataset[data-ds]').forEach(function(wrap){
+  var table=wrap.querySelector('table.ft');if(!table)return;
+  var cfg=DS_CFG[wrap.dataset.ds]||{primary:0};
+  var headers=Array.from(table.querySelectorAll('th')).map(function(th){return th.textContent.trim();});
+  var rows=table.querySelectorAll('tbody tr');
+  var container=document.createElement('div');
+  container.className='dataset-cards';
+  rows.forEach(function(row){
+    var cells=Array.from(row.querySelectorAll('td'));
+    var card=document.createElement('div');card.className='ds-card';
+    var prim=document.createElement('div');prim.className='ds-card-primary';
+    prim.innerHTML=cells[cfg.primary]?cells[cfg.primary].innerHTML:'';
+    card.appendChild(prim);
+    cells.forEach(function(cell,i){
+      if(i===cfg.primary)return;
+      var field=document.createElement('div');field.className='ds-card-field';
+      field.innerHTML='<span class="ds-card-label">'+headers[i]+'</span><span class="ds-card-value">'+cell.innerHTML+'</span>';
+      card.appendChild(field);
+    });
+    container.appendChild(card);
+  });
+  wrap.appendChild(container);
+});
+
+/* ===== SEARCH SYSTEM ===== */
+var searchInput=document.getElementById('search-input');
+var searchClear=document.getElementById('search-clear');
+var searchSugg=document.getElementById('search-suggestions');
+var searchIdx=[],selIdx=-1;
+
+function buildSearchIndex(){
+  searchIdx=[];
+  document.querySelectorAll('.nav-tabs .nav-tab[data-s]').forEach(function(t){
+    searchIdx.push({type:'lab',text:t.textContent.trim(),panel:t.dataset.s,targetId:'panel-'+t.dataset.s,priority:1});
+  });
+  document.querySelectorAll('.cb[id] h3').forEach(function(h3){
+    var panel=h3.closest('.panel');if(!panel)return;
+    var cb=h3.closest('.cb');
+    var tag=h3.querySelector('.sec-tag');
+    searchIdx.push({type:'section',text:tag?tag.textContent.trim():h3.textContent.trim(),panel:panel.id.replace('panel-',''),targetId:cb?cb.id:'',priority:2});
+  });
+  document.querySelectorAll('.ev-card').forEach(function(card){
+    var panel=card.closest('.panel');
+    var lbl=card.querySelector('.ev-label');
+    var claim=card.querySelector('.ev-claim');
+    if(lbl){
+      searchIdx.push({type:'figure',text:lbl.textContent.trim()+(claim?' \u2014 '+claim.textContent.trim():''),panel:panel?panel.id.replace('panel-',''):'',targetEl:card,priority:3});
+    }
+  });
+  document.querySelectorAll('.dataset[data-ds]').forEach(function(wrapper){
+    var panel=wrapper.closest('.panel');
+    var table=wrapper.querySelector('table.ft');
+    var cfg=DS_CFG[wrapper.dataset.ds]||{primary:0};
+    if(!table)return;
+    table.querySelectorAll('tbody tr').forEach(function(row){
+      var cells=row.querySelectorAll('td');
+      var primary=cells[cfg.primary]?cells[cfg.primary].textContent.trim():'';
+      if(primary){
+        searchIdx.push({type:'finding',text:primary,panel:panel?panel.id.replace('panel-',''):'',targetEl:row,priority:4});
+      }
+    });
+  });
+}
+buildSearchIndex();
+
+function highlightMatch(text,query){
+  if(!query)return text;
+  var idx=text.toLowerCase().indexOf(query.toLowerCase());
+  if(idx<0)return text;
+  return text.substring(0,idx)+'<mark>'+text.substring(idx,idx+query.length)+'</mark>'+text.substring(idx+query.length);
+}
+
+function rankResults(query){
+  var q=query.toLowerCase().trim();if(!q)return[];
+  var results=[];
+  searchIdx.forEach(function(entry){
+    var t=entry.text.toLowerCase();
+    if(t.indexOf(q)<0)return;
+    var score=entry.priority*10;
+    if(t===q)score-=100;
+    else if(t.indexOf(q)===0)score-=50;
+    results.push(Object.assign({},entry,{score:score}));
+  });
+  results.sort(function(a,b){return a.score-b.score;});
+  return results.slice(0,12);
+}
+
+function renderSuggestions(results,query){
+  searchSugg.innerHTML='';selIdx=-1;
+  if(!results.length){searchSugg.hidden=true;return;}
+  var typeLabels={lab:'Lab',section:'Section',figure:'Figure',finding:'Finding'};
+  results.forEach(function(r,i){
+    var li=document.createElement('li');
+    li.setAttribute('role','option');li.setAttribute('aria-selected','false');
+    li.dataset.idx=i;
+    li.innerHTML='<span class="sr-type">'+typeLabels[r.type]+'</span><span class="sr-text">'+highlightMatch(r.text,query)+'</span>';
+    li.addEventListener('click',function(){selectResult(r);});
+    li.addEventListener('mouseenter',function(){selIdx=i;updateSelIdx();});
+    searchSugg.appendChild(li);
+  });
+  searchSugg.hidden=false;
+}
+
+function selectResult(r){
+  if(r.panel)switchTo(r.panel);
+  setTimeout(function(){
+    var el=null;
+    if(r.targetId)el=document.getElementById(r.targetId);
+    else if(r.targetEl)el=r.targetEl;
+    if(el){
+      el.scrollIntoView({behavior:rmq.matches?'auto':'smooth',block:'center'});
+      el.classList.add('search-hl');
+      setTimeout(function(){el.classList.remove('search-hl');},2200);
+    }
+  },100);
+  dismissSearch();
+}
+
+function updateSelIdx(){
+  var items=searchSugg.querySelectorAll('li');
+  items.forEach(function(li,i){li.setAttribute('aria-selected',i===selIdx?'true':'false');});
+}
+
+function dismissSearch(){searchSugg.hidden=true;selIdx=-1;}
+
+function applySearchFilter(query){
+  var q=query.toLowerCase().trim();
+  clearSearchFilter();
+  if(!q)return;
+  var activePanel=document.querySelector('.panel.active');
+  if(!activePanel)return;
+  activePanel.classList.add('search-filter-active');
+  activePanel.querySelectorAll('.ev-card').forEach(function(card){
+    var text=(card.querySelector('.ev-label')?card.querySelector('.ev-label').textContent:'')+(card.querySelector('.ev-claim')?card.querySelector('.ev-claim').textContent:'')+(card.querySelector('.ev-support')?card.querySelector('.ev-support').textContent:'');
+    if(text.toLowerCase().indexOf(q)<0)card.classList.add('search-hidden');
+  });
+  activePanel.querySelectorAll('.dataset[data-ds]').forEach(function(ds){
+    var rows=ds.querySelectorAll('tbody tr');
+    var cards=ds.querySelectorAll('.ds-card');
+    rows.forEach(function(row,i){
+      if(row.textContent.toLowerCase().indexOf(q)<0){
+        row.classList.add('search-hidden');
+        if(cards[i])cards[i].classList.add('search-hidden');
+      }
+    });
+  });
+  var bar=activePanel.querySelector('.search-filter-bar');
+  if(!bar){
+    bar=document.createElement('div');bar.className='search-filter-bar';
+    bar.innerHTML='<span>Filtering: "'+q.replace(/</g,'&lt;')+'"</span><button aria-label="Clear filter">\u2715 Clear</button>';
+    bar.querySelector('button').addEventListener('click',clearSearchFilter);
+    activePanel.querySelector('.sec-hdr').insertAdjacentElement('afterend',bar);
+  }
+}
+
+function clearSearchFilter(){
+  document.querySelectorAll('.search-filter-active').forEach(function(p){p.classList.remove('search-filter-active');});
+  document.querySelectorAll('.search-hidden').forEach(function(el){el.classList.remove('search-hidden');});
+  document.querySelectorAll('.search-filter-bar').forEach(function(b){b.remove();});
+}
+
+searchInput.addEventListener('input',function(){
+  var q=searchInput.value;
+  searchClear.hidden=!q;
+  var results=rankResults(q);
+  renderSuggestions(results,q);
+});
+
+searchInput.addEventListener('keydown',function(e){
+  var items=searchSugg.querySelectorAll('li');
+  if(e.key==='ArrowDown'){e.preventDefault();selIdx=Math.min(selIdx+1,items.length-1);updateSelIdx();}
+  else if(e.key==='ArrowUp'){e.preventDefault();selIdx=Math.max(selIdx-1,0);updateSelIdx();}
+  else if(e.key==='Enter'){
+    e.preventDefault();
+    if(selIdx>=0&&items[selIdx]){items[selIdx].click();}
+    else if(searchInput.value.trim()){applySearchFilter(searchInput.value);dismissSearch();}
+  }
+  else if(e.key==='Escape'){dismissSearch();}
+});
+
+searchClear.addEventListener('click',function(){
+  searchInput.value='';searchClear.hidden=true;dismissSearch();clearSearchFilter();searchInput.focus();
+});
+
+document.addEventListener('click',function(e){
+  if(!document.getElementById('search-module').contains(e.target))dismissSearch();
+});
+
+})();
 </script>
 </body>
 </html>
