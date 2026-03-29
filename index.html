@@ -811,7 +811,61 @@
 
     .ev-card .ev-img-wrap {
       position: relative;
+      padding: .2rem 1rem 1rem;
+      background: linear-gradient(180deg, rgba(255, 255, 255, .02), transparent 72%);
+    }
+
+    .ev-card .ev-stack {
+      position: relative;
+      padding: .4rem .55rem .8rem;
+      isolation: isolate;
+    }
+
+    .ev-card .ev-stack::before,
+    .ev-card .ev-stack::after {
+      content: '';
+      position: absolute;
+      inset: .55rem .2rem .1rem;
+      border-radius: calc(var(--r-lg) - 6px);
+      border: 1px solid rgba(94, 109, 134, .22);
+      background: linear-gradient(180deg, rgba(12, 17, 27, .86), rgba(17, 23, 36, .78));
+      box-shadow: 0 14px 24px rgba(0, 0, 0, .18);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .ev-card .ev-stack::before {
+      transform: translate(-7px, 7px) rotate(-1.1deg);
+      opacity: .82;
+    }
+
+    .ev-card .ev-stack::after {
+      transform: translate(7px, 13px) rotate(1.15deg);
+      opacity: .62;
+    }
+
+    .ev-card .ev-stack-card {
+      position: relative;
+      z-index: 1;
       overflow: hidden;
+      border-radius: calc(var(--r-lg) - 6px);
+      border: 1px solid rgba(116, 132, 156, .28);
+      background: linear-gradient(180deg, rgba(10, 14, 23, .98), rgba(18, 24, 38, .95));
+      box-shadow:
+        0 18px 30px rgba(0, 0, 0, .28),
+        inset 0 1px 0 rgba(255, 255, 255, .04),
+        0 0 0 1px rgba(0, 255, 136, .03);
+    }
+
+    .ev-card .ev-stack-card::before {
+      content: '';
+      position: absolute;
+      inset: 0 0 auto;
+      height: 2px;
+      background: linear-gradient(90deg, rgba(0, 255, 136, .65), rgba(0, 212, 255, .45), transparent 78%);
+      opacity: .8;
+      pointer-events: none;
+      z-index: 2;
     }
 
     .ev-card img {
@@ -819,13 +873,22 @@
       display: block;
       aspect-ratio: 16/10;
       object-fit: cover;
-      filter: brightness(.88) saturate(.95);
+      background: linear-gradient(180deg, rgba(10, 14, 23, .9), rgba(20, 25, 38, .9));
+      filter: brightness(.9) saturate(.96);
       transition: filter .3s, transform .3s;
+    }
+
+    .ev-card:hover .ev-stack::before {
+      transform: translate(-9px, 8px) rotate(-1.25deg);
+    }
+
+    .ev-card:hover .ev-stack::after {
+      transform: translate(9px, 15px) rotate(1.3deg);
     }
 
     .ev-card:hover img {
       filter: brightness(1.02) saturate(1.05);
-      transform: scale(1.02);
+      transform: scale(1.018);
     }
 
     .ev-card .ev-body {
@@ -861,6 +924,14 @@
     @media(max-width:480px) {
       .ev-grid {
         grid-template-columns: 1fr;
+      }
+
+      .ev-card .ev-img-wrap {
+        padding-inline: .8rem;
+      }
+
+      .ev-card .ev-stack {
+        padding: .3rem .35rem .65rem;
       }
     }
 
@@ -1481,7 +1552,6 @@
       box-shadow:
         10px 10px 0 rgba(0, 0, 0, .7),
         10px 10px 0 1px rgba(0, 255, 136, .14);
-      animation: search-wobble .5s ease-in-out;
     }
 
     .input-container .input:focus::placeholder {
@@ -1568,7 +1638,11 @@
       animation: search-glitch 1.1s linear infinite;
     }
 
-    .input-container .input:focus:not(:placeholder-shown) {
+    .input-container .input.is-wobbling {
+      animation: search-wobble .5s ease-in-out;
+    }
+
+    .input-container .input.is-wobbling:not(:placeholder-shown) {
       animation: search-wobble .5s ease-in-out, search-glitch 1.1s linear .5s infinite;
     }
 
@@ -2090,7 +2164,7 @@
 
       .input-container::after,
       .input-container .input:not(:placeholder-shown),
-      .input-container .input:focus {
+      .input-container .input.is-wobbling {
         animation: none;
       }
 
@@ -4114,6 +4188,25 @@ function toggleMob(){
 }
 document.getElementById('mob-btn').addEventListener('click',toggleMob);
 
+/* ===== EVIDENCE IMAGE STACKS ===== */
+function initEvidenceStacks(){
+  document.querySelectorAll('.ev-card > img').forEach(function(img){
+    if(img.closest('.ev-img-wrap'))return;
+    var wrap=document.createElement('div');
+    wrap.className='ev-img-wrap';
+    var stack=document.createElement('div');
+    stack.className='ev-stack';
+    var card=document.createElement('div');
+    card.className='ev-stack-card';
+    var parent=img.parentNode;
+    parent.insertBefore(wrap,img);
+    wrap.appendChild(stack);
+    stack.appendChild(card);
+    card.appendChild(img);
+  });
+}
+initEvidenceStacks();
+
 /* ===== LIGHTBOX ===== */
 var lbx=document.getElementById('lbx');
 var lbxImg=document.getElementById('lbx-img');
@@ -4275,6 +4368,20 @@ var searchInput=document.getElementById('search-input');
 var searchClear=document.getElementById('search-clear');
 var searchSugg=document.getElementById('search-suggestions');
 var searchIdx=[],selIdx=-1;
+
+function triggerSearchWobble(){
+  if(rmq.matches||!searchInput)return;
+  searchInput.classList.remove('is-wobbling');
+  void searchInput.offsetWidth;
+  searchInput.classList.add('is-wobbling');
+}
+
+searchInput.addEventListener('focus',triggerSearchWobble);
+searchInput.addEventListener('animationend',function(e){
+  if(e.animationName==='search-wobble'){
+    searchInput.classList.remove('is-wobbling');
+  }
+});
 
 function buildSearchIndex(){
   searchIdx=[];
