@@ -156,17 +156,34 @@
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: .65rem;
+      position: relative;
       font-family: var(--mono);
       font-size: .68rem;
       text-transform: uppercase;
       letter-spacing: .15em;
-      color: var(--acc);
-      background: var(--acc-bg);
-      border: 1px solid var(--acc-bd);
-      padding: .4rem 1.2rem;
-      border-radius: var(--r-pill);
+      color: var(--tx);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      padding: .55rem 1rem .55rem 3.85rem;
+      border-radius: 0;
+      box-shadow: 6px 6px 0 rgba(4, 6, 10, .88);
       margin-bottom: 1.75rem;
+    }
+
+    .badge::before {
+      content: '';
+      position: absolute;
+      left: .8rem;
+      top: 50%;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+      background: var(--acc);
+      box-shadow: 14px 0 0 var(--cyan), 28px 0 0 var(--purple);
     }
 
     /* From Uiverse.io by LeonKohli */
