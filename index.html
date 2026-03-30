@@ -1097,142 +1097,139 @@
     .ev-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.6rem;
+      gap: 2rem 1.8rem;
       margin: 1.5rem 0 1.25rem;
+      padding-bottom: .5rem;
     }
 
-    /* ── card: angular box with stacked-photo shadow layers ── */
+    /* ── neobrutalist stacked-photo card ── */
     .ev-card {
-      --card-clip: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
       background: var(--s2);
-      border: 1px solid var(--bd);
-      clip-path: var(--card-clip);
+      border: 3px solid var(--acc);
+      box-shadow: 8px 8px 0 rgba(0, 255, 136, .25);
       overflow: hidden;
-      transition: transform .25s, box-shadow .25s, border-color .25s;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       position: relative;
+      transition: translate .25s ease, box-shadow .25s ease, border-color .25s ease;
+      translate: -4px -4px;
     }
 
-    /* stacked layers behind the card */
+    /* stacked photo layers behind */
     .ev-card::before,
     .ev-card::after {
       content: '';
+      display: block;
       position: absolute;
-      inset: 0;
-      clip-path: var(--card-clip);
+      height: 100%;
+      width: 100%;
+      border: 3px solid var(--bd);
       background: var(--s1);
-      border: 1px solid var(--bd);
+      transform-origin: center center;
       z-index: -1;
-      transition: transform .28s ease, opacity .28s ease;
+      transition: transform .2s ease;
+      top: 0;
+      left: 0;
     }
     .ev-card::before {
-      transform: translate(5px, 5px) rotate(.6deg);
-      opacity: .5;
+      transform: translateY(-1.5%) rotate(-3deg);
     }
     .ev-card::after {
-      transform: translate(10px, 10px) rotate(1.1deg);
-      opacity: .25;
+      transform: translateY(1.5%) rotate(3deg);
     }
 
     .ev-card:hover {
+      translate: -4px -8px;
+      box-shadow: 10px 12px 0 rgba(0, 255, 136, .35);
       border-color: var(--acc);
-      transform: translateY(-4px);
-      box-shadow:
-        0 0 12px rgba(0, 255, 136, .08),
-        0 16px 32px rgba(0, 0, 0, .3);
     }
     .ev-card:hover::before {
-      transform: translate(7px, 7px) rotate(.9deg);
-      opacity: .6;
+      transform: translateY(-2%) rotate(-4.5deg);
     }
     .ev-card:hover::after {
-      transform: translate(13px, 14px) rotate(1.5deg);
-      opacity: .35;
+      transform: translateY(2%) rotate(4.5deg);
+    }
+
+    .ev-card:active {
+      translate: 0px 0px;
+      box-shadow: 0 0 0 rgba(0, 255, 136, .25);
     }
 
     .ev-card:focus-visible {
-      outline: none;
-      box-shadow: var(--focus-ring);
-      border-color: var(--acc);
+      outline: 3px solid var(--acc);
+      outline-offset: 3px;
     }
 
-    /* top accent bar — angular gradient strip */
-    .ev-card > .ev-label::after {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, var(--acc) 0%, var(--cyan, #00d4ff) 50%, transparent 85%);
-    }
-
+    /* ── head bar — neobrutalist window title ── */
     .ev-card .ev-label {
       font-family: var(--mono);
-      font-size: .68rem;
-      color: var(--acc2);
-      font-weight: 600;
-      padding: .6rem 1rem .35rem;
+      font-size: .72rem;
+      font-weight: 900;
+      color: #0a0e17;
+      background: var(--acc);
+      padding: .4rem .8rem;
       letter-spacing: .06em;
+      text-transform: uppercase;
       display: flex;
       align-items: center;
       gap: .5rem;
-      position: relative;
+      border-bottom: 3px solid rgba(0, 0, 0, .5);
     }
 
     .ev-card .ev-label::before {
-      content: '◈';
-      font-size: .8rem;
+      content: '//';
+      font-weight: 900;
+      opacity: .5;
     }
 
     .ev-card[data-annotations] .ev-label::after {
       content: '⊕ annotated';
       font-size: .55rem;
       margin-left: auto;
-      color: var(--tx3);
-      background: rgba(0, 255, 136, .08);
+      color: #0a0e17;
+      background: rgba(0, 0, 0, .15);
       padding: .1rem .45rem;
-      border-radius: 2px;
+      font-weight: 700;
       letter-spacing: .03em;
       text-transform: uppercase;
-      position: static;
-      height: auto;
     }
 
-    /* ── image area ── */
+    /* ── image — bordered photo in the stack ── */
     .ev-card img {
-      width: 100%;
+      width: calc(100% - 1.2rem);
+      margin: .6rem auto;
       display: block;
       aspect-ratio: 16 / 10;
       object-fit: cover;
-      background: var(--s1);
-      filter: brightness(.88) saturate(.94);
-      transition: filter .3s, transform .3s;
-      border-top: 1px solid rgba(255, 255, 255, .04);
-      border-bottom: 1px solid rgba(255, 255, 255, .04);
+      background: #0a0e17;
+      border: 3px solid rgba(0, 0, 0, .5);
+      filter: brightness(.9) saturate(.95);
+      transition: filter .25s, transform .25s;
     }
 
     .ev-card:hover img {
-      filter: brightness(1) saturate(1.05);
-      transform: scale(1.015);
+      filter: brightness(1.02) saturate(1.08);
+      transform: scale(1.01);
     }
 
     /* ── text body ── */
     .ev-card .ev-body {
-      padding: .7rem 1rem .85rem;
-      border-top: 1px solid var(--bd);
-      background: linear-gradient(180deg, rgba(20, 25, 38, .5), transparent);
+      padding: .6rem .8rem .75rem;
+      border-top: 3px solid rgba(0, 0, 0, .5);
+      background: var(--s2);
       flex: 1;
       display: flex;
       flex-direction: column;
-      gap: .25rem;
+      gap: .2rem;
     }
 
     .ev-card .ev-claim {
-      font-size: .84rem;
-      font-weight: 700;
+      font-family: var(--mono);
+      font-size: .8rem;
+      font-weight: 800;
       color: var(--tx);
-      line-height: 1.45;
+      line-height: 1.4;
       letter-spacing: .01em;
     }
 
@@ -1244,30 +1241,26 @@
     }
 
     .ev-card .ev-support::before {
-      content: '↳ ';
-      color: var(--tx3);
-    }
-
-    /* ── corner cut indicator — bottom-left notch detail ── */
-    .ev-card .ev-body::after {
-      content: '';
-      display: block;
-      width: 18px;
-      height: 1px;
-      background: var(--acc);
-      opacity: .3;
-      margin-top: .5rem;
+      content: '> ';
+      color: var(--acc);
+      font-weight: 700;
+      font-family: var(--mono);
     }
 
     @media(max-width:480px) {
       .ev-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .ev-card {
+        translate: -3px -3px;
+        box-shadow: 6px 6px 0 rgba(0, 255, 136, .25);
       }
       .ev-card::before {
-        transform: translate(4px, 4px) rotate(.5deg);
+        transform: translateY(-1%) rotate(-2deg);
       }
       .ev-card::after {
-        transform: translate(8px, 8px) rotate(.9deg);
+        transform: translateY(1%) rotate(2deg);
       }
     }
 
