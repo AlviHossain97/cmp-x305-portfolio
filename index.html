@@ -77,7 +77,7 @@
       --meta-track: .12em;
       --body-fs: .95rem;
       --body-lh: 1.72;
-      --support-fs: .78rem;
+      --support-fs: .875rem;
       --support-lh: 1.62;
       --mono: 'JetBrains Mono', monospace;
       --sans: 'Inter', system-ui, sans-serif;
@@ -1226,7 +1226,7 @@
 
     .ev-card .ev-claim {
       font-family: var(--mono);
-      font-size: .8rem;
+      font-size: .9375rem;
       font-weight: 800;
       color: var(--tx);
       line-height: 1.4;
@@ -2807,6 +2807,26 @@
       clip: rect(0, 0, 0, 0);
       border: 0;
     }
+
+    /* ===== BACK TO TOP ===== */
+    .btt{
+      position:fixed;bottom:2rem;right:2rem;z-index:900;
+      width:48px;height:48px;border-radius:0;
+      background:var(--s2);border:2.5px solid var(--acc);
+      box-shadow:4px 4px 0 rgba(0,255,136,.25);
+      color:var(--acc);font-size:1.3rem;
+      cursor:pointer;display:flex;align-items:center;justify-content:center;
+      opacity:0;pointer-events:none;
+      transition:opacity .3s,translate .2s,box-shadow .2s;
+    }
+    .btt.visible{opacity:1;pointer-events:auto;}
+    .btt:hover{translate:-2px -2px;box-shadow:6px 6px 0 rgba(0,255,136,.35);}
+    .btt:active{translate:0 0;box-shadow:2px 2px 0 rgba(0,255,136,.15);}
+    .btt svg{width:20px;height:20px;stroke:var(--acc);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
+    .btt-ring{position:absolute;inset:-1px;pointer-events:none;}
+    .btt-ring circle{fill:none;stroke:var(--acc);stroke-width:3;
+      stroke-dasharray:164;stroke-dashoffset:164;
+      transform:rotate(-90deg);transform-origin:center;}
 
     /* ===== RESPONSIVE ===== */
     @media(prefers-reduced-motion:reduce) {
@@ -5584,6 +5604,27 @@ document.addEventListener('click',function(e){
 });
 
 })();
+  </script>
+
+  <!-- BACK TO TOP -->
+  <button class="btt" id="btt" aria-label="Back to top" title="Back to top">
+    <svg class="btt-ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" id="btt-circle"/></svg>
+    <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+  </button>
+  <script>
+  (function(){
+    var btn=document.getElementById('btt'),circle=document.getElementById('btt-circle');
+    var circ=2*Math.PI*22;
+    circle.style.strokeDasharray=circ;
+    circle.style.strokeDashoffset=circ;
+    window.addEventListener('scroll',function(){
+      var h=document.documentElement.scrollHeight-window.innerHeight;
+      var pct=h>0?window.scrollY/h:0;
+      circle.style.strokeDashoffset=circ-(circ*pct);
+      btn.classList.toggle('visible',window.scrollY>300);
+    },{passive:true});
+    btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
+  })();
   </script>
 </body>
 </html>
