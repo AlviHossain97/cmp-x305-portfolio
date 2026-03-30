@@ -4696,14 +4696,14 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-39"
-            onclick="openLbx('images/image82.png','Figure W8-39 &mdash; SSH login to router with MOTD banner and system info')">
+            onclick="openLbx('images/image82.png','Figure W8-39 &mdash; SSH key-based authentication to router using -i identity file')">
             <div class="ev-label">Figure W8-39</div><img src="images/image82.png"
-              alt="SSH router login &mdash; MOTD banner reveals system information" loading="lazy">
+              alt="SSH key-based auth &mdash; -i specifies private key for passwordless login" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">SSH router login &mdash; MOTD banner reveals system information</div>
-              <div class="ev-support">Logging into 192.168.123.1 displays the Ubuntu MOTD banner exposing disk usage
-                (63.2%), memory, kernel version, network interfaces (IPv4 and IPv6) and 118 pending updates.
-                Attackers use this information for privilege escalation and lateral movement planning.</div>
+              <div class="ev-claim">SSH key-based authentication &mdash; -i selects explicit identity file</div>
+              <div class="ev-support">The -i ~/.ssh/id_rsa flag selects the private key for passwordless login to
+                192.168.123.1, confirming the key deployed earlier with ssh-copy-id is functional. MOTD banner
+                reveals Ubuntu 22.04.1 LTS, kernel 5.15.0-171-generic and dual-stack networking.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-40"
