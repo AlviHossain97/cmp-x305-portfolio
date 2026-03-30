@@ -912,10 +912,9 @@
       text-shadow: 2px 2px var(--shadow-primary), -2px -2px var(--shadow-secondary);
       clip-path: var(--clip);
       animation: glitch 2s infinite;
-      display: none;
+      display: block;
     }
-    .input:hover   + .btn .btn__glitch { display: block; }
-    .input:checked + .btn .btn__glitch { display: block; animation: glitch 5s infinite; }
+    .input:checked + .btn .btn__glitch { animation: glitch 5s infinite; }
 
     .btn__glitch::before {
       content: '';
