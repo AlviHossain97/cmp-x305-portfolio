@@ -298,6 +298,7 @@
       grid-template-columns: repeat(4, 1fr);
       gap: 1rem;
       margin: 2rem 0 2.5rem;
+      padding: 8px 8px 0 8px;
       align-items: stretch;
     }
 
@@ -366,14 +367,18 @@
     .demo-card .demo-window {
       color: rgba(5, 7, 13, .74);
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
 
     .demo-card .demo-week {
       margin-left: auto;
       padding: .15rem .45rem;
       border: 2px solid rgba(4, 6, 10, .92);
-      background: rgba(255, 255, 255, .74);
+      background: rgba(4, 6, 10, .12);
       box-shadow: 2px 2px 0 rgba(4, 6, 10, .92);
+      flex-shrink: 0;
     }
 
     .demo-card .demo-content {
@@ -3244,7 +3249,7 @@
           </div>
         </div>
         <div class="demo-card">
-          <div class="demo-head"><span class="demo-window">overview://secure-admin</span><span class="demo-week">W8</span>
+          <div class="demo-head"><span class="demo-window">overview://ssh-admin</span><span class="demo-week">W8</span>
           </div>
           <div class="demo-content">
             <div class="icon">&#x1F510;</div>
@@ -3256,7 +3261,7 @@
           </div>
         </div>
         <div class="demo-card">
-          <div class="demo-head"><span class="demo-window">overview://risk-priority</span><span class="demo-week">W9</span>
+          <div class="demo-head"><span class="demo-window">overview://risk-scan</span><span class="demo-week">W9</span>
           </div>
           <div class="demo-content">
             <div class="icon">&#x1F4CA;</div>
