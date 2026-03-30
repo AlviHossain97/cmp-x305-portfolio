@@ -4696,13 +4696,14 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-39"
-            onclick="openLbx('images/image82.png','Figure W8-39 &mdash; SSH session exit and tunnel termination')">
+            onclick="openLbx('images/image82.png','Figure W8-39 &mdash; SSH login to router with MOTD banner and system info')">
             <div class="ev-label">Figure W8-39</div><img src="images/image82.png"
-              alt="SSH exit &mdash; session and tunnel properly closed" loading="lazy">
+              alt="SSH router login &mdash; MOTD banner reveals system information" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">SSH exit &mdash; session and tunnel closed</div>
-              <div class="ev-support">Explicit exit resets auth state and closes forwarded tunnels. Orphaned SSH
-                sessions represent unmonitored access — always terminate explicitly.</div>
+              <div class="ev-claim">SSH router login &mdash; MOTD banner reveals system information</div>
+              <div class="ev-support">Logging into 192.168.123.1 displays the Ubuntu MOTD banner exposing disk usage
+                (63.2%), memory, kernel version, network interfaces (IPv4 and IPv6) and 118 pending updates.
+                Attackers use this information for privilege escalation and lateral movement planning.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-40"
