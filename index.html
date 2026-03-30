@@ -2823,10 +2823,6 @@
     .btt:hover{translate:-2px -2px;box-shadow:6px 6px 0 rgba(0,255,136,.35);}
     .btt:active{translate:0 0;box-shadow:2px 2px 0 rgba(0,255,136,.15);}
     .btt svg{width:20px;height:20px;stroke:var(--acc);fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;}
-    .btt-ring{position:absolute;inset:-1px;pointer-events:none;}
-    .btt-ring circle{fill:none;stroke:var(--acc);stroke-width:3;
-      stroke-dasharray:164;stroke-dashoffset:164;
-      transform:rotate(-90deg);transform-origin:center;}
 
     /* ===== RESPONSIVE ===== */
     @media(prefers-reduced-motion:reduce) {
@@ -5608,19 +5604,12 @@ document.addEventListener('click',function(e){
 
   <!-- BACK TO TOP -->
   <button class="btt" id="btt" aria-label="Back to top" title="Back to top">
-    <svg class="btt-ring" viewBox="0 0 52 52"><circle cx="26" cy="26" r="22" id="btt-circle"/></svg>
     <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
   </button>
   <script>
   (function(){
-    var btn=document.getElementById('btt'),circle=document.getElementById('btt-circle');
-    var circ=2*Math.PI*22;
-    circle.style.strokeDasharray=circ;
-    circle.style.strokeDashoffset=circ;
+    var btn=document.getElementById('btt');
     window.addEventListener('scroll',function(){
-      var h=document.documentElement.scrollHeight-window.innerHeight;
-      var pct=h>0?window.scrollY/h:0;
-      circle.style.strokeDashoffset=circ-(circ*pct);
       btn.classList.toggle('visible',window.scrollY>300);
     },{passive:true});
     btn.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
