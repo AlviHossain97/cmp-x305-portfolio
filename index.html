@@ -3377,14 +3377,14 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-9"
-            onclick="openLbx('images/image51.png','Figure W5-9 &mdash; robots.txt and XML-RPC exploitation vectors identified')">
+            onclick="openLbx('images/image51.png','Figure W5-9 &mdash; WPScan authenticated scan launched against target')">
             <div class="ev-label">Figure W5-9</div><img src="images/image51.png"
-              alt="robots.txt and XML-RPC exploitation paths discovered" loading="lazy">
+              alt="WPScan authenticated scan launched" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">robots.txt and XML-RPC exploitation paths discovered</div>
-              <div class="ev-support">robots.txt enumeration reveals upload directories and admin paths; XML-RPC
-                detection enables user enumeration and brute-force attacks. Both are critical reconnaissance vectors.
-              </div>
+              <div class="ev-claim">WPScan authenticated scan launched against target</div>
+              <div class="ev-support">Command shows API token authentication, password file for brute-force,
+                target 192.168.123.30, and initial output confirming the server runs Apache/2.4.52 on Ubuntu.
+                Timestamp establishes the assessment timeline.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W5-10"
@@ -4052,23 +4052,25 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-9"
-            onclick="openLbx('images/image30.png','Figure W8-9 &mdash; IPv6 scan showed SSH and HTTP accessible over a second protocol stack')">
+            onclick="openLbx('images/image30.png','Figure W8-9 &mdash; Targeted Nmap scans comparing port state across hosts')">
             <div class="ev-label">Figure W8-9</div><img src="images/image30.png"
-              alt="IPv6 scan &mdash; dual-stack exposure confirmed" loading="lazy">
+              alt="Targeted port scans &mdash; multi-host comparison" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">IPv6 scan &mdash; dual-stack exposure confirmed</div>
-              <div class="ev-support">If IPv4 is hardened but IPv6 is not, the host remains accessible. Both protocol
-                stacks must receive the same hardening decisions.</div>
+              <div class="ev-claim">Targeted port scans &mdash; multi-host comparison</div>
+              <div class="ev-support">Sequential scans show 192.168.123.1 with SSH as its only open service on the
+                tested range, while 192.168.1.1 does not respond. Closed ports confirm services are not running,
+                different from filtered where a firewall silently drops packets.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-10"
-            onclick="openLbx('images/image57.png','Figure W8-10 &mdash; ACK scan for firewall rules discovery')">
+            onclick="openLbx('images/image57.png','Figure W8-10 &mdash; Service version scan identifies exact software builds')">
             <div class="ev-label">Figure W8-10</div><img src="images/image57.png"
-              alt="ACK scan &mdash; stateful firewall filtering behaviour" loading="lazy">
+              alt="Service version detection &mdash; -sV" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">ACK scan &mdash; firewall rule mapping</div>
-              <div class="ev-support">ACK scanning identifies filtered vs. unfiltered ports without triggering IDS
-                alerts. Answers "what does the firewall block?" rather than "what ports are open?".</div>
+              <div class="ev-claim">Service version detection &mdash; -sV identifies software builds</div>
+              <div class="ev-support">The -sV scan reveals OpenSSH 8.9p1 (protocol 2.0) and tcpwrapped on port 5666,
+                with OS fingerprinting confirming Linux. Version numbers map directly to CVE databases for
+                targeted vulnerability research.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-11"
@@ -4132,23 +4134,25 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-17"
-            onclick="openLbx('images/image64.png','Figure W8-17 &mdash; HTTP enumeration script scanning target paths')">
+            onclick="openLbx('images/image64.png','Figure W8-17 &mdash; Combined version, OS and script scan with privilege escalation')">
             <div class="ev-label">Figure W8-17</div><img src="images/image64.png"
-              alt="NSE HTTP scripts enumerate WordPress paths" loading="lazy">
+              alt="Combined scan &mdash; -sV -O --script default" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">NSE HTTP &mdash; path enumeration</div>
-              <div class="ev-support">HTTP scripts enumerate WordPress feeds, gravatar integrations and exposed paths —
-                structured recon without manual crawling.</div>
+              <div class="ev-claim">Combined scan &mdash; -sV -O --script default</div>
+              <div class="ev-support">First attempt without root fails because -O requires raw socket access. With sudo,
+                Nmap returns SSH host key fingerprints (ECDSA + ED25519), OS kernel range (4.15&ndash;5.8) and MAC
+                vendor (VirtualBox) in a single pass.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-18"
-            onclick="openLbx('images/image65.png','Figure W8-18 &mdash; Nmap default script scanning on single host')">
+            onclick="openLbx('images/image65.png','Figure W8-18 &mdash; Scan output saved to file with NRPE service identified')">
             <div class="ev-label">Figure W8-18</div><img src="images/image65.png"
-              alt="Default scripts (-sC) broad vulnerability baseline" loading="lazy">
+              alt="Output to file &mdash; -oN" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">Default scripts (-sC) &mdash; vulnerability baseline</div>
-              <div class="ev-support">-sC runs standard reconnaissance scripts for each detected service — provides
-                broad coverage without custom scripting. Appropriate for every assessment baseline.</div>
+              <div class="ev-claim">Output to file &mdash; -oN saves evidence to disk</div>
+              <div class="ev-support">-oN output.txt saves results in normal human-readable format. Port 5666
+                now identified as NRPE (Nagios monitoring agent) rather than tcpwrapped, showing that
+                service identification can vary between scan types.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-19"
@@ -4162,43 +4166,47 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-20"
-            onclick="openLbx('images/image67.png','Figure W8-20 &mdash; Output file generation in XML format')">
+            onclick="openLbx('images/image67.png','Figure W8-20 &mdash; Grepable output format for scriptable post-processing')">
             <div class="ev-label">Figure W8-20</div><img src="images/image67.png"
-              alt="XML output (-oX) for machine-readable scan data" loading="lazy">
+              alt="Grepable output &mdash; -oG" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">XML output (-oX) &mdash; machine-readable data</div>
-              <div class="ev-support">Structured XML output enables automated diff-scanning to detect config drift
-                between assessment cycles. Always save scan output — lost evidence cannot be recreated.</div>
+              <div class="ev-claim">Grepable output &mdash; -oG for scriptable analysis</div>
+              <div class="ev-support">-oG output.grep saves results in one-host-per-line format for command-line
+                parsing with grep, awk or cut. Ports 22 (SSH) and 5666 (NRPE) confirmed open, consistent
+                with previous scans.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-21"
-            onclick="openLbx('images/image68.png','Figure W8-21 &mdash; Multiple output format generation simultaneously')">
+            onclick="openLbx('images/image68.png','Figure W8-21 &mdash; Decoy scan obscures true scanner source among random IPs')">
             <div class="ev-label">Figure W8-21</div><img src="images/image68.png"
-              alt="Multi-format output — normal and XML simultaneously" loading="lazy">
+              alt="Decoy scanning &mdash; -D RND:10" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">Multi-format output &mdash; normal and XML</div>
-              <div class="ev-support">-oN + -oX simultaneously satisfies human review and automated pipeline
-                requirements. Documents the correct multi-format evidence capture workflow.</div>
+              <div class="ev-claim">Decoy scanning &mdash; -D RND:10 obscures source IP</div>
+              <div class="ev-support">-D RND:10 mixes 10 randomly generated decoy addresses with the real scanning
+                source. Ports 22 and 5666 remain consistent, confirming decoy mode does not affect result
+                accuracy &mdash; only attribution difficulty.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-22"
-            onclick="openLbx('images/image69.png','Figure W8-22 &mdash; RND:10 randomization and OS detection on gateway')">
+            onclick="openLbx('images/image69.png','Figure W8-22 &mdash; Fragment scan tests IDS evasion via packet splitting')">
             <div class="ev-label">Figure W8-22</div><img src="images/image69.png"
-              alt="RND probe order &mdash; evasion via randomisation" loading="lazy">
+              alt="Fragment scan &mdash; -f" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">RND probe order &mdash; evasion via randomisation</div>
-              <div class="ev-support">Random probe ordering makes OS detection harder to defend against while still
-                revealing system information. Informs better IDS signature-matching rules.</div>
+              <div class="ev-claim">Fragment scan &mdash; -f splits probes into 8-byte fragments</div>
+              <div class="ev-support">-f fragments TCP probes into small IP fragments, testing whether firewalls
+                or IDS reassemble traffic before inspection. Identical results (ports 22, 5666) indicate no
+                fragment-based filtering is active.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-23"
-            onclick="openLbx('images/image70.png','Figure W8-23 &mdash; Continued RND scan results on target gateway')">
+            onclick="openLbx('images/image70.png','Figure W8-23 &mdash; MAC address spoofing demonstrates Layer 2 identity concealment')">
             <div class="ev-label">Figure W8-23</div><img src="images/image70.png"
-              alt="Repeated scans confirm consistent network configuration" loading="lazy">
+              alt="MAC spoofing &mdash; --spoof-mac" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">Repeated scans &mdash; consistent configuration confirmed</div>
-              <div class="ev-support">Multiple scans show stable service state and consistent firewall rules, validating
-                reconnaissance findings for reliable attack planning.</div>
+              <div class="ev-claim">MAC spoofing &mdash; --spoof-mac conceals scanner identity</div>
+              <div class="ev-support">--spoof-mac 00:11:22:33:44:55 substitutes a fabricated MAC (Cimsys by OUI
+                lookup). Host appears down because ARP replies route to the spoofed address, illustrating
+                the trade-off between Layer 2 anonymity and scan reliability.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-24"
@@ -4252,23 +4260,25 @@
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-29"
-            onclick="openLbx('images/image76.png','Figure W8-29 &mdash; IPv6 scanning on target network')">
+            onclick="openLbx('images/image76.png','Figure W8-29 &mdash; IPv6 scanning and ACK-based firewall mapping')">
             <div class="ev-label">Figure W8-29</div><img src="images/image76.png"
-              alt="IPv6 scan &mdash; dual-stack services discovered" loading="lazy">
+              alt="IPv6 scan + ACK firewall mapping" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">IPv6 scan &mdash; dual-stack services</div>
-              <div class="ev-support">IPv6-capable hosts confirm dual-stack deployment. IPv6 ACLs frequently lag behind
-                IPv4 rule sets — always scan both protocol stacks.</div>
+              <div class="ev-claim">IPv6 scan + ACK firewall mapping</div>
+              <div class="ev-support">-6 confirms SSH and HTTP reachable over IPv6 on the WordPress host. -sA ACK scan
+                against .1 reveals all 1000 ports unfiltered &mdash; every ACK receives RST, meaning no stateful
+                firewall is present.</div>
             </div>
           </div>
           <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-30"
-            onclick="openLbx('images/image77.png','Figure W8-30 &mdash; Full network scan with 256 IPs completed in 36 seconds')">
+            onclick="openLbx('images/image77.png','Figure W8-30 &mdash; Subnet sweep discovers three live hosts with different service profiles')">
             <div class="ev-label">Figure W8-30</div><img src="images/image77.png"
-              alt="Full /24 scan &mdash; 3 hosts in 36 seconds" loading="lazy">
+              alt="Subnet sweep &mdash; /24 discovery" loading="lazy">
             <div class="ev-body">
-              <div class="ev-claim">Full /24 scan &mdash; 3 hosts in 36 seconds</div>
-              <div class="ev-support">Comprehensive subnet reconnaissance identifies complete asset inventory. No host
-                unaccounted for — the definitive baseline before any targeted exploitation begins.</div>
+              <div class="ev-claim">Subnet sweep &mdash; three hosts with different service profiles</div>
+              <div class="ev-support">Scanning 192.168.123.1&ndash;255 finds .1 (SSH + NRPE), .30 (SSH + HTTP + MySQL)
+                and .10 (all closed). Host .30 is the highest-value target &mdash; MySQL exposed alongside HTTP
+                suggests a web application with database backend.</div>
             </div>
           </div>
         </div>
