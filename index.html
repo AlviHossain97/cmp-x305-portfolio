@@ -1097,33 +1097,74 @@
     .ev-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 1.25rem;
+      gap: 1.6rem;
       margin: 1.5rem 0 1.25rem;
     }
 
+    /* ── card: angular box with stacked-photo shadow layers ── */
     .ev-card {
+      --card-clip: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
       background: var(--s2);
       border: 1px solid var(--bd);
-      border-left: 3px solid var(--acc);
-      border-radius: var(--r-lg);
+      clip-path: var(--card-clip);
       overflow: hidden;
-      transition: all .28s;
+      transition: transform .25s, box-shadow .25s, border-color .25s;
       cursor: pointer;
       display: flex;
       flex-direction: column;
       position: relative;
     }
 
+    /* stacked layers behind the card */
+    .ev-card::before,
+    .ev-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      clip-path: var(--card-clip);
+      background: var(--s1);
+      border: 1px solid var(--bd);
+      z-index: -1;
+      transition: transform .28s ease, opacity .28s ease;
+    }
+    .ev-card::before {
+      transform: translate(5px, 5px) rotate(.6deg);
+      opacity: .5;
+    }
+    .ev-card::after {
+      transform: translate(10px, 10px) rotate(1.1deg);
+      opacity: .25;
+    }
+
     .ev-card:hover {
-      border-color: var(--bd-hover);
-      transform: translateY(-3px);
-      box-shadow: var(--sh-glow-h), 0 12px 28px rgba(0, 0, 0, .25);
+      border-color: var(--acc);
+      transform: translateY(-4px);
+      box-shadow:
+        0 0 12px rgba(0, 255, 136, .08),
+        0 16px 32px rgba(0, 0, 0, .3);
+    }
+    .ev-card:hover::before {
+      transform: translate(7px, 7px) rotate(.9deg);
+      opacity: .6;
+    }
+    .ev-card:hover::after {
+      transform: translate(13px, 14px) rotate(1.5deg);
+      opacity: .35;
     }
 
     .ev-card:focus-visible {
       outline: none;
       box-shadow: var(--focus-ring);
       border-color: var(--acc);
+    }
+
+    /* top accent bar — angular gradient strip */
+    .ev-card > .ev-label::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--acc) 0%, var(--cyan, #00d4ff) 50%, transparent 85%);
     }
 
     .ev-card .ev-label {
@@ -1136,6 +1177,7 @@
       display: flex;
       align-items: center;
       gap: .5rem;
+      position: relative;
     }
 
     .ev-card .ev-label::before {
@@ -1150,118 +1192,32 @@
       color: var(--tx3);
       background: rgba(0, 255, 136, .08);
       padding: .1rem .45rem;
-      border-radius: var(--r-sm);
+      border-radius: 2px;
       letter-spacing: .03em;
       text-transform: uppercase;
+      position: static;
+      height: auto;
     }
 
-    .ev-card .ev-img-wrap {
-      position: relative;
-      padding: .15rem 1rem 1rem;
-      background: linear-gradient(180deg, rgba(255, 255, 255, .02), transparent 70%);
-    }
-
-    .ev-card .stack {
-      position: relative;
-      aspect-ratio: 16 / 10;
+    /* ── image area ── */
+    .ev-card img {
       width: 100%;
-      max-width: 100%;
-      isolation: isolate;
-    }
-
-    .ev-card .stack::before,
-    .ev-card .stack::after,
-    .ev-card .stack .card {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: calc(var(--r-lg) - 6px);
-      border: 1px solid rgba(106, 122, 146, .22);
-      background: linear-gradient(180deg, rgba(12, 17, 27, .94), rgba(18, 24, 38, .86));
-      box-shadow: 0 14px 28px rgba(0, 0, 0, .24);
-      pointer-events: none;
-      transition: transform .28s ease, opacity .28s ease, box-shadow .28s ease;
-    }
-
-    .ev-card .stack::before {
-      z-index: 0;
-      transform: translate(-8px, 8px) rotate(-2.25deg);
-      opacity: .76;
-    }
-
-    .ev-card .stack::after {
-      z-index: 1;
-      transform: translate(8px, 12px) rotate(2.1deg);
-      opacity: .56;
-    }
-
-    .ev-card .stack .card {
-      position: relative;
-      z-index: 2;
-      overflow: hidden;
-      border-color: rgba(120, 138, 164, .32);
-      background: linear-gradient(180deg, rgba(8, 12, 20, .99), rgba(17, 23, 36, .96));
-      box-shadow:
-        0 18px 32px rgba(0, 0, 0, .3),
-        inset 0 1px 0 rgba(255, 255, 255, .04),
-        0 0 0 1px rgba(0, 255, 136, .03);
-      pointer-events: auto;
-    }
-
-    .ev-card .stack .card::before {
-      content: '';
-      position: absolute;
-      inset: 0 0 auto;
-      height: 2px;
-      background: linear-gradient(90deg, rgba(0, 255, 136, .65), rgba(0, 212, 255, .45), transparent 78%);
-      opacity: .8;
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .ev-card .stack .card::after {
-      content: '';
-      position: absolute;
-      inset: 10px;
-      border-radius: calc(var(--r-md) - 4px);
-      border: 1px solid rgba(255, 255, 255, .06);
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .ev-card img.image {
-      width: 100%;
-      height: 100%;
       display: block;
+      aspect-ratio: 16 / 10;
       object-fit: cover;
-      background: linear-gradient(180deg, rgba(10, 14, 23, .9), rgba(20, 25, 38, .9));
-      filter: brightness(.9) saturate(.96);
+      background: var(--s1);
+      filter: brightness(.88) saturate(.94);
       transition: filter .3s, transform .3s;
+      border-top: 1px solid rgba(255, 255, 255, .04);
+      border-bottom: 1px solid rgba(255, 255, 255, .04);
     }
 
-    .ev-card:hover .stack::before {
-      transform: translate(-11px, 10px) rotate(-3deg);
-      opacity: .84;
+    .ev-card:hover img {
+      filter: brightness(1) saturate(1.05);
+      transform: scale(1.015);
     }
 
-    .ev-card:hover .stack::after {
-      transform: translate(10px, 15px) rotate(2.65deg);
-      opacity: .66;
-    }
-
-    .ev-card:hover .stack .card {
-      transform: translateY(-2px);
-      box-shadow:
-        0 24px 38px rgba(0, 0, 0, .34),
-        inset 0 1px 0 rgba(255, 255, 255, .05),
-        0 0 0 1px rgba(0, 255, 136, .05);
-    }
-
-    .ev-card:hover img.image {
-      filter: brightness(1.02) saturate(1.05);
-      transform: scale(1.018);
-    }
-
+    /* ── text body ── */
     .ev-card .ev-body {
       padding: .7rem 1rem .85rem;
       border-top: 1px solid var(--bd);
@@ -1292,21 +1248,26 @@
       color: var(--tx3);
     }
 
+    /* ── corner cut indicator — bottom-left notch detail ── */
+    .ev-card .ev-body::after {
+      content: '';
+      display: block;
+      width: 18px;
+      height: 1px;
+      background: var(--acc);
+      opacity: .3;
+      margin-top: .5rem;
+    }
+
     @media(max-width:480px) {
       .ev-grid {
         grid-template-columns: 1fr;
       }
-
-      .ev-card .ev-img-wrap {
-        padding-inline: .8rem;
+      .ev-card::before {
+        transform: translate(4px, 4px) rotate(.5deg);
       }
-
-      .ev-card .stack::before {
-        transform: translate(-5px, 6px) rotate(-1.8deg);
-      }
-
-      .ev-card .stack::after {
-        transform: translate(5px, 9px) rotate(1.75deg);
+      .ev-card::after {
+        transform: translate(8px, 8px) rotate(.9deg);
       }
     }
 
