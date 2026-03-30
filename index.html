@@ -5392,15 +5392,17 @@ function closeLbx(){
 }
 window.openLbx=openLbx;
 
-document.addEventListener('click',function(e){
-  var card=e.target.closest('.ev-card[role="button"]');
-  if(card){
-    e.preventDefault();
-    e.stopPropagation();
-    openCard(card);
-    return;
-  }
-},true);
+function initEvidenceGallery(){
+  document.querySelectorAll('.ev-card[role="button"]').forEach(function(card){
+    if(card.hasAttribute('onclick'))card.removeAttribute('onclick');
+    card.addEventListener('click',function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      openCard(card);
+    });
+  });
+}
+initEvidenceGallery();
 
 lbx.addEventListener('click',function(e){if(e.target===lbx||e.target===lbx.querySelector('.lbx-content'))closeLbx();});
 lbxImg.addEventListener('click',function(e){e.stopPropagation();});
