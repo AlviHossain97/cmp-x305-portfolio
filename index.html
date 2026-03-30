@@ -2357,6 +2357,110 @@
       position: relative;
     }
 
+    .lbx-content {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: min(1200px, 100%);
+      width: 100%;
+    }
+
+    .lbx-gallery-ui {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(900px, calc(100% - 6rem));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      pointer-events: none;
+      z-index: 202;
+    }
+
+    .lbx-nav-btn,
+    .lbx-status {
+      pointer-events: auto;
+      background: linear-gradient(180deg, rgba(17, 23, 36, .98), rgba(8, 12, 20, .98));
+      border: 3px solid rgba(4, 6, 10, .96);
+      box-shadow: 6px 6px 0 rgba(4, 6, 10, .88);
+      color: var(--tx);
+      font-family: var(--mono);
+    }
+
+    .lbx-nav-btn {
+      min-width: 112px;
+      padding: .58rem .9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      font-size: .72rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: translate .2s ease, box-shadow .2s ease, background .2s ease, color .2s ease;
+    }
+
+    .lbx-nav-btn:hover {
+      translate: 2px 2px;
+      box-shadow: 4px 4px 0 rgba(4, 6, 10, .88);
+      background: linear-gradient(180deg, rgba(0, 255, 136, .12), rgba(8, 12, 20, .98));
+      color: var(--acc);
+    }
+
+    .lbx-nav-btn:focus-visible {
+      outline: none;
+      box-shadow: var(--focus-ring);
+    }
+
+    .lbx-nav-btn[disabled] {
+      opacity: .45;
+      cursor: not-allowed;
+      color: var(--tx3);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .9), rgba(8, 12, 20, .94));
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .88);
+    }
+
+    .lbx-nav-btn[disabled]:hover {
+      translate: none;
+      color: var(--tx3);
+      box-shadow: 3px 3px 0 rgba(4, 6, 10, .88);
+      background: linear-gradient(180deg, rgba(17, 23, 36, .9), rgba(8, 12, 20, .94));
+    }
+
+    .lbx-status {
+      flex: 1;
+      min-width: 0;
+      padding: .62rem .9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: .18rem;
+      text-align: center;
+      max-width: 360px;
+    }
+
+    .lbx-status-label {
+      color: var(--acc);
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 100%;
+    }
+
+    .lbx-status-hint {
+      color: var(--tx2);
+      font-size: .64rem;
+      letter-spacing: .04em;
+    }
+
     .lbx-annotations {
       position: absolute;
       inset: 0;
@@ -2433,6 +2537,23 @@
         left: auto;
         transform: none;
         margin-top: 1rem;
+      }
+
+      .lbx-gallery-ui {
+        width: calc(100% - 2rem);
+        top: .75rem;
+        gap: .65rem;
+      }
+
+      .lbx-nav-btn {
+        min-width: 92px;
+        padding: .5rem .7rem;
+        box-shadow: 4px 4px 0 rgba(4, 6, 10, .88);
+      }
+
+      .lbx-status {
+        padding: .55rem .7rem;
+        box-shadow: 4px 4px 0 rgba(4, 6, 10, .88);
       }
     }
 
@@ -2776,7 +2897,8 @@
       .sub-nav a:hover,
       .mit-list li:hover,
       .dl-btn:hover,
-      .footer-btn:hover {
+      .footer-btn:hover,
+      .lbx-nav-btn:hover {
         translate: none;
       }
 
@@ -2989,6 +3111,36 @@
         padding: 1rem;
       }
 
+      .lbx-gallery-ui {
+        top: .55rem;
+        width: calc(100% - 1rem);
+        gap: .5rem;
+      }
+
+      .lbx-nav-btn {
+        min-width: 0;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        gap: 0;
+      }
+
+      .lbx-nav-btn span:not([aria-hidden="true"]) {
+        display: none;
+      }
+
+      .lbx-status {
+        padding: .5rem .65rem;
+      }
+
+      .lbx-status-label {
+        font-size: .66rem;
+      }
+
+      .lbx-status-hint {
+        font-size: .58rem;
+      }
+
       .lbx-cap {
         max-width: calc(100% - 1.5rem);
         bottom: .85rem;
@@ -3013,6 +3165,20 @@
   <div class="lbx" id="lbx" role="dialog" aria-modal="true" aria-label="Image viewer">
     <button class="lbx-close" id="lbx-close" aria-label="Close image viewer">&times;</button>
     <div class="lbx-content" id="lbx-content">
+      <div class="lbx-gallery-ui">
+        <button class="lbx-nav-btn lbx-prev" id="lbx-prev" type="button" aria-label="Previous screenshot">
+          <span aria-hidden="true">&larr;</span>
+          <span>Prev</span>
+        </button>
+        <div class="lbx-status" id="lbx-status" aria-live="polite">
+          <span class="lbx-status-label" id="lbx-status-label">Figure</span>
+          <span class="lbx-status-hint">Use &larr; &rarr; to browse</span>
+        </div>
+        <button class="lbx-nav-btn lbx-next" id="lbx-next" type="button" aria-label="Next screenshot">
+          <span>Next</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </div>
       <img id="lbx-img" src="" alt="">
       <div class="lbx-annotations" id="lbx-annotations"></div>
     </div>
@@ -5090,11 +5256,63 @@ var lbx=document.getElementById('lbx');
 var lbxImg=document.getElementById('lbx-img');
 var lbxCap=document.getElementById('lbx-cap');
 var lbxAnnotations=document.getElementById('lbx-annotations');
+var lbxStatusLabel=document.getElementById('lbx-status-label');
+var lbxStatusHint=document.querySelector('.lbx-status-hint');
+var lbxPrev=document.getElementById('lbx-prev');
+var lbxNext=document.getElementById('lbx-next');
 var prevFocus=null;
 var currentAnnotations=null;
+var currentGallery=[];
+var currentGalleryIndex=-1;
 
-function openLbx(src,cap,annotationsJson){
-  prevFocus=document.activeElement;
+function getFigureSortKey(card){
+  var label=card&&card.querySelector('.ev-label');
+  var text=label?label.textContent.trim():'';
+  var m=text.match(/Figure\s+([A-Z0-9]+)-(\d+)/i);
+  return {
+    group:m?m[1]:'',
+    num:m?parseInt(m[2],10):0,
+    text:text
+  };
+}
+
+function getGalleryCards(card){
+  var panel=(card&&card.closest('.panel'))||document.querySelector('.panel.active');
+  if(!panel)return[];
+  return Array.from(panel.querySelectorAll('.ev-card[role="button"]')).filter(function(item){
+    return !item.classList.contains('search-hidden');
+  }).sort(function(a,b){
+    var ka=getFigureSortKey(a);
+    var kb=getFigureSortKey(b);
+    if(ka.group!==kb.group)return ka.group.localeCompare(kb.group,undefined,{numeric:true});
+    if(ka.num!==kb.num)return ka.num-kb.num;
+    return ka.text.localeCompare(kb.text,undefined,{numeric:true});
+  });
+}
+
+function getCardPayload(card){
+  var img=card.querySelector('img');
+  var label=card.querySelector('.ev-label');
+  var claim=card.querySelector('.ev-claim');
+  return {
+    src:img?img.src:'',
+    cap:(label?label.textContent:'')+(claim?' — '+claim.textContent:''),
+    label:label?label.textContent.trim():'Figure',
+    annotations:card.dataset.annotations||null
+  };
+}
+
+function updateLbxNav(){
+  var hasGallery=currentGallery.length>1&&currentGalleryIndex>-1;
+  var currentCard=currentGallery[currentGalleryIndex]||null;
+  var label=currentCard?(currentCard.querySelector('.ev-label')||{}).textContent:'Figure';
+  lbxStatusLabel.textContent=hasGallery?(label+' • '+(currentGalleryIndex+1)+' / '+currentGallery.length):(label||'Figure');
+  lbxStatusHint.textContent=hasGallery?'Use ← → to browse':'Press Esc to close';
+  lbxPrev.disabled=currentGalleryIndex<=0;
+  lbxNext.disabled=currentGalleryIndex<0||currentGalleryIndex>=currentGallery.length-1;
+}
+
+function renderLbx(src,cap,annotationsJson){
   lbxImg.src=src;lbxImg.alt=cap||'';lbxCap.textContent=cap||'';
   lbxAnnotations.innerHTML='';
   currentAnnotations=null;
@@ -5106,6 +5324,39 @@ function openLbx(src,cap,annotationsJson){
       renderAnnotations(anns);
     }catch(e){}
   }
+
+  updateLbxNav();
+}
+
+function openCard(card){
+  if(!card)return;
+  if(!lbx.classList.contains('open'))prevFocus=document.activeElement;
+  currentGallery=getGalleryCards(card);
+  currentGalleryIndex=currentGallery.indexOf(card);
+  if(currentGalleryIndex<0){
+    currentGallery=[card];
+    currentGalleryIndex=0;
+  }
+  var payload=getCardPayload(card);
+  renderLbx(payload.src,payload.cap,payload.annotations);
+  lbx.classList.add('open');document.body.style.overflow='hidden';
+  document.getElementById('lbx-close').focus();
+}
+
+function navigateLbx(direction){
+  if(!lbx.classList.contains('open')||!currentGallery.length)return;
+  var nextIndex=currentGalleryIndex+direction;
+  if(nextIndex<0||nextIndex>=currentGallery.length)return;
+  currentGalleryIndex=nextIndex;
+  var payload=getCardPayload(currentGallery[currentGalleryIndex]);
+  renderLbx(payload.src,payload.cap,payload.annotations);
+}
+
+function openLbx(src,cap,annotationsJson){
+  if(!lbx.classList.contains('open'))prevFocus=document.activeElement;
+  currentGallery=[];
+  currentGalleryIndex=-1;
+  renderLbx(src,cap,annotationsJson);
 
   lbx.classList.add('open');document.body.style.overflow='hidden';
   document.getElementById('lbx-close').focus();
@@ -5136,20 +5387,17 @@ function renderAnnotations(anns){
 function closeLbx(){
   lbx.classList.remove('open');document.body.style.overflow='';
   lbxAnnotations.innerHTML='';currentAnnotations=null;
+  currentGallery=[];currentGalleryIndex=-1;
   if(prevFocus)prevFocus.focus();
 }
 window.openLbx=openLbx;
 
 document.addEventListener('click',function(e){
-  var card=e.target.closest('.ev-card[data-annotations]');
-  if(card && card.dataset.annotations){
+  var card=e.target.closest('.ev-card[role="button"]');
+  if(card){
+    e.preventDefault();
     e.stopPropagation();
-    var img=card.querySelector('img');
-    var label=card.querySelector('.ev-label');
-    var claim=card.querySelector('.ev-claim');
-    var src=img?img.src:'';
-    var cap=(label?label.textContent:'')+(claim?' — '+claim.textContent:'');
-    openLbx(src,cap,card.dataset.annotations);
+    openCard(card);
     return;
   }
 },true);
@@ -5157,9 +5405,21 @@ document.addEventListener('click',function(e){
 lbx.addEventListener('click',function(e){if(e.target===lbx||e.target===lbx.querySelector('.lbx-content'))closeLbx();});
 lbxImg.addEventListener('click',function(e){e.stopPropagation();});
 document.getElementById('lbx-close').addEventListener('click',closeLbx);
+lbxPrev.addEventListener('click',function(e){e.stopPropagation();navigateLbx(-1);});
+lbxNext.addEventListener('click',function(e){e.stopPropagation();navigateLbx(1);});
 
 /* ===== KEYBOARD HANDLER ===== */
 document.addEventListener('keydown',function(e){
+  if(lbx.classList.contains('open')&&e.key==='ArrowLeft'){
+    e.preventDefault();
+    navigateLbx(-1);
+    return;
+  }
+  if(lbx.classList.contains('open')&&e.key==='ArrowRight'){
+    e.preventDefault();
+    navigateLbx(1);
+    return;
+  }
   if(e.key==='Escape'){
     if(lbx.classList.contains('open')){closeLbx();}
     else{dismissSearch();}
