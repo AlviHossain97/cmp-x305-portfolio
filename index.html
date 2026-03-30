@@ -4429,28 +4429,7 @@
                 firewalls between attacker and target in the lab subnet.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-29"
-            onclick="openLbx('images/image76.png','Figure W8-29 &mdash; IPv6 scanning and ACK-based firewall mapping')">
-            <div class="ev-label">Figure W8-29</div><img src="images/image76.png"
-              alt="IPv6 scan + ACK firewall mapping" loading="lazy">
-            <div class="ev-body">
-              <div class="ev-claim">IPv6 scan + ACK firewall mapping</div>
-              <div class="ev-support">-6 confirms SSH and HTTP reachable over IPv6 on the WordPress host. -sA ACK scan
-                against .1 reveals all 1000 ports unfiltered &mdash; every ACK receives RST, meaning no stateful
-                firewall is present.</div>
-            </div>
-          </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-30"
-            onclick="openLbx('images/image77.png','Figure W8-30 &mdash; ACK scan maps firewall filtering behaviour')">
-            <div class="ev-label">Figure W8-30</div><img src="images/image77.png"
-              alt="ACK scan &mdash; firewall mapping" loading="lazy">
-            <div class="ev-body">
-              <div class="ev-claim">ACK scan &mdash; firewall filtering behaviour mapped</div>
-              <div class="ev-support">The -sA ACK scan sends ACK packets to determine firewall rules. Unfiltered
-                ports return RST (no stateful firewall), while filtered ports drop packets silently.
-                Note: this duplicates the W8-7 ACK scan evidence from a different angle.</div>
-            </div>
-          </div>
+
         </div>
       </div>
       <div class="cb" id="w8-nmap-find">
@@ -4613,9 +4592,9 @@
       <div class="cb" id="w8-ssh-ev">
         <h3><span class="sec-tag">Evidence &mdash; SSH Administration</span></h3>
         <div class="ev-grid">
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-31"
-            onclick="openLbx('images/image31.png','Figure W8-31 &mdash; Initial SSH connection to the gateway using password auth')">
-            <div class="ev-label">Figure W8-31</div><img src="images/image31.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-29"
+            onclick="openLbx('images/image31.png','Figure W8-29 &mdash; Initial SSH connection to the gateway using password auth')">
+            <div class="ev-label">Figure W8-29</div><img src="images/image31.png"
               alt="Initial SSH connection established" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Initial SSH connection established</div>
@@ -4623,9 +4602,9 @@
                 configuration that subsequent steps improve upon.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-32"
-            onclick="openLbx('images/image32.png','Figure W8-32 &mdash; 4096-bit RSA key pair generated with ssh-keygen')">
-            <div class="ev-label">Figure W8-32</div><img src="images/image32.png" alt="4096-bit RSA key pair created"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-30"
+            onclick="openLbx('images/image32.png','Figure W8-30 &mdash; 4096-bit RSA key pair generated with ssh-keygen')">
+            <div class="ev-label">Figure W8-30</div><img src="images/image32.png" alt="4096-bit RSA key pair created"
               loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">4096-bit RSA key pair created</div>
@@ -4633,9 +4612,9 @@
                 security &mdash; the full deployment chain matters.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-33"
-            onclick="openLbx('images/image33.png','Figure W8-33 &mdash; Public key copied to the gateway via ssh-copy-id')">
-            <div class="ev-label">Figure W8-33</div><img src="images/image33.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-31"
+            onclick="openLbx('images/image33.png','Figure W8-31 &mdash; Public key copied to the gateway via ssh-copy-id')">
+            <div class="ev-label">Figure W8-31</div><img src="images/image33.png"
               alt="Public key deployed to authorized_keys" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Public key deployed to authorized_keys</div>
@@ -4643,9 +4622,9 @@
                 being done correctly and the private key being protected.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-34"
-            onclick="openLbx('images/image34.png','Figure W8-34 &mdash; SCP used to transfer a file securely over the SSH session')">
-            <div class="ev-label">Figure W8-34</div><img src="images/image34.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-32"
+            onclick="openLbx('images/image34.png','Figure W8-32 &mdash; SCP used to transfer a file securely over the SSH session')">
+            <div class="ev-label">Figure W8-32</div><img src="images/image34.png"
               alt="SCP &mdash; encrypted file transfer confirmed" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">SCP &mdash; encrypted file transfer confirmed</div>
@@ -4653,9 +4632,9 @@
                 could be misused to exfiltrate data if SSH access is not governed.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-35"
-            onclick="openLbx('images/image35.png','Figure W8-35 &mdash; Local port forwarding used to reach the WordPress service through the gateway')">
-            <div class="ev-label">Figure W8-35</div><img src="images/image35.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-33"
+            onclick="openLbx('images/image35.png','Figure W8-33 &mdash; Local port forwarding used to reach the WordPress service through the gateway')">
+            <div class="ev-label">Figure W8-33</div><img src="images/image35.png"
               alt="Local port forwarding through the gateway" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Local port forwarding through the gateway</div>
@@ -4665,9 +4644,9 @@
           </div>
           <div class="ev-card"
             data-annotations='[{"id":1,"x":40,"y":45,"label":"No password prompt","detail":"Key-based authentication confirmed — the full hardening chain from key generation to deployment is validated."}]'
-            tabindex="0" role="button" aria-label="View Figure W8-36"
-            onclick="openLbx('images/image36.png','Figure W8-36 &mdash; Remote port forwarding demonstrated over the SSH session')">
-            <div class="ev-label">Figure W8-36</div><img src="images/image36.png"
+            tabindex="0" role="button" aria-label="View Figure W8-34"
+            onclick="openLbx('images/image36.png','Figure W8-34 &mdash; Remote port forwarding demonstrated over the SSH session')">
+            <div class="ev-label">Figure W8-34</div><img src="images/image36.png"
               alt="Remote port forwarding demonstrated" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Remote port forwarding demonstrated</div>
@@ -4675,9 +4654,9 @@
                 governance to prevent unintended network exposure.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-37"
-            onclick="openLbx('images/image37.png','Figure W8-37 &mdash; ControlMaster multiplexing configured for session reuse')">
-            <div class="ev-label">Figure W8-37</div><img src="images/image37.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-35"
+            onclick="openLbx('images/image37.png','Figure W8-35 &mdash; ControlMaster multiplexing configured for session reuse')">
+            <div class="ev-label">Figure W8-35</div><img src="images/image37.png"
               alt="ControlMaster &mdash; session multiplexing configured" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">ControlMaster &mdash; session multiplexing configured</div>
@@ -4685,9 +4664,9 @@
                 operational efficiency without weakening security.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-38"
-            onclick="openLbx('images/image38.png','Figure W8-38 &mdash; Passwordless SSH login confirmed after key-based auth was set up')">
-            <div class="ev-label">Figure W8-38</div><img src="images/image38.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-36"
+            onclick="openLbx('images/image38.png','Figure W8-36 &mdash; Passwordless SSH login confirmed after key-based auth was set up')">
+            <div class="ev-label">Figure W8-36</div><img src="images/image38.png"
               alt="Passwordless login confirmed &mdash; key auth working" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Passwordless login confirmed &mdash; key auth working</div>
@@ -4695,9 +4674,9 @@
                 verified login. Password auth is no longer required.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-39"
-            onclick="openLbx('images/image78.png','Figure W8-39 &mdash; SCP transfer progress and completion status')">
-            <div class="ev-label">Figure W8-39</div><img src="images/image78.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-37"
+            onclick="openLbx('images/image78.png','Figure W8-37 &mdash; SCP transfer progress and completion status')">
+            <div class="ev-label">Figure W8-37</div><img src="images/image78.png"
               alt="SCP transfer progress &mdash; real-time status" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">SCP transfer progress &mdash; real-time status</div>
@@ -4705,9 +4684,9 @@
                 payload delivery capability — the same mechanism models attacker upload scenarios.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-40"
-            onclick="openLbx('images/image79.png','Figure W8-40 &mdash; Reverse SCP download from WordPress server')">
-            <div class="ev-label">Figure W8-40</div><img src="images/image79.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-38"
+            onclick="openLbx('images/image79.png','Figure W8-38 &mdash; Reverse SCP download from WordPress server')">
+            <div class="ev-label">Figure W8-38</div><img src="images/image79.png"
               alt="Reverse SCP &mdash; data exfiltration from compromised host" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Reverse SCP &mdash; data exfiltration modelled</div>
@@ -4715,9 +4694,9 @@
                 exfiltration. Bidirectional SCP means one credential gives read and write access.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-41"
-            onclick="openLbx('images/image80.png','Figure W8-41 &mdash; SCP bidirectional transfer confirmation')">
-            <div class="ev-label">Figure W8-41</div><img src="images/image80.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-39"
+            onclick="openLbx('images/image80.png','Figure W8-39 &mdash; SCP bidirectional transfer confirmation')">
+            <div class="ev-label">Figure W8-39</div><img src="images/image80.png"
               alt="SCP bidirectional &mdash; upload and download both demonstrated" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">SCP bidirectional &mdash; upload and download</div>
@@ -4725,9 +4704,9 @@
                 file movement capability between hosts over the encrypted channel.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-42"
-            onclick="openLbx('images/image81.png','Figure W8-42 &mdash; SSH local port forwarding (-L) with interactive access')">
-            <div class="ev-label">Figure W8-42</div><img src="images/image81.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-40"
+            onclick="openLbx('images/image81.png','Figure W8-40 &mdash; SSH local port forwarding (-L) with interactive access')">
+            <div class="ev-label">Figure W8-40</div><img src="images/image81.png"
               alt="Local port forwarding &mdash; tunnelling WordPress HTTP" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Local port forwarding &mdash; tunnelling WordPress HTTP</div>
@@ -4735,9 +4714,9 @@
                 firewall rules. SSH becomes a universal tunnelling tool that firewall policy must account for.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-43"
-            onclick="openLbx('images/image82.png','Figure W8-43 &mdash; SSH session exit and tunnel termination')">
-            <div class="ev-label">Figure W8-43</div><img src="images/image82.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-41"
+            onclick="openLbx('images/image82.png','Figure W8-41 &mdash; SSH session exit and tunnel termination')">
+            <div class="ev-label">Figure W8-41</div><img src="images/image82.png"
               alt="SSH exit &mdash; session and tunnel properly closed" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">SSH exit &mdash; session and tunnel closed</div>
@@ -4745,9 +4724,9 @@
                 sessions represent unmonitored access — always terminate explicitly.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-44"
-            onclick="openLbx('images/image83.png','Figure W8-44 &mdash; SSH host key warning on initial connection')">
-            <div class="ev-label">Figure W8-44</div><img src="images/image83.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-42"
+            onclick="openLbx('images/image83.png','Figure W8-42 &mdash; SSH host key warning on initial connection')">
+            <div class="ev-label">Figure W8-42</div><img src="images/image83.png"
               alt="Host key verification &mdash; MITM prevention" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Host key verification &mdash; MITM prevention</div>
@@ -4755,9 +4734,9 @@
                 Bypassing this opens full man-in-the-middle exposure — never skip it.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-45"
-            onclick="openLbx('images/image84.png','Figure W8-45 &mdash; SSH ControlMaster multiplexing configuration')">
-            <div class="ev-label">Figure W8-45</div><img src="images/image84.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-43"
+            onclick="openLbx('images/image84.png','Figure W8-43 &mdash; SSH ControlMaster multiplexing configuration')">
+            <div class="ev-label">Figure W8-43</div><img src="images/image84.png"
               alt="ControlMaster &mdash; connection reuse configured" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">ControlMaster &mdash; connection reuse configured</div>
@@ -4765,9 +4744,9 @@
                 auth handshake. Reduces latency and auth overhead — essential for scripted automation.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-46"
-            onclick="openLbx('images/image85.png','Figure W8-46 &mdash; ControlPersist with reused SSH connections')">
-            <div class="ev-label">Figure W8-46</div><img src="images/image85.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-44"
+            onclick="openLbx('images/image85.png','Figure W8-44 &mdash; ControlPersist with reused SSH connections')">
+            <div class="ev-label">Figure W8-44</div><img src="images/image85.png"
               alt="ControlPersist &mdash; persistent connections for automation" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">ControlPersist &mdash; persistent connection automation</div>
@@ -4775,9 +4754,9 @@
                 defender note: persistent connections reduce audit log entries, decreasing visibility.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-47"
-            onclick="openLbx('images/image86.png','Figure W8-47 &mdash; SSH private key file deletion post-lab')">
-            <div class="ev-label">Figure W8-47</div><img src="images/image86.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-45"
+            onclick="openLbx('images/image86.png','Figure W8-45 &mdash; SSH private key file deletion post-lab')">
+            <div class="ev-label">Figure W8-45</div><img src="images/image86.png"
               alt="Key cleanup &mdash; private key deleted after use" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Key cleanup &mdash; private key deleted</div>
@@ -4785,9 +4764,9 @@
                 lifecycle. Generate → deploy → delete: never leave keys in temporary locations.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-48"
-            onclick="openLbx('images/image87.png','Figure W8-48 &mdash; SSH debug mode showing protocol negotiation')">
-            <div class="ev-label">Figure W8-48</div><img src="images/image87.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-46"
+            onclick="openLbx('images/image87.png','Figure W8-46 &mdash; SSH debug mode showing protocol negotiation')">
+            <div class="ev-label">Figure W8-46</div><img src="images/image87.png"
               alt="SSH debug (-vvv) &mdash; cipher and key exchange negotiation" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">SSH debug (-vvv) &mdash; protocol negotiation visible</div>
@@ -4795,9 +4774,9 @@
                 mechanisms step by step. Invaluable for hardening review and troubleshooting key selection.</div>
             </div>
           </div>
-          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-49"
-            onclick="openLbx('images/image88.png','Figure W8-49 &mdash; SSH debug session showing complete authentication lifecycle')">
-            <div class="ev-label">Figure W8-49</div><img src="images/image88.png"
+          <div class="ev-card" tabindex="0" role="button" aria-label="View Figure W8-47"
+            onclick="openLbx('images/image88.png','Figure W8-47 &mdash; SSH debug session showing complete authentication lifecycle')">
+            <div class="ev-label">Figure W8-47</div><img src="images/image88.png"
               alt="Debug session &mdash; full auth lifecycle trace" loading="lazy">
             <div class="ev-body">
               <div class="ev-claim">Debug session &mdash; full auth lifecycle trace</div>
